@@ -1,33 +1,33 @@
 {
   "active": false,
   "connections": {
-    "ClickUp Trigger": {
+    "\"Active\" Task status changes": {
       "main": [
         [
           {
-            "node": "Filter",
+            "node": "Status changed to \"Today\"",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "ClickUp": {
+    "Status changed to \"Today\"": {
+      "main": [
+        [
+          {
+            "node": "Get task details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get task details": {
       "main": [
         [
           {
             "node": "ClickUp1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Filter": {
-      "main": [
-        [
-          {
-            "node": "ClickUp",
             "type": "main",
             "index": 0
           }
@@ -41,23 +41,21 @@
   "nodes": [
     {
       "parameters": {
-        "team": "14335650",
-        "events": [
-          "taskStatusUpdated"
-        ],
-        "filters": {
-          "listId": "164286867"
+        "operation": "update",
+        "id": "={{ $json.id }}",
+        "updateFields": {
+          "dueDate": "=",
+          "dueDateTime": true
         }
       },
-      "id": "3aa535de-55db-4886-a30a-0263d7860ac4",
-      "name": "ClickUp Trigger",
-      "type": "n8n-nodes-base.clickUpTrigger",
+      "id": "6cc7705d-d94b-44c6-be05-212038c99834",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        520,
+        1180,
         640
       ],
-      "webhookId": "2e014644-1c0e-4aba-987c-8b5abc35d423",
       "credentials": {
         "clickUpApi": {
           "id": "1",
@@ -67,17 +65,23 @@
     },
     {
       "parameters": {
-        "operation": "get",
-        "id": "={{ $json.task_id }}"
+        "team": "14335650",
+        "events": [
+          "taskStatusUpdated"
+        ],
+        "filters": {
+          "listId": "164286867"
+        }
       },
-      "id": "698567c6-a441-4ef7-8d40-1061abfca4a1",
-      "name": "ClickUp",
-      "type": "n8n-nodes-base.clickUp",
+      "id": "3aa535de-55db-4886-a30a-0263d7860ac4",
+      "name": "\"Active\" Task status changes",
+      "type": "n8n-nodes-base.clickUpTrigger",
       "typeVersion": 1,
       "position": [
-        960,
+        520,
         640
       ],
+      "webhookId": "2e014644-1c0e-4aba-987c-8b5abc35d423",
       "credentials": {
         "clickUpApi": {
           "id": "1",
@@ -102,7 +106,7 @@
         }
       },
       "id": "6ac9113a-3388-4b54-b439-9b8ce03b2791",
-      "name": "Filter",
+      "name": "Status changed to \"Today\"",
       "type": "n8n-nodes-base.filter",
       "typeVersion": 1,
       "position": [
@@ -112,19 +116,15 @@
     },
     {
       "parameters": {
-        "operation": "update",
-        "id": "={{ $json.id }}",
-        "updateFields": {
-          "dueDate": "=",
-          "dueDateTime": true
-        }
+        "operation": "get",
+        "id": "={{ $json.task_id }}"
       },
-      "id": "6cc7705d-d94b-44c6-be05-212038c99834",
-      "name": "ClickUp1",
+      "id": "698567c6-a441-4ef7-8d40-1061abfca4a1",
+      "name": "Get task details",
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        1180,
+        960,
         640
       ],
       "credentials": {
@@ -136,7 +136,7 @@
     }
   ],
   "pinData": {
-    "ClickUp Trigger": [
+    "\"Active\" Task status changes": [
       {
         "json": {
           "event": "taskStatusUpdated",
@@ -210,6 +210,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-04-23T13:30:10.000Z",
-  "versionId": "035208a5-e5a9-4382-b51e-e824c49eefeb"
+  "updatedAt": "2023-04-23T14:11:03.000Z",
+  "versionId": "3c5ccefd-2a67-4d8f-9d5d-b4e4b6ff7e7a"
 }
