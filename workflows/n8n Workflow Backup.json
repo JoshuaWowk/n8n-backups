@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "n8n": {
       "main": [
@@ -308,7 +308,7 @@
       "typeVersion": 1,
       "credentials": {
         "githubApi": {
-          "id": "11",
+          "id": "4",
           "name": "GitHub"
         }
       }
@@ -332,7 +332,7 @@
       "typeVersion": 1,
       "credentials": {
         "githubApi": {
-          "id": "11",
+          "id": "4",
           "name": "GitHub"
         }
       }
@@ -490,10 +490,13 @@
     }
   ],
   "pinData": {},
-  "settings": {},
+  "settings": {
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2023-04-23T13:46:00.000Z",
-  "versionId": "6615f2ed-bd67-480f-83db-377fd1410530"
+  "triggerCount": 1,
+  "updatedAt": "2023-04-23T14:06:58.000Z",
+  "versionId": "3fcb8ed6-b811-4134-ab51-a7d26941de7a"
 }
