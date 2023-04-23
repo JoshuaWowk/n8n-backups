@@ -1,0 +1,215 @@
+{
+  "active": false,
+  "connections": {
+    "ClickUp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp": {
+      "main": [
+        [
+          {
+            "node": "ClickUp1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-23T12:44:34.243Z",
+  "id": "1",
+  "name": "Status ➟ \"Today\"; Due Today @ 4:30 PM",
+  "nodes": [
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskStatusUpdated"
+        ],
+        "filters": {
+          "listId": "164286867"
+        }
+      },
+      "id": "3aa535de-55db-4886-a30a-0263d7860ac4",
+      "name": "ClickUp Trigger",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        520,
+        640
+      ],
+      "webhookId": "2e014644-1c0e-4aba-987c-8b5abc35d423",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.task_id }}"
+      },
+      "id": "698567c6-a441-4ef7-8d40-1061abfca4a1",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        960,
+        640
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.history_items[0].after.status }}",
+              "value2": "=today"
+            },
+            {
+              "value1": "={{ $json.history_items[0].before.status }}",
+              "operation": "notEqual",
+              "value2": "=today"
+            }
+          ]
+        }
+      },
+      "id": "6ac9113a-3388-4b54-b439-9b8ce03b2791",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        740,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.id }}",
+        "updateFields": {
+          "dueDate": "=",
+          "dueDateTime": true
+        }
+      },
+      "id": "6cc7705d-d94b-44c6-be05-212038c99834",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        640
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "ClickUp Trigger": [
+      {
+        "json": {
+          "event": "taskStatusUpdated",
+          "history_items": [
+            {
+              "id": "3463804842794396427",
+              "type": 1,
+              "date": "1682254996856",
+              "field": "status",
+              "parent_id": "164286867",
+              "data": {
+                "status_type": "custom"
+              },
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_M3D.jpg"
+              },
+              "before": {
+                "status": "this week",
+                "color": "#7C4DFF",
+                "orderindex": 1,
+                "type": "unstarted"
+              },
+              "after": {
+                "status": "today",
+                "color": "#2a6bfb",
+                "orderindex": 2,
+                "type": "custom"
+              }
+            }
+          ],
+          "task_id": "860q9hcny",
+          "webhook_id": "602135ca-185e-4982-ab58-380758c364a7"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "602135ca-185e-4982-ab58-380758c364a7",
+      "secret": "QVMQNF88EYSZA1OX1YLNL5GZHSNBQLFH7LVCUPC9HQDMT6JI6FSF3LF2GTCB6P2L"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-04-23T13:06:55.331Z",
+      "updatedAt": "2023-04-23T13:06:55.331Z",
+      "id": "2",
+      "name": "Dev/Test"
+    },
+    {
+      "createdAt": "2023-04-23T13:07:18.739Z",
+      "updatedAt": "2023-04-23T13:07:18.739Z",
+      "id": "3",
+      "name": "Make.com Replacement"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-23T13:30:10.000Z",
+  "versionId": "035208a5-e5a9-4382-b51e-e824c49eefeb"
+}
