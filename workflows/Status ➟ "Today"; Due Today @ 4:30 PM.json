@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "ClickUp1",
+            "node": "Set due datetime > Today @ 4:30PM",
             "type": "main",
             "index": 0
           }
@@ -39,30 +39,6 @@
   "id": "1",
   "name": "Status ➟ \"Today\"; Due Today @ 4:30 PM",
   "nodes": [
-    {
-      "parameters": {
-        "operation": "update",
-        "id": "={{ $json.id }}",
-        "updateFields": {
-          "dueDate": "=",
-          "dueDateTime": true
-        }
-      },
-      "id": "6cc7705d-d94b-44c6-be05-212038c99834",
-      "name": "ClickUp1",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        1180,
-        640
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
     {
       "parameters": {
         "team": "14335650",
@@ -125,6 +101,30 @@
       "typeVersion": 1,
       "position": [
         960,
+        640
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.id }}",
+        "updateFields": {
+          "dueDate": "={{ $today.set({ hour: 16, minute: 30 }).toMillis() }}",
+          "dueDateTime": true
+        }
+      },
+      "id": "6cc7705d-d94b-44c6-be05-212038c99834",
+      "name": "Set due datetime > Today @ 4:30PM",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1180,
         640
       ],
       "credentials": {
@@ -210,6 +210,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-04-23T14:11:03.000Z",
-  "versionId": "3c5ccefd-2a67-4d8f-9d5d-b4e4b6ff7e7a"
+  "updatedAt": "2023-04-24T00:32:01.000Z",
+  "versionId": "08310448-84a3-404c-abc6-b8a6fced6d78"
 }
