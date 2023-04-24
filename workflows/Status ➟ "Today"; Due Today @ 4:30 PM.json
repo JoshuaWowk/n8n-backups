@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "\"Active\" Task status changes": {
       "main": [
@@ -187,6 +187,10 @@
     "node:ClickUp Trigger": {
       "webhookId": "602135ca-185e-4982-ab58-380758c364a7",
       "secret": "QVMQNF88EYSZA1OX1YLNL5GZHSNBQLFH7LVCUPC9HQDMT6JI6FSF3LF2GTCB6P2L"
+    },
+    "node:\"Active\" Task status changes": {
+      "webhookId": "a3d8e3f6-c631-41d3-a335-f266afb34129",
+      "secret": "5IH9NVIEQ9LOUJV5PY6P28OEEXB3J226DP1J7Y4AATY548RWX8TR9RHJ93PKXQBZ"
     }
   },
   "tags": [
@@ -209,7 +213,7 @@
       "name": "Make.com Replacement"
     }
   ],
-  "triggerCount": 0,
-  "updatedAt": "2023-04-24T00:32:01.000Z",
-  "versionId": "08310448-84a3-404c-abc6-b8a6fced6d78"
+  "triggerCount": 1,
+  "updatedAt": "2023-04-24T12:36:17.000Z",
+  "versionId": "e106ad8d-db5a-4719-8a83-a5a1cd49e347"
 }
