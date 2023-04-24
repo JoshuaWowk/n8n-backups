@@ -1,0 +1,219 @@
+{
+  "active": false,
+  "connections": {
+    "\"Active\" Task status changes": {
+      "main": [
+        [
+          {
+            "node": "Status changed to \"Today\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status changed to \"Today\"": {
+      "main": [
+        [
+          {
+            "node": "Get task details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get task details": {
+      "main": [
+        [
+          {
+            "node": "Set due datetime > Today @ 4:30PM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-24T12:38:49.044Z",
+  "id": "3",
+  "name": "M-F 12:01 AM \"Today\" status > Due Today @ 4:30 PM copy",
+  "nodes": [
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskStatusUpdated"
+        ],
+        "filters": {
+          "listId": "164286867"
+        }
+      },
+      "id": "9d660219-4a9b-447f-8a04-dc7334a4683e",
+      "name": "\"Active\" Task status changes",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        520,
+        640
+      ],
+      "webhookId": "d8a72a95-79b6-48fa-9bd6-78c049a37f1c",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.history_items[0].after.status }}",
+              "value2": "=today"
+            },
+            {
+              "value1": "={{ $json.history_items[0].before.status }}",
+              "operation": "notEqual",
+              "value2": "=today"
+            }
+          ]
+        }
+      },
+      "id": "e4929b46-e918-4598-95ff-e68d204373ce",
+      "name": "Status changed to \"Today\"",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        740,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.task_id }}"
+      },
+      "id": "937b0d33-5ac2-4866-abf0-edb1be7c49e1",
+      "name": "Get task details",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        960,
+        640
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.id }}",
+        "updateFields": {
+          "dueDate": "={{ $today.set({ hour: 16, minute: 30 }).toMillis() }}",
+          "dueDateTime": true
+        }
+      },
+      "id": "e14f031e-ee10-413b-a722-a7893d760c80",
+      "name": "Set due datetime > Today @ 4:30PM",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        640
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "\"Active\" Task status changes": [
+      {
+        "json": {
+          "event": "taskStatusUpdated",
+          "history_items": [
+            {
+              "id": "3463804842794396427",
+              "type": 1,
+              "date": "1682254996856",
+              "field": "status",
+              "parent_id": "164286867",
+              "data": {
+                "status_type": "custom"
+              },
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_M3D.jpg"
+              },
+              "before": {
+                "status": "this week",
+                "color": "#7C4DFF",
+                "orderindex": 1,
+                "type": "unstarted"
+              },
+              "after": {
+                "status": "today",
+                "color": "#2a6bfb",
+                "orderindex": 2,
+                "type": "custom"
+              }
+            }
+          ],
+          "task_id": "860q9hcny",
+          "webhook_id": "602135ca-185e-4982-ab58-380758c364a7"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "602135ca-185e-4982-ab58-380758c364a7",
+      "secret": "QVMQNF88EYSZA1OX1YLNL5GZHSNBQLFH7LVCUPC9HQDMT6JI6FSF3LF2GTCB6P2L"
+    },
+    "node:\"Active\" Task status changes": {
+      "webhookId": "a3d8e3f6-c631-41d3-a335-f266afb34129",
+      "secret": "5IH9NVIEQ9LOUJV5PY6P28OEEXB3J226DP1J7Y4AATY548RWX8TR9RHJ93PKXQBZ"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-04-23T13:06:55.331Z",
+      "updatedAt": "2023-04-23T13:06:55.331Z",
+      "id": "2",
+      "name": "Dev/Test"
+    },
+    {
+      "createdAt": "2023-04-23T13:07:18.739Z",
+      "updatedAt": "2023-04-23T13:07:18.739Z",
+      "id": "3",
+      "name": "Make.com Replacement"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-04-24T12:38:49.044Z",
+  "versionId": "34a7e279-cd78-418c-9b9d-dd9539a098ef"
+}
