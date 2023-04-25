@@ -1,0 +1,205 @@
+{
+  "active": true,
+  "connections": {
+    "ClickUp Trigger": {
+      "main": [
+        [
+          {
+            "node": "ClickUp1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp": {
+      "main": [
+        []
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-25T04:33:36.082Z",
+  "id": "4",
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskStatusUpdated"
+        ],
+        "filters": {}
+      },
+      "id": "9d05abdd-a900-4c40-9623-090274972c1c",
+      "name": "ClickUp Trigger",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        560
+      ],
+      "webhookId": "37bd3ea9-c2cd-4af5-810d-845a95274902",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.clickup.com/api/v2/task/{{ $node[\"ClickUp Trigger\"].json.task_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "custom_task_ids",
+              "value": "true"
+            },
+            {
+              "name": "team_id",
+              "value": "123"
+            },
+            {
+              "name": "include_subtasks",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "0487b498-8224-4bf5-af58-344b4b7c551b",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1360,
+        560
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json[\"body.subtasks[0].id\"] }}",
+        "updateFields": {
+          "status": "={{ $node.ClickUp1.json.status.status }}"
+        }
+      },
+      "id": "2c75f7eb-84a7-4a28-a719-d50589401f95",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        560
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body.subtasks",
+        "include": "selectedOtherFields",
+        "fieldsToInclude": {
+          "fields": [
+            {
+              "fieldName": "body.subtasks[0].id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b66aa54d-1100-4de7-9495-5e5fad17181c",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.task_id }}"
+      },
+      "id": "2d59927f-878e-4d98-b6bb-d8b748c0e3f7",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        560
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "5ba6a7f3-e68e-4109-a3f4-6a9da0e1caad",
+      "secret": "E6QA0B5GWCPEL8EOY3OUU88F5QDCXE4PAEZR1FHPLT3E86TWPSPUPNCSHF6EQFUG"
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-04-25T06:04:22.000Z",
+  "versionId": "1de9e90a-4fae-49e6-a925-6fdd78eb9a0f"
+}
