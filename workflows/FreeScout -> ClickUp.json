@@ -1,0 +1,163 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2023-04-27T02:34:03.687Z",
+  "id": "5",
+  "name": "FreeScout -> ClickUp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "029c7406-e8f8-46fa-91ab-a5d7d5adf3af",
+        "options": {}
+      },
+      "id": "d325b81c-a080-44dc-b7d6-049d421519de",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        640
+      ],
+      "webhookId": "029c7406-e8f8-46fa-91ab-a5d7d5adf3af"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.hpne.it",
+            "x-real-ip": "34.232.89.226",
+            "x-forwarded-for": "34.232.89.226",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "1924",
+            "user-agent": "GuzzleHttp/6.3.3 curl/8.0.1 PHP/8.2.5",
+            "content-type": "application/json",
+            "x-freescout-event": "convo.assigned",
+            "x-freescout-signature": "3KkGUHhLBjCFxDlFCCje/XaK2Ls="
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": 155,
+            "number": 155,
+            "threadsCount": 1,
+            "type": "email",
+            "folderId": 3,
+            "status": "active",
+            "state": "published",
+            "subject": "Test 9001",
+            "preview": "Over 9000!",
+            "mailboxId": 1,
+            "assignee": {
+              "id": 1,
+              "type": "user",
+              "firstName": "Josh",
+              "lastName": "Wowk",
+              "photoUrl": "https://freescout.hpne.it/storage/users/d97a51c129f2a1a3f145706bb37bd9e2.jpg",
+              "email": "joshua.wowk@hp-ne.com"
+            },
+            "createdBy": {
+              "id": 1,
+              "type": "user",
+              "firstName": "Josh",
+              "lastName": "Wowk",
+              "photoUrl": "https://freescout.hpne.it/storage/users/d97a51c129f2a1a3f145706bb37bd9e2.jpg",
+              "email": "joshua.wowk@hp-ne.com"
+            },
+            "createdAt": "2023-04-27T02:37:50Z",
+            "updatedAt": "2023-04-27T02:38:15Z",
+            "closedBy": null,
+            "closedByUser": null,
+            "closedAt": null,
+            "userUpdatedAt": "2023-04-27T02:38:15Z",
+            "customerWaitingSince": {
+              "time": "2023-04-27T02:38:15Z",
+              "friendly": "Just now",
+              "latestReplyFrom": "user"
+            },
+            "source": {
+              "type": "web",
+              "via": "user"
+            },
+            "cc": [
+              "joshua.wowk@hp-ne.com"
+            ],
+            "bcc": [],
+            "customer": {
+              "id": 60,
+              "type": "customer",
+              "firstName": null,
+              "lastName": null,
+              "photoUrl": "",
+              "email": "joshua.wowk@hp-ne.com"
+            },
+            "_embedded": {
+              "threads": [
+                {
+                  "id": 155,
+                  "type": "message",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "",
+                    "text": "Josh Wowk started a new conversation #155",
+                    "associatedEntities": []
+                  },
+                  "body": "<div>Over 9000!</div>",
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": {
+                    "id": 60,
+                    "type": "customer",
+                    "firstName": null,
+                    "lastName": null,
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "createdBy": {
+                    "id": 1,
+                    "type": "user",
+                    "firstName": "Josh",
+                    "lastName": "Wowk",
+                    "photoUrl": "https://freescout.hpne.it/storage/users/d97a51c129f2a1a3f145706bb37bd9e2.jpg",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "assignedTo": {
+                    "id": 1,
+                    "type": "user",
+                    "firstName": "Josh",
+                    "lastName": "Wowk",
+                    "photoUrl": "https://freescout.hpne.it/storage/users/d97a51c129f2a1a3f145706bb37bd9e2.jpg",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [
+                    "joshua.wowk@hp-ne.com"
+                  ],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-04-27T02:38:15Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-04-27T02:41:21.000Z",
+  "versionId": "9ae6ec37-1178-41b5-b04d-ef79544948da"
+}
