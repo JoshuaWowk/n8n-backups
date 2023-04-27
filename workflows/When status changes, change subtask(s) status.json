@@ -189,12 +189,12 @@
   "settings": {},
   "staticData": {
     "node:ClickUp Trigger": {
-      "webhookId": "e5e14a15-2b8f-4188-8c13-ac08f5bc9baf",
-      "secret": "V7YUNIN3TWZ9IQSK7M19SBJRVPN8KTKZ1FYL4ENIKXXK0U3OZHE3520K924CKNEG"
+      "webhookId": "32c69482-5408-4a05-8efd-1dabda244765",
+      "secret": "81PC7GSPXCQFESNR882I1W57WPUCKXJI2CPT284UTX0VT9T0CGHYLIGSC4UL47JE"
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-04-25T18:32:04.000Z",
+  "updatedAt": "2023-04-27T03:09:33.000Z",
   "versionId": "4fb8e6c3-d36a-4414-b27d-cb4cfee13c65"
 }
