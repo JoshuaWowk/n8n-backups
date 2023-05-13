@@ -1,0 +1,930 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Zammad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zammad": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-05-12T23:35:50.087Z",
+  "id": "6",
+  "name": "Zammad > ClickUp | New Ticket",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d450a71e-e9b4-4f0f-a58d-20c158d95a2b",
+        "options": {}
+      },
+      "id": "ed43a774-4b59-4d5c-802b-a30b0d3f4c29",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        920,
+        560
+      ],
+      "webhookId": "d450a71e-e9b4-4f0f-a58d-20c158d95a2b"
+    },
+    {
+      "parameters": {
+        "resource": "ticket",
+        "operation": "get",
+        "id": "={{ $json.body.ticket.id }}"
+      },
+      "id": "c275f8f2-d450-4ed3-951d-3f60a6ec468d",
+      "name": "Zammad",
+      "type": "n8n-nodes-base.zammad",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        560
+      ],
+      "credentials": {
+        "zammadTokenAuthApi": {
+          "id": "6",
+          "name": "Zammad Basic Auth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Note\n> Need to clean up the **[Body]** markdown from Zammad, namely removing **[\\n]** line delimiters.\n\n## Code\n ***{{ $node[\"Zammad\"].json[\"articles\"][0][\"body\"].replace(/\\r?\\n|\\r/g, \" \") }}***",
+        "height": 224,
+        "width": 667
+      },
+      "id": "d56e9706-49db-4464-b2a6-eaf0b4edce8a",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        980,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folderless": true,
+        "list": "164286867",
+        "name": "={{ $json.articles[0].subject }}",
+        "additionalFields": {
+          "content": "={{ $json.data }}",
+          "markdownContent": true
+        }
+      },
+      "id": "1a8f350e-3ca3-46f1-ba2c-d9b4598865c9",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        560
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "html": "={{ $node[\"Zammad\"].json[\"articles\"][0][\"body\"].replace(/\\r?\\n|\\r/g, \" \") }}\n",
+        "options": {}
+      },
+      "id": "ff19a01b-18f6-4667-853c-063f5789f490",
+      "name": "Markdown",
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        560
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.hpne.it",
+            "x-real-ip": "5.161.196.179",
+            "x-forwarded-for": "5.161.196.179",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "25291",
+            "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "accept": "*/*",
+            "user-agent": "Zammad User Agent",
+            "x-zammad-trigger": "New Ticket Webhook",
+            "x-zammad-delivery": "f5755a02-4c71-4af6-8dda-9728e0703515",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "ticket": {
+              "article_count": 1,
+              "article_ids": [
+                120
+              ],
+              "category": "",
+              "close_at": null,
+              "close_diff_in_min": null,
+              "close_escalation_at": null,
+              "close_in_min": null,
+              "create_article_sender": "Agent",
+              "create_article_sender_id": 1,
+              "create_article_type": "email",
+              "create_article_type_id": 1,
+              "created_at": "2023-05-12T23:41:54.162Z",
+              "created_by": {
+                "active": true,
+                "address": "2 Thurber Blvd.",
+                "city": "",
+                "country": "",
+                "created_at": "2023-04-30T04:42:40.407Z",
+                "created_by": "-",
+                "created_by_id": 1,
+                "department": "IT",
+                "department_new": "IT",
+                "email": "joshua.wowk@hp-ne.com",
+                "fax": "",
+                "firstname": "Joshua",
+                "id": 3,
+                "image": "8488ffba690938d441771f4dbea0940b",
+                "image_source": null,
+                "lastname": "Wowk",
+                "location": "",
+                "login": "joshua.wowk@hp-ne.com",
+                "mobile": "4018714110",
+                "note": "",
+                "organization": "High Purity New England",
+                "organization_id": 2,
+                "organization_ids": [],
+                "organizations": [],
+                "out_of_office": false,
+                "out_of_office_end_at": null,
+                "out_of_office_replacement_id": null,
+                "out_of_office_start_at": null,
+                "overview_sorting_ids": [],
+                "overview_sortings": [],
+                "phone": "4013495153",
+                "role_ids": [
+                  1,
+                  2
+                ],
+                "roles": [
+                  "Admin",
+                  "Agent | IT"
+                ],
+                "source": null,
+                "street": "",
+                "updated_at": "2023-05-12T23:41:54.179Z",
+                "updated_by": "joshua.wowk@hp-ne.com",
+                "updated_by_id": 3,
+                "verified": false,
+                "vip": false,
+                "web": "",
+                "zip": ""
+              },
+              "created_by_id": 3,
+              "customer": {
+                "active": true,
+                "address": "2 Thurber Blvd.",
+                "city": "",
+                "country": "",
+                "created_at": "2023-04-30T04:42:40.407Z",
+                "created_by": "-",
+                "created_by_id": 1,
+                "department": "IT",
+                "department_new": "IT",
+                "email": "joshua.wowk@hp-ne.com",
+                "fax": "",
+                "firstname": "Joshua",
+                "id": 3,
+                "image": "8488ffba690938d441771f4dbea0940b",
+                "image_source": null,
+                "lastname": "Wowk",
+                "location": "",
+                "login": "joshua.wowk@hp-ne.com",
+                "mobile": "4018714110",
+                "note": "",
+                "organization": "High Purity New England",
+                "organization_id": 2,
+                "organization_ids": [],
+                "organizations": [],
+                "out_of_office": false,
+                "out_of_office_end_at": null,
+                "out_of_office_replacement_id": null,
+                "out_of_office_start_at": null,
+                "overview_sorting_ids": [],
+                "overview_sortings": [],
+                "phone": "4013495153",
+                "role_ids": [
+                  1,
+                  2
+                ],
+                "roles": [
+                  "Admin",
+                  "Agent | IT"
+                ],
+                "source": null,
+                "street": "",
+                "updated_at": "2023-05-12T23:41:54.179Z",
+                "updated_by": "joshua.wowk@hp-ne.com",
+                "updated_by_id": 3,
+                "verified": false,
+                "vip": false,
+                "web": "",
+                "zip": ""
+              },
+              "customer_id": 3,
+              "escalation_at": null,
+              "first_response_at": "2023-05-12T23:41:54.188Z",
+              "first_response_diff_in_min": null,
+              "first_response_escalation_at": null,
+              "first_response_in_min": null,
+              "group": {
+                "active": true,
+                "assignment_timeout": null,
+                "created_at": "2023-05-10T19:06:57.366Z",
+                "created_by": "joshua.wowk@hp-ne.com",
+                "created_by_id": 3,
+                "email_address_id": 5,
+                "follow_up_assignment": true,
+                "follow_up_possible": "yes",
+                "id": 26,
+                "name": "Service Desk",
+                "note": "",
+                "reopen_time_in_days": null,
+                "shared_drafts": true,
+                "signature": "jwowk_short_signature",
+                "signature_id": 1,
+                "updated_at": "2023-05-10T21:21:49.139Z",
+                "updated_by": "joshua.wowk@hp-ne.com",
+                "updated_by_id": 3,
+                "user_ids": [
+                  3
+                ],
+                "users": [
+                  "joshua.wowk@hp-ne.com"
+                ]
+              },
+              "group_id": 26,
+              "id": 106,
+              "last_close_at": null,
+              "last_contact_agent_at": "2023-05-12T23:41:54.188Z",
+              "last_contact_at": "2023-05-12T23:41:54.188Z",
+              "last_contact_customer_at": null,
+              "last_owner_update_at": "2023-05-12T23:41:54.262Z",
+              "note": null,
+              "number": "91106",
+              "organization": {
+                "active": true,
+                "created_at": "2023-04-30T05:06:42.324Z",
+                "created_by": "joshua.wowk@hp-ne.com",
+                "created_by_id": 3,
+                "domain": "hp-ne.com",
+                "domain_assignment": false,
+                "id": 2,
+                "member_ids": [
+                  4,
+                  3
+                ],
+                "members": [
+                  "jwowk.admin@hp-ne.com",
+                  "joshua.wowk@hp-ne.com"
+                ],
+                "name": "High Purity New England",
+                "note": "",
+                "secondary_member_ids": [],
+                "shared": true,
+                "updated_at": "2023-05-12T23:41:54.183Z",
+                "updated_by": "joshua.wowk@hp-ne.com",
+                "updated_by_id": 3
+              },
+              "organization_id": 2,
+              "owner": {
+                "active": false,
+                "address": "",
+                "city": "",
+                "country": "",
+                "created_at": "2023-04-30T04:30:49.996Z",
+                "created_by": "-",
+                "created_by_id": 1,
+                "department": "",
+                "department_new": null,
+                "email": "",
+                "fax": "",
+                "firstname": "-",
+                "id": 1,
+                "image": null,
+                "image_source": null,
+                "lastname": "",
+                "location": null,
+                "login": "-",
+                "mobile": "",
+                "note": "",
+                "organization_id": null,
+                "organization_ids": [],
+                "organizations": [],
+                "out_of_office": false,
+                "out_of_office_end_at": null,
+                "out_of_office_replacement_id": null,
+                "out_of_office_start_at": null,
+                "overview_sorting_ids": [],
+                "overview_sortings": [],
+                "phone": "",
+                "role_ids": [],
+                "roles": [],
+                "source": null,
+                "street": "",
+                "updated_at": "2023-04-30T04:30:49.996Z",
+                "updated_by": "-",
+                "updated_by_id": 1,
+                "verified": false,
+                "vip": false,
+                "web": "",
+                "zip": ""
+              },
+              "owner_id": 1,
+              "pending_time": null,
+              "preferences": {
+                "channel_id": 6
+              },
+              "priority": {
+                "active": true,
+                "created_at": "2023-04-30T04:30:50.656Z",
+                "created_by": "-",
+                "created_by_id": 1,
+                "default_create": true,
+                "id": 2,
+                "name": "2 normal",
+                "note": null,
+                "ui_color": null,
+                "ui_icon": null,
+                "updated_at": "2023-04-30T04:30:50.656Z",
+                "updated_by": "-",
+                "updated_by_id": 1
+              },
+              "priority_id": 2,
+              "state": "new",
+              "state_id": 1,
+              "submissiontype": "Incident",
+              "ticket_time_accounting": [],
+              "ticket_time_accounting_ids": [],
+              "time_unit": null,
+              "title": "Fw: Computer Issues",
+              "update_diff_in_min": null,
+              "update_escalation_at": null,
+              "update_in_min": null,
+              "updated_at": "2023-05-12T23:41:54.436Z",
+              "updated_by": {
+                "active": true,
+                "address": "2 Thurber Blvd.",
+                "city": "",
+                "country": "",
+                "created_at": "2023-04-30T04:42:40.407Z",
+                "created_by": "-",
+                "created_by_id": 1,
+                "department": "IT",
+                "department_new": "IT",
+                "email": "joshua.wowk@hp-ne.com",
+                "fax": "",
+                "firstname": "Joshua",
+                "id": 3,
+                "image": "8488ffba690938d441771f4dbea0940b",
+                "image_source": null,
+                "lastname": "Wowk",
+                "location": "",
+                "login": "joshua.wowk@hp-ne.com",
+                "mobile": "4018714110",
+                "note": "",
+                "organization": "High Purity New England",
+                "organization_id": 2,
+                "organization_ids": [],
+                "organizations": [],
+                "out_of_office": false,
+                "out_of_office_end_at": null,
+                "out_of_office_replacement_id": null,
+                "out_of_office_start_at": null,
+                "overview_sorting_ids": [],
+                "overview_sortings": [],
+                "phone": "4013495153",
+                "role_ids": [
+                  1,
+                  2
+                ],
+                "roles": [
+                  "Admin",
+                  "Agent | IT"
+                ],
+                "source": null,
+                "street": "",
+                "updated_at": "2023-05-12T23:41:54.179Z",
+                "updated_by": "joshua.wowk@hp-ne.com",
+                "updated_by_id": 3,
+                "verified": false,
+                "vip": false,
+                "web": "",
+                "zip": ""
+              },
+              "updated_by_id": 3
+            },
+            "article": {
+              "attachments": [
+                {
+                  "id": 257,
+                  "store_file_id": 240,
+                  "filename": "message.html",
+                  "size": "14718",
+                  "preferences": {
+                    "content-alternative": true,
+                    "original-format": true,
+                    "Mime-Type": "text/html",
+                    "Charset": "us-ascii"
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/257"
+                },
+                {
+                  "id": 258,
+                  "store_file_id": 241,
+                  "filename": "image004.png",
+                  "size": "49796",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image004.png",
+                    "Content-Description": "image004.png",
+                    "Content-ID": "image004.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/258"
+                },
+                {
+                  "id": 259,
+                  "store_file_id": 242,
+                  "filename": "image005.png",
+                  "size": "2476",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image005.png",
+                    "Content-Description": "image005.png",
+                    "Content-ID": "image005.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/259"
+                },
+                {
+                  "id": 260,
+                  "store_file_id": 243,
+                  "filename": "image006.png",
+                  "size": "1307",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image006.png",
+                    "Content-Description": "image006.png",
+                    "Content-ID": "image006.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/260"
+                },
+                {
+                  "id": 261,
+                  "store_file_id": 18,
+                  "filename": "image007.png",
+                  "size": "49790",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image007.png",
+                    "Content-Description": "image007.png",
+                    "Content-ID": "image007.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/261"
+                },
+                {
+                  "id": 262,
+                  "store_file_id": 19,
+                  "filename": "image008.png",
+                  "size": "2470",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image008.png",
+                    "Content-Description": "image008.png",
+                    "Content-ID": "image008.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/262"
+                },
+                {
+                  "id": 263,
+                  "store_file_id": 20,
+                  "filename": "image009.png",
+                  "size": "1301",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image009.png",
+                    "Content-Description": "image009.png",
+                    "Content-ID": "image009.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/263"
+                },
+                {
+                  "id": 264,
+                  "store_file_id": 8,
+                  "filename": "Outlook-zopxe3gr.png",
+                  "size": "361",
+                  "preferences": {
+                    "Content-Type": "image/png; name=Outlook-zopxe3gr.png",
+                    "Content-Description": "Outlook-zopxe3gr.png",
+                    "Content-ID": "d6f58935-1cc6-4a5d-9ac6-8b64954fdcbc",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8"
+                  },
+                  "url": "https://help.hp-ne.us/api/v1/ticket_attachment/106/120/264"
+                }
+              ],
+              "body": "<div> </div><div>\n<div> </div>\n<div>\n<div>\n<p>\n<span style=\" color: rgb(222, 106, 25);\">Joshua Wowk</span><span style=\" color: rgb(222, 106, 25);\"> </span><span style=\" color: rgb(222, 106, 25);\">| </span><span style=\" color: rgb(222, 106, 25);\">Sys Admin</span><span style=\" color: rgb(237, 125, 49);\"><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\" color: rgb(222, 106, 25);\">| </span></span><span style=\" color: rgb(222, 106, 25);\">HPNE</span><span style=\" color: rgb(237, 125, 49);\"><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\" color: rgb(222, 106, 25);\">| </span></span><span style=\" color: rgb(222, 106, 25);\">401-349-5153</span></p>\n<span style=\" color: rgb(222, 106, 25);\"> </span><a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" rel=\"nofollow noreferrer noopener\" target=\"_blank\"><img style=\"max-width:100%;width: 16px;max-height: 16px;max-width: initial;width:16px;max-height:16px;\" src=\"/api/v1/ticket_attachment/106/120/264?view=inline\"><span style=\" color: rgb(222, 106, 25);\"><sup>Click here to book time with me</sup></span></a>\n</div>\n</div>\n</div><hr>\n<div dir=\"ltr\">\n<b>From:</b> Raud Jean-Louis &lt;raud.jeanlouis@hp-ne.com&gt;<br>\n<b>Sent:</b> Friday, May 12, 2023 2:38 PM<br>\n<b>To:</b> Maisam Dadgar &lt;Maisam.Dadgar@hp-ne.com&gt;; Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;; Lynford Harris &lt;Lynford.Harris@hp-ne.com&gt;<br>\n<b>Subject:</b> RE: Computer Issues <div> </div>\n</div><div lang=\"EN-US\">\n<div>\n<p>Hi all,</p>\n<p> </p>\n<p>I agree. It makes perfect sense to wait until after the upgrade on Monday.</p>\n<p> </p>\n<div>\n<p><b>Raud Jean-Louis</b></p>\n<p><i><span style=\"color:#ed7d31;\">IT Manager</span></i><span style=\"color:#ed7d31;\"></span></p>\n<p><b><span style=\"color:#ed7d31;\">High Purity New England</span></b><span style=\"color:#ed7d31;\">\n<b>| HP-NE.com</b></span></p>\n<p><i>2 Thurber Blvd, Smithfield, RI 02917</i></p>\n<p><span>E: <a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a> | </span>O: 401.349.5248 </p>\n<p><b><u><span lang=\"ES\" style=\"color:#ed7d31;\">ISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB</span></u></b></p>\n<p><b><span lang=\"ES\" style=\" color:#ed7d31;\"> </span></b></p>\n<p><a href=\"https://www.linkedin.com/company/high-purity-new-england\" rel=\"nofollow noreferrer noopener\" title=\"https://www.linkedin.com/company/high-purity-new-england\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" style=\"max-width:100%;width:.2812in;max-height:.2812in;width:27px;max-height:27px;\" src=\"/api/v1/ticket_attachment/106/120/258?view=inline\"></span></a><span lang=\"ES\"> </span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" rel=\"nofollow noreferrer noopener\" target=\"_blank\"><b><span lang=\"ES\"><img border=\"0\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/259?view=inline\"></span></b></a><span lang=\"ES\"> </span><a href=\"https://www.facebook.com/HighPurityNE/\" rel=\"nofollow noreferrer noopener\" title=\"https://www.facebook.com/HighPurityNE/\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/260?view=inline\"></span></a></p>\n</div>\n<p> </p>\n<div>\n<div>\n<span class=\"js-signatureMarker\"></span><p><b>From:</b> Maisam Dadgar &lt;Maisam.Dadgar@hp-ne.com&gt; <br>\n<b>Sent:</b> Friday, May 12, 2023 2:19 PM<br>\n<b>To:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;; Lynford Harris &lt;Lynford.Harris@hp-ne.com&gt;; Raud Jean-Louis &lt;raud.jeanlouis@hp-ne.com&gt;<br>\n<b>Subject:</b> RE: Computer Issues</p>\n</div>\n</div>\n<p> </p>\n<p>Hi Josh,</p>\n<p> </p>\n<p>It makes sense to look at it after the 2021 upgrade.</p>\n<p> </p>\n<p>Maisam</p>\n<p> </p>\n<div>\n<div>\n<p><b>From:</b> Joshua Wowk &lt;<a href=\"mailto:Joshua.Wowk@hp-ne.com\">Joshua.Wowk@hp-ne.com</a>&gt; <br>\n<b>Sent:</b> Friday, May 12, 2023 2:08 PM<br>\n<b>To:</b> Maisam Dadgar &lt;<a href=\"mailto:Maisam.Dadgar@hp-ne.com\">Maisam.Dadgar@hp-ne.com</a>&gt;; Lynford Harris &lt;<a href=\"mailto:Lynford.Harris@hp-ne.com\">Lynford.Harris@hp-ne.com</a>&gt;; Raud Jean-Louis &lt;<a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a>&gt;<br>\n<b>Subject:</b> Re: Computer Issues</p>\n</div>\n</div>\n<p> </p>\n<div>\n<p>Hey Maisam, been working with Lynford the past hour to pin down what's going on. I need to spend additional time to research the issue and determine the cause here. That said, there's a number of things that could be resolved, or at the very least changed, with Monday's SolidWorks 2021 upgrade so I'm weary of dedicating additional time today for this. Please share any thoughts on this you may have.</p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p>I have some additional information to share as well. I'll send all I have when I return from lunch, which I'm leaving for now.</p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p>Thanks.</p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p><b>Joshua Wowk</b> | Sys Admin | <b>HPNE</b> | 401-349-5153</p>\n</div>\n<div>\n<hr>\n</div>\n<div>\n<p><b>From:</b><span> Maisam Dadgar &lt;<a href=\"mailto:Maisam.Dadgar@hp-ne.com\">Maisam.Dadgar@hp-ne.com</a>&gt;<br>\n<b>Sent:</b> Friday, May 12, 2023 1:07:40 PM<br>\n<b>To:</b> Lynford Harris &lt;<a href=\"mailto:Lynford.Harris@hp-ne.com\">Lynford.Harris@hp-ne.com</a>&gt;; Raud Jean-Louis &lt;<a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a>&gt;; Joshua Wowk &lt;<a href=\"mailto:Joshua.Wowk@hp-ne.com\">Joshua.Wowk@hp-ne.com</a>&gt;<br>\n<b>Subject:</b> RE: Computer Issues</span> </p>\n<div>\n<p> </p>\n</div>\n</div>\n<div>\n<div>\n<p>Definitely an urgent request here</p>\n<p> </p>\n<div>\n<div>\n<p><b>From:</b> Lynford Harris &lt;<a href=\"mailto:Lynford.Harris@hp-ne.com\">Lynford.Harris@hp-ne.com</a>&gt; <br>\n<b>Sent:</b> Friday, May 12, 2023 10:30 AM<br>\n<b>To:</b> Raud Jean-Louis &lt;<a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a>&gt;; Joshua Wowk &lt;<a href=\"mailto:Joshua.Wowk@hp-ne.com\">Joshua.Wowk@hp-ne.com</a>&gt;<br>\n<b>Cc:</b> Maisam Dadgar &lt;<a href=\"mailto:Maisam.Dadgar@hp-ne.com\">Maisam.Dadgar@hp-ne.com</a>&gt;<br>\n<b>Subject:</b> Computer Issues</p>\n</div>\n</div>\n<p> </p>\n<p>Good Morning All,</p>\n<p> </p>\n<p>I just wanted to inform you that I have been having some major computer issues, for the last few weeks. I have talked to Josh about a few of them and seem isolated to my laptop. They are rather sporadic but do tend to interrupt workflow when they happen.</p>\n<p> </p>\n<p>Some of the issues are:</p>\n<ul type=\"disc\">\n<li>PDM not loading when computer is turned on in the morning for at least 45 mins (always loads in teams though for some strange reason).</li>\n<li>The computer crashing randomly if not turned off overnight.</li>\n<li>Solidworks unable to save.</li>\n<li>Unable to save documents as pdf.</li>\n</ul>\n<p> </p>\n<p>I have attached a few screenshots to depict these issues. Please let me know if there is any more clarification needed, and if there is anything that could be done as well.</p>\n<p> </p>\n<p>Kind Regards,</p>\n<p><b>Lynford Harris</b></p>\n<p><i><span style=\"color:#ed7d31;\">Mechanical Design Engineer</span></i></p>\n<p><b><span style=\"color:#ed7d31;\">High Purity New England | HP-NE.com</span></b></p>\n<p><i>2 Thurber Blvd, Smithfield, RI 02917</i></p>\n<p>E: <u><span style=\"color:#0563c1;\"><a href=\"mailto:lynford.harris@hp-ne.com\">lynford.harris@hp-ne.com</a></span></u>\n</p>\n<p><b><u><span lang=\"ES\" style=\"color:#ed7d31;\">ISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB</span></u></b></p>\n<p><span lang=\"ES\"> </span></p>\n<p><a href=\"https://www.linkedin.com/company/high-purity-new-england\" rel=\"nofollow noreferrer noopener\" title=\"https://www.linkedin.com/company/high-purity-new-england\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" alt=\"signature_70785060\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/261?view=inline\"></span></a><span lang=\"ES\"> </span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" rel=\"nofollow noreferrer noopener\" target=\"_blank\"><b><span lang=\"ES\"><img border=\"0\" alt=\"signature_1576473685\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/262?view=inline\"></span></b></a><span lang=\"ES\"> </span><a href=\"https://www.facebook.com/HighPurityNE/\" rel=\"nofollow noreferrer noopener\" title=\"https://www.facebook.com/HighPurityNE/\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" alt=\"signature_3251001740\" style=\"max-width:100%;width:.2604in;max-height:.2604in;width:25px;max-height:25px;\" src=\"/api/v1/ticket_attachment/106/120/263?view=inline\"></span></a></p>\n<p><span lang=\"ES\"> </span></p>\n</div>\n</div>\n</div>\n</div>",
+              "cc": null,
+              "content_type": "text/html",
+              "created_at": "2023-05-12T23:41:54.188Z",
+              "created_by": {
+                "active": true,
+                "address": "2 Thurber Blvd.",
+                "city": "",
+                "country": "",
+                "created_at": "2023-04-30T04:42:40.407Z",
+                "created_by": "-",
+                "created_by_id": 1,
+                "department": "IT",
+                "department_new": "IT",
+                "email": "joshua.wowk@hp-ne.com",
+                "fax": "",
+                "firstname": "Joshua",
+                "id": 3,
+                "image": "8488ffba690938d441771f4dbea0940b",
+                "image_source": null,
+                "lastname": "Wowk",
+                "location": "",
+                "login": "joshua.wowk@hp-ne.com",
+                "mobile": "4018714110",
+                "note": "",
+                "organization": "High Purity New England",
+                "organization_id": 2,
+                "organization_ids": [],
+                "organizations": [],
+                "out_of_office": false,
+                "out_of_office_end_at": null,
+                "out_of_office_replacement_id": null,
+                "out_of_office_start_at": null,
+                "overview_sorting_ids": [],
+                "overview_sortings": [],
+                "phone": "4013495153",
+                "role_ids": [
+                  1,
+                  2
+                ],
+                "roles": [
+                  "Admin",
+                  "Agent | IT"
+                ],
+                "source": null,
+                "street": "",
+                "updated_at": "2023-05-12T23:41:54.179Z",
+                "updated_by": "joshua.wowk@hp-ne.com",
+                "updated_by_id": 3,
+                "verified": false,
+                "vip": false,
+                "web": "",
+                "zip": ""
+              },
+              "created_by_id": 3,
+              "from": "Joshua Wowk <Joshua.Wowk@hp-ne.com>",
+              "id": 120,
+              "in_reply_to": null,
+              "internal": false,
+              "message_id": "<PH7PR22MB3890E36BED1DB93FABBBD432AB759@PH7PR22MB3890.namprd22.prod.outlook.com>",
+              "message_id_md5": "6e4b1a3e9d62a9309f766f72494d3924",
+              "origin_by_id": null,
+              "preferences": {
+                "send-auto-response": true,
+                "is-auto-response": false
+              },
+              "references": null,
+              "reply_to": null,
+              "sender": "Agent",
+              "sender_id": 1,
+              "subject": "Fw: Computer Issues",
+              "ticket_id": 106,
+              "to": "HPNE/IT Service Desk <servicedesk@hp-ne.com>",
+              "type": "email",
+              "type_id": 1,
+              "updated_at": "2023-05-12T23:41:54.188Z",
+              "updated_by": {
+                "active": true,
+                "address": "2 Thurber Blvd.",
+                "city": "",
+                "country": "",
+                "created_at": "2023-04-30T04:42:40.407Z",
+                "created_by": "-",
+                "created_by_id": 1,
+                "department": "IT",
+                "department_new": "IT",
+                "email": "joshua.wowk@hp-ne.com",
+                "fax": "",
+                "firstname": "Joshua",
+                "id": 3,
+                "image": "8488ffba690938d441771f4dbea0940b",
+                "image_source": null,
+                "lastname": "Wowk",
+                "location": "",
+                "login": "joshua.wowk@hp-ne.com",
+                "mobile": "4018714110",
+                "note": "",
+                "organization": "High Purity New England",
+                "organization_id": 2,
+                "organization_ids": [],
+                "organizations": [],
+                "out_of_office": false,
+                "out_of_office_end_at": null,
+                "out_of_office_replacement_id": null,
+                "out_of_office_start_at": null,
+                "overview_sorting_ids": [],
+                "overview_sortings": [],
+                "phone": "4013495153",
+                "role_ids": [
+                  1,
+                  2
+                ],
+                "roles": [
+                  "Admin",
+                  "Agent | IT"
+                ],
+                "source": null,
+                "street": "",
+                "updated_at": "2023-05-12T23:41:54.179Z",
+                "updated_by": "joshua.wowk@hp-ne.com",
+                "updated_by_id": 3,
+                "verified": false,
+                "vip": false,
+                "web": "",
+                "zip": ""
+              },
+              "updated_by_id": 3,
+              "accounted_time": 0
+            }
+          }
+        }
+      }
+    ],
+    "Zammad": [
+      {
+        "json": {
+          "id": 106,
+          "group_id": 26,
+          "priority_id": 2,
+          "state_id": 1,
+          "organization_id": 2,
+          "number": "91106",
+          "title": "Fw: Computer Issues",
+          "owner_id": 1,
+          "customer_id": 3,
+          "note": null,
+          "first_response_at": "2023-05-12T23:41:54.188Z",
+          "first_response_escalation_at": null,
+          "first_response_in_min": null,
+          "first_response_diff_in_min": null,
+          "close_at": null,
+          "close_escalation_at": null,
+          "close_in_min": null,
+          "close_diff_in_min": null,
+          "update_escalation_at": null,
+          "update_in_min": null,
+          "update_diff_in_min": null,
+          "last_close_at": null,
+          "last_contact_at": "2023-05-12T23:41:54.188Z",
+          "last_contact_agent_at": "2023-05-12T23:41:54.188Z",
+          "last_contact_customer_at": null,
+          "last_owner_update_at": "2023-05-12T23:41:54.262Z",
+          "create_article_type_id": 1,
+          "create_article_sender_id": 1,
+          "article_count": 1,
+          "escalation_at": null,
+          "pending_time": null,
+          "time_unit": null,
+          "preferences": {
+            "channel_id": 6
+          },
+          "updated_by_id": 3,
+          "created_by_id": 3,
+          "created_at": "2023-05-12T23:41:54.162Z",
+          "updated_at": "2023-05-12T23:41:54.436Z",
+          "category": "",
+          "submissiontype": "Incident",
+          "articles": [
+            {
+              "id": 120,
+              "ticket_id": 106,
+              "type_id": 1,
+              "sender_id": 1,
+              "from": "Joshua Wowk <Joshua.Wowk@hp-ne.com>",
+              "to": "HPNE/IT Service Desk <servicedesk@hp-ne.com>",
+              "cc": null,
+              "subject": "Fw: Computer Issues",
+              "reply_to": null,
+              "message_id": "<PH7PR22MB3890E36BED1DB93FABBBD432AB759@PH7PR22MB3890.namprd22.prod.outlook.com>",
+              "message_id_md5": "6e4b1a3e9d62a9309f766f72494d3924",
+              "in_reply_to": null,
+              "content_type": "text/html",
+              "references": null,
+              "body": "<div> </div><div>\n<div> </div>\n<div>\n<div>\n<p>\n<span style=\" color: rgb(222, 106, 25);\">Joshua Wowk</span><span style=\" color: rgb(222, 106, 25);\"> </span><span style=\" color: rgb(222, 106, 25);\">| </span><span style=\" color: rgb(222, 106, 25);\">Sys Admin</span><span style=\" color: rgb(237, 125, 49);\"><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\" color: rgb(222, 106, 25);\">| </span></span><span style=\" color: rgb(222, 106, 25);\">HPNE</span><span style=\" color: rgb(237, 125, 49);\"><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\" color: rgb(222, 106, 25);\">| </span></span><span style=\" color: rgb(222, 106, 25);\">401-349-5153</span></p>\n<span style=\" color: rgb(222, 106, 25);\"> </span><a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" rel=\"nofollow noreferrer noopener\" target=\"_blank\"><img style=\"max-width:100%;width: 16px;max-height: 16px;max-width: initial;width:16px;max-height:16px;\" src=\"/api/v1/ticket_attachment/106/120/264?view=inline\"><span style=\" color: rgb(222, 106, 25);\"><sup>Click here to book time with me</sup></span></a>\n</div>\n</div>\n</div><hr>\n<div dir=\"ltr\">\n<b>From:</b> Raud Jean-Louis &lt;raud.jeanlouis@hp-ne.com&gt;<br>\n<b>Sent:</b> Friday, May 12, 2023 2:38 PM<br>\n<b>To:</b> Maisam Dadgar &lt;Maisam.Dadgar@hp-ne.com&gt;; Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;; Lynford Harris &lt;Lynford.Harris@hp-ne.com&gt;<br>\n<b>Subject:</b> RE: Computer Issues <div> </div>\n</div><div lang=\"EN-US\">\n<div>\n<p>Hi all,</p>\n<p> </p>\n<p>I agree. It makes perfect sense to wait until after the upgrade on Monday.</p>\n<p> </p>\n<div>\n<p><b>Raud Jean-Louis</b></p>\n<p><i><span style=\"color:#ed7d31;\">IT Manager</span></i><span style=\"color:#ed7d31;\"></span></p>\n<p><b><span style=\"color:#ed7d31;\">High Purity New England</span></b><span style=\"color:#ed7d31;\">\n<b>| HP-NE.com</b></span></p>\n<p><i>2 Thurber Blvd, Smithfield, RI 02917</i></p>\n<p><span>E: <a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a> | </span>O: 401.349.5248 </p>\n<p><b><u><span lang=\"ES\" style=\"color:#ed7d31;\">ISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB</span></u></b></p>\n<p><b><span lang=\"ES\" style=\" color:#ed7d31;\"> </span></b></p>\n<p><a href=\"https://www.linkedin.com/company/high-purity-new-england\" rel=\"nofollow noreferrer noopener\" title=\"https://www.linkedin.com/company/high-purity-new-england\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" style=\"max-width:100%;width:.2812in;max-height:.2812in;width:27px;max-height:27px;\" src=\"/api/v1/ticket_attachment/106/120/258?view=inline\"></span></a><span lang=\"ES\"> </span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" rel=\"nofollow noreferrer noopener\" target=\"_blank\"><b><span lang=\"ES\"><img border=\"0\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/259?view=inline\"></span></b></a><span lang=\"ES\"> </span><a href=\"https://www.facebook.com/HighPurityNE/\" rel=\"nofollow noreferrer noopener\" title=\"https://www.facebook.com/HighPurityNE/\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/260?view=inline\"></span></a></p>\n</div>\n<p> </p>\n<div>\n<div>\n<span class=\"js-signatureMarker\"></span><p><b>From:</b> Maisam Dadgar &lt;Maisam.Dadgar@hp-ne.com&gt; <br>\n<b>Sent:</b> Friday, May 12, 2023 2:19 PM<br>\n<b>To:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;; Lynford Harris &lt;Lynford.Harris@hp-ne.com&gt;; Raud Jean-Louis &lt;raud.jeanlouis@hp-ne.com&gt;<br>\n<b>Subject:</b> RE: Computer Issues</p>\n</div>\n</div>\n<p> </p>\n<p>Hi Josh,</p>\n<p> </p>\n<p>It makes sense to look at it after the 2021 upgrade.</p>\n<p> </p>\n<p>Maisam</p>\n<p> </p>\n<div>\n<div>\n<p><b>From:</b> Joshua Wowk &lt;<a href=\"mailto:Joshua.Wowk@hp-ne.com\">Joshua.Wowk@hp-ne.com</a>&gt; <br>\n<b>Sent:</b> Friday, May 12, 2023 2:08 PM<br>\n<b>To:</b> Maisam Dadgar &lt;<a href=\"mailto:Maisam.Dadgar@hp-ne.com\">Maisam.Dadgar@hp-ne.com</a>&gt;; Lynford Harris &lt;<a href=\"mailto:Lynford.Harris@hp-ne.com\">Lynford.Harris@hp-ne.com</a>&gt;; Raud Jean-Louis &lt;<a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a>&gt;<br>\n<b>Subject:</b> Re: Computer Issues</p>\n</div>\n</div>\n<p> </p>\n<div>\n<p>Hey Maisam, been working with Lynford the past hour to pin down what's going on. I need to spend additional time to research the issue and determine the cause here. That said, there's a number of things that could be resolved, or at the very least changed, with Monday's SolidWorks 2021 upgrade so I'm weary of dedicating additional time today for this. Please share any thoughts on this you may have.</p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p>I have some additional information to share as well. I'll send all I have when I return from lunch, which I'm leaving for now.</p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p>Thanks.</p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p> </p>\n</div>\n<div>\n<p><b>Joshua Wowk</b> | Sys Admin | <b>HPNE</b> | 401-349-5153</p>\n</div>\n<div>\n<hr>\n</div>\n<div>\n<p><b>From:</b><span> Maisam Dadgar &lt;<a href=\"mailto:Maisam.Dadgar@hp-ne.com\">Maisam.Dadgar@hp-ne.com</a>&gt;<br>\n<b>Sent:</b> Friday, May 12, 2023 1:07:40 PM<br>\n<b>To:</b> Lynford Harris &lt;<a href=\"mailto:Lynford.Harris@hp-ne.com\">Lynford.Harris@hp-ne.com</a>&gt;; Raud Jean-Louis &lt;<a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a>&gt;; Joshua Wowk &lt;<a href=\"mailto:Joshua.Wowk@hp-ne.com\">Joshua.Wowk@hp-ne.com</a>&gt;<br>\n<b>Subject:</b> RE: Computer Issues</span> </p>\n<div>\n<p> </p>\n</div>\n</div>\n<div>\n<div>\n<p>Definitely an urgent request here</p>\n<p> </p>\n<div>\n<div>\n<p><b>From:</b> Lynford Harris &lt;<a href=\"mailto:Lynford.Harris@hp-ne.com\">Lynford.Harris@hp-ne.com</a>&gt; <br>\n<b>Sent:</b> Friday, May 12, 2023 10:30 AM<br>\n<b>To:</b> Raud Jean-Louis &lt;<a href=\"mailto:raud.jeanlouis@hp-ne.com\">raud.jeanlouis@hp-ne.com</a>&gt;; Joshua Wowk &lt;<a href=\"mailto:Joshua.Wowk@hp-ne.com\">Joshua.Wowk@hp-ne.com</a>&gt;<br>\n<b>Cc:</b> Maisam Dadgar &lt;<a href=\"mailto:Maisam.Dadgar@hp-ne.com\">Maisam.Dadgar@hp-ne.com</a>&gt;<br>\n<b>Subject:</b> Computer Issues</p>\n</div>\n</div>\n<p> </p>\n<p>Good Morning All,</p>\n<p> </p>\n<p>I just wanted to inform you that I have been having some major computer issues, for the last few weeks. I have talked to Josh about a few of them and seem isolated to my laptop. They are rather sporadic but do tend to interrupt workflow when they happen.</p>\n<p> </p>\n<p>Some of the issues are:</p>\n<ul type=\"disc\">\n<li>PDM not loading when computer is turned on in the morning for at least 45 mins (always loads in teams though for some strange reason).</li>\n<li>The computer crashing randomly if not turned off overnight.</li>\n<li>Solidworks unable to save.</li>\n<li>Unable to save documents as pdf.</li>\n</ul>\n<p> </p>\n<p>I have attached a few screenshots to depict these issues. Please let me know if there is any more clarification needed, and if there is anything that could be done as well.</p>\n<p> </p>\n<p>Kind Regards,</p>\n<p><b>Lynford Harris</b></p>\n<p><i><span style=\"color:#ed7d31;\">Mechanical Design Engineer</span></i></p>\n<p><b><span style=\"color:#ed7d31;\">High Purity New England | HP-NE.com</span></b></p>\n<p><i>2 Thurber Blvd, Smithfield, RI 02917</i></p>\n<p>E: <u><span style=\"color:#0563c1;\"><a href=\"mailto:lynford.harris@hp-ne.com\">lynford.harris@hp-ne.com</a></span></u>\n</p>\n<p><b><u><span lang=\"ES\" style=\"color:#ed7d31;\">ISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB</span></u></b></p>\n<p><span lang=\"ES\"> </span></p>\n<p><a href=\"https://www.linkedin.com/company/high-purity-new-england\" rel=\"nofollow noreferrer noopener\" title=\"https://www.linkedin.com/company/high-purity-new-england\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" alt=\"signature_70785060\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/261?view=inline\"></span></a><span lang=\"ES\"> </span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" rel=\"nofollow noreferrer noopener\" target=\"_blank\"><b><span lang=\"ES\"><img border=\"0\" alt=\"signature_1576473685\" style=\"max-width:100%;width:.2708in;max-height:.2708in;width:26px;max-height:26px;\" src=\"/api/v1/ticket_attachment/106/120/262?view=inline\"></span></b></a><span lang=\"ES\"> </span><a href=\"https://www.facebook.com/HighPurityNE/\" rel=\"nofollow noreferrer noopener\" title=\"https://www.facebook.com/HighPurityNE/\" target=\"_blank\"><span style=\"color:windowtext;\"><img border=\"0\" alt=\"signature_3251001740\" style=\"max-width:100%;width:.2604in;max-height:.2604in;width:25px;max-height:25px;\" src=\"/api/v1/ticket_attachment/106/120/263?view=inline\"></span></a></p>\n<p><span lang=\"ES\"> </span></p>\n</div>\n</div>\n</div>\n</div>",
+              "internal": false,
+              "preferences": {
+                "send-auto-response": true,
+                "is-auto-response": false
+              },
+              "updated_by_id": 3,
+              "created_by_id": 3,
+              "origin_by_id": null,
+              "created_at": "2023-05-12T23:41:54.188Z",
+              "updated_at": "2023-05-12T23:41:54.188Z",
+              "attachments": [
+                {
+                  "id": 257,
+                  "store_file_id": 240,
+                  "filename": "message.html",
+                  "size": "14718",
+                  "preferences": {
+                    "content-alternative": true,
+                    "original-format": true,
+                    "Mime-Type": "text/html",
+                    "Charset": "us-ascii"
+                  }
+                },
+                {
+                  "id": 258,
+                  "store_file_id": 241,
+                  "filename": "image004.png",
+                  "size": "49796",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image004.png",
+                    "Content-Description": "image004.png",
+                    "Content-ID": "image004.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  }
+                },
+                {
+                  "id": 259,
+                  "store_file_id": 242,
+                  "filename": "image005.png",
+                  "size": "2476",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image005.png",
+                    "Content-Description": "image005.png",
+                    "Content-ID": "image005.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  }
+                },
+                {
+                  "id": 260,
+                  "store_file_id": 243,
+                  "filename": "image006.png",
+                  "size": "1307",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image006.png",
+                    "Content-Description": "image006.png",
+                    "Content-ID": "image006.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  }
+                },
+                {
+                  "id": 261,
+                  "store_file_id": 18,
+                  "filename": "image007.png",
+                  "size": "49790",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image007.png",
+                    "Content-Description": "image007.png",
+                    "Content-ID": "image007.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  }
+                },
+                {
+                  "id": 262,
+                  "store_file_id": 19,
+                  "filename": "image008.png",
+                  "size": "2470",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image008.png",
+                    "Content-Description": "image008.png",
+                    "Content-ID": "image008.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  }
+                },
+                {
+                  "id": 263,
+                  "store_file_id": 20,
+                  "filename": "image009.png",
+                  "size": "1301",
+                  "preferences": {
+                    "Content-Type": "image/png; name=image009.png",
+                    "Content-Description": "image009.png",
+                    "Content-ID": "image009.png@01D984DE.CE2026C0",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8",
+                    "resizable": true,
+                    "content_preview": true
+                  }
+                },
+                {
+                  "id": 264,
+                  "store_file_id": 8,
+                  "filename": "Outlook-zopxe3gr.png",
+                  "size": "361",
+                  "preferences": {
+                    "Content-Type": "image/png; name=Outlook-zopxe3gr.png",
+                    "Content-Description": "Outlook-zopxe3gr.png",
+                    "Content-ID": "d6f58935-1cc6-4a5d-9ac6-8b64954fdcbc",
+                    "Mime-Type": "image/png",
+                    "Charset": "UTF-8"
+                  }
+                }
+              ],
+              "type": "email",
+              "sender": "Agent",
+              "created_by": "joshua.wowk@hp-ne.com",
+              "updated_by": "joshua.wowk@hp-ne.com"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-05-13T00:56:45.000Z",
+  "versionId": "950e3b78-8c86-485b-9e38-18cd2674ed37"
+}
