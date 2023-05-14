@@ -1,0 +1,238 @@
+{
+  "active": false,
+  "connections": {
+    "ClickUp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-05-14T14:07:18.725Z",
+  "id": "7",
+  "name": "ClickUp | Close [DONE] tasks",
+  "nodes": [
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskStatusUpdated"
+        ],
+        "filters": {
+          "listId": "164286867"
+        }
+      },
+      "id": "ac10880d-c589-43b4-805b-101979a5d4d3",
+      "name": "ClickUp Trigger",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        620,
+        460
+      ],
+      "webhookId": "79eee5f2-ed66-466f-b5a6-8dbbf017ad0b",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.history_items[0].after.status }}",
+              "value2": "done"
+            }
+          ]
+        }
+      },
+      "id": "5834a8da-b75d-4a42-a2b7-e44cdc90d2ef",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        840,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{$now.plus({days: 3})}}"
+      },
+      "id": "81fc6faa-7082-498d-b8a7-1013543b19a9",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        380
+      ],
+      "webhookId": "66e113df-5f8d-4666-8d89-1a5675a43e2d"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$today.weekdayLong}}",
+              "value2": "Thursday"
+            }
+          ]
+        }
+      },
+      "id": "1985fa41-a3aa-4299-810a-17c028a215ae",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        460
+      ],
+      "notesInFlow": true,
+      "notes": "IF[TODAY]=[THURSDAY]"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$today.weekdayLong}}",
+              "value2": "Friday"
+            }
+          ]
+        }
+      },
+      "id": "b978651a-ee94-45fa-bb6c-2e1cd1b9b7b7",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**IF** [TODAY] = [THURSDAY]",
+        "height": 80,
+        "width": 150
+      },
+      "id": "c4385d97-f8d6-478c-aaff-39ddeb0aef74",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**IF** [TODAY] = [FRIDAY]",
+        "height": 80,
+        "width": 150
+      },
+      "id": "f34d84ac-fb88-4095-84e4-8a36826e6ac4",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "pinData": {
+    "ClickUp Trigger": [
+      {
+        "json": {
+          "event": "taskStatusUpdated",
+          "history_items": [
+            {
+              "id": "3494310045884720140",
+              "type": 1,
+              "date": "1684073248653",
+              "field": "status",
+              "parent_id": "164286867",
+              "data": {
+                "status_type": "done"
+              },
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_M3D.jpg"
+              },
+              "before": {
+                "status": "today",
+                "color": "#2a6bfb",
+                "orderindex": 2,
+                "type": "custom"
+              },
+              "after": {
+                "status": "done",
+                "color": "#3aef8f",
+                "orderindex": 3,
+                "type": "done"
+              }
+            }
+          ],
+          "task_id": "85ywt1vun",
+          "webhook_id": "1c5297f1-3c1f-4ac6-a2b2-bac2817dfd79"
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "1c5297f1-3c1f-4ac6-a2b2-bac2817dfd79",
+      "secret": "POTI2ZL43ZN3U6MHGQHVQ4BZ0TCGS0RMQ75BALZ72FD5XJUIM5F3UWVM42SGNEP4"
+    }
+  },
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-05-14T15:39:01.000Z",
+  "versionId": "aa415e08-2042-4a65-8ba1-b86b54f2be6b"
+}
