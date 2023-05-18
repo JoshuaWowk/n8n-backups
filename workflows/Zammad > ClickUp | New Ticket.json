@@ -14,13 +14,7 @@
     },
     "Zammad": {
       "main": [
-        [
-          {
-            "node": "Markdown",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Markdown": {
@@ -28,6 +22,18 @@
         [
           {
             "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -87,8 +93,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        980,
-        320
+        1040,
+        100
       ]
     },
     {
@@ -108,8 +114,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        1580,
-        560
+        1800,
+        660
       ],
       "credentials": {
         "clickUpApi": {
@@ -128,9 +134,88 @@
       "type": "n8n-nodes-base.markdown",
       "typeVersion": 1,
       "position": [
-        1360,
-        560
+        1580,
+        660
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.articles[0].subject }}",
+              "operation": "contains",
+              "value2": "Report domain"
+            },
+            {
+              "value1": "={{ $json.articles[0].from }}",
+              "operation": "notContains",
+              "value2": "hp-ne.com"
+            }
+          ]
+        }
+      },
+      "id": "fca600db-a83f-4ece-bfa6-909f55cc8f33",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://help.hp-ne.us/api/v1/tickets/9",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "group",
+              "value": "DMARC Reports"
+            },
+            {
+              "name": "state",
+              "value": "closed"
+            },
+            {
+              "name": "submissiontype",
+              "value": "={{ $node.Zammad.json.submissiontype }}"
+            },
+            {
+              "name": "category",
+              "value": "Other"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "211dec17-99d6-41e5-8699-3e704b71a221",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1580,
+        480
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "7",
+          "name": "Zammad API"
+        }
+      }
     }
   ],
   "pinData": {
@@ -925,6 +1010,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-05-13T00:56:45.000Z",
-  "versionId": "950e3b78-8c86-485b-9e38-18cd2674ed37"
+  "updatedAt": "2023-05-17T23:07:52.000Z",
+  "versionId": "010f3983-ebc8-4086-9a5a-967eb96ce367"
 }
