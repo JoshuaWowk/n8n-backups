@@ -1,0 +1,66 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2023-05-26T03:01:09.124Z",
+  "id": "10",
+  "name": "FreeScout HTTP Requests",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $json.body.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "295ac46d-6d53-4d15-831a-641d2948284d",
+      "name": "GetConversation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        220
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "X-FreeScout-API-Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node['HTTP Request'].json.id }}/custom_fields",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"customFields\":[{\"id\":6,\"value\":\"{{ $json.url }}\"}]}",
+        "options": {}
+      },
+      "id": "ebf56e10-b221-4a33-926c-e5161c5adbfb",
+      "name": "PutConversation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        900,
+        220
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "X-FreeScout-API-Key"
+        }
+      },
+      "notes": "Write ClickUp task URL to FreeScout ticket"
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-05-26T03:01:09.124Z",
+  "versionId": "fc7fbba4-fb39-4007-b739-0713a5fef6a5"
+}
