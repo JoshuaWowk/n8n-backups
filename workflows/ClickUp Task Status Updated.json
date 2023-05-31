@@ -1,0 +1,208 @@
+{
+  "active": false,
+  "connections": {
+    "ClickUp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "PutConversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-05-30T22:08:00.145Z",
+  "id": "12",
+  "name": "ClickUp Task Status Updated",
+  "nodes": [
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskStatusUpdated"
+        ],
+        "filters": {
+          "listId": "164286867"
+        }
+      },
+      "id": "8fcb8aab-b00e-4b46-84f8-8eff13364842",
+      "name": "ClickUp Trigger",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        580
+      ],
+      "webhookId": "8e97aab0-5d6b-402a-a622-89d8bb402405",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.custom_fields[1].value }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "0b7de212-c0de-473a-9164-a1486e368445",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node['ClickUp Trigger'].json.history_items[0].data.status_type }}",
+              "value2": "done"
+            }
+          ]
+        }
+      },
+      "id": "e5a5c05c-5998-45a3-962b-eed972582af7",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node['HTTP Request'].json.id }}/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"status\":\"closed\"}",
+        "options": {}
+      },
+      "id": "ec7e5f04-f128-4ff1-bf2d-0ce4c30ccbe4",
+      "name": "PutConversation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1840,
+        540
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "X-FreeScout-API-Key"
+        }
+      },
+      "notes": "Change Status"
+    },
+    {
+      "parameters": {
+        "content": "Need to add FreeScout ID to ClickUp Tasks"
+      },
+      "id": "99065404-7cd8-44ad-8db1-12396d879000",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        340
+      ]
+    }
+  ],
+  "pinData": {
+    "ClickUp Trigger": [
+      {
+        "json": {
+          "event": "taskStatusUpdated",
+          "history_items": [
+            {
+              "id": "3517987224321207017",
+              "type": 1,
+              "date": "1685484518461",
+              "field": "status",
+              "parent_id": "164286867",
+              "data": {
+                "status_type": "done"
+              },
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "before": {
+                "status": "active",
+                "color": "#2a6bfb",
+                "orderindex": 2,
+                "type": "custom"
+              },
+              "after": {
+                "status": "done",
+                "color": "#3aef8f",
+                "orderindex": 3,
+                "type": "done"
+              }
+            }
+          ],
+          "task_id": "85zt6732h",
+          "webhook_id": "933dc305-1914-41e2-ba7f-9a9a566c5268"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "933dc305-1914-41e2-ba7f-9a9a566c5268",
+      "secret": "HHQYAS50GB4MKXWW3XHUTJ3ZVH7ORDU3Y54KHPKWL9J1QC228M2PRUUZVIOY2AO7"
+    }
+  },
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-05-30T22:16:46.000Z",
+  "versionId": "9c8b6715-a260-412b-9fa8-f4e55ff6c624"
+}
