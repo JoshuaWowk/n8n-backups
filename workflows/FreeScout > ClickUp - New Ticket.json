@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "GetConversation",
             "type": "main",
             "index": 0
           }
@@ -23,22 +23,33 @@
         ]
       ]
     },
-    "HTTP Request": {
+    "ClickUp": {
       "main": [
         [
           {
-            "node": "Markdown",
+            "node": "ClickUp1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "ClickUp": {
+    "ClickUp1": {
       "main": [
         [
           {
             "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetConversation": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
             "type": "main",
             "index": 0
           }
@@ -66,7 +77,9 @@
         1180,
         580
       ],
-      "webhookId": "5b5cd8b2-dcaf-418a-8282-1a84b17bc58f"
+      "webhookId": "5b5cd8b2-dcaf-418a-8282-1a84b17bc58f",
+      "notesInFlow": true,
+      "notes": "newTicket (newConversation)"
     },
     {
       "parameters": {
@@ -85,7 +98,9 @@
       "position": [
         1620,
         580
-      ]
+      ],
+      "notesInFlow": true,
+      "notes": "Description Text/Body"
     },
     {
       "parameters": {
@@ -116,35 +131,13 @@
     },
     {
       "parameters": {
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $json.body.id }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "options": {}
-      },
-      "id": "0dff0540-f25e-4e01-99db-5f4e3998a068",
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1400,
-        580
-      ],
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "9",
-          "name": "X-FreeScout-API-Key"
-        }
-      }
-    },
-    {
-      "parameters": {
         "method": "PUT",
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node['HTTP Request'].json.id }}/custom_fields",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"Webhook\"].json[\"body\"][\"id\"] }}/custom_fields",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\"customFields\":[{\"id\":6,\"value\":\"{{ $json.url }}\"}]}",
+        "jsonBody": "={\"customFields\":[{\"id\":6,\"value\":\"{{ $node.ClickUp.json.url }}\"}]} ",
         "options": {}
       },
       "id": "366ef6ce-8b72-4b4a-a991-f39743fa1a85",
@@ -152,7 +145,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2040,
+        2320,
         580
       ],
       "notesInFlow": true,
@@ -162,7 +155,31 @@
           "name": "X-FreeScout-API-Key"
         }
       },
-      "notes": "Write ClickUp task URL to FreeScout ticket"
+      "notes": "Task URL -> FreeScout"
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $node.ClickUp.json.id }}",
+        "field": "ed124332-f2e5-41fa-925a-fca1eed08ef9",
+        "value": "=https://freescout.hp-ne.us/conversation/{{ $node.Webhook.json.body.id }}"
+      },
+      "id": "9e6ae539-e477-4e1f-8684-07e0cbf1f8a8",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        580
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "Ticket URL"
     },
     {
       "parameters": {
@@ -171,39 +188,13 @@
         "genericAuthType": "httpHeaderAuth",
         "options": {}
       },
-      "id": "47b19b84-d319-49fe-ac82-ba272a270678",
+      "id": "0dff0540-f25e-4e01-99db-5f4e3998a068",
       "name": "GetConversation",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1440,
-        300
-      ],
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "9",
-          "name": "X-FreeScout-API-Key"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "PUT",
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node['HTTP Request'].json.id }}/custom_fields",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\"customFields\":[{\"id\":6,\"value\":\"{{ $json.url }}\"}]}",
-        "options": {}
-      },
-      "id": "974bb9c7-74e3-4944-8244-19599c94ac26",
-      "name": "PutConversation",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1660,
-        300
+        1400,
+        580
       ],
       "notesInFlow": true,
       "credentials": {
@@ -212,7 +203,7 @@
           "name": "X-FreeScout-API-Key"
         }
       },
-      "notes": "Write ClickUp task URL to FreeScout ticket"
+      "notes": "GetTicket (GetThread)"
     }
   ],
   "pinData": {
@@ -442,293 +433,6 @@
               }
             ]
           }
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ],
-    "HTTP Request": [
-      {
-        "json": {
-          "id": 8,
-          "number": 8,
-          "threadsCount": 2,
-          "type": "email",
-          "folderId": 4,
-          "status": "closed",
-          "state": "published",
-          "subject": "Fw: SolidWorks Upgrade",
-          "preview": "Elevated user to local admin&nbsp;",
-          "mailboxId": 1,
-          "assignee": {
-            "id": 2,
-            "type": "user",
-            "firstName": "Joshua",
-            "lastName": "Wowk",
-            "photoUrl": "",
-            "email": "joshua.wowk@hp-ne.com"
-          },
-          "createdBy": {
-            "id": 62,
-            "type": "customer",
-            "firstName": "Joshua",
-            "lastName": "Wowk",
-            "photoUrl": "",
-            "email": "Joshua.Wowk@hp-ne.com"
-          },
-          "createdAt": "2023-05-23T20:14:13Z",
-          "updatedAt": "2023-05-25T13:37:24Z",
-          "closedBy": 2,
-          "closedByUser": {
-            "id": 2,
-            "type": "user",
-            "firstName": "Joshua",
-            "lastName": "Wowk",
-            "photoUrl": "",
-            "email": "joshua.wowk@hp-ne.com"
-          },
-          "closedAt": "2023-05-25T13:37:24Z",
-          "userUpdatedAt": "2023-05-25T13:37:24Z",
-          "customerWaitingSince": {
-            "time": "2023-05-25T13:37:24Z",
-            "friendly": "13 hours ago",
-            "latestReplyFrom": "user"
-          },
-          "source": {
-            "type": "email",
-            "via": "customer"
-          },
-          "cc": [
-            "joshua.wowk@hp-ne.com"
-          ],
-          "bcc": [],
-          "customer": {
-            "id": 62,
-            "type": "customer",
-            "firstName": "Joshua",
-            "lastName": "Wowk",
-            "photoUrl": "",
-            "email": "Joshua.Wowk@hp-ne.com"
-          },
-          "_embedded": {
-            "threads": [
-              {
-                "id": 35,
-                "type": "message",
-                "status": "closed",
-                "state": "published",
-                "action": {
-                  "type": "",
-                  "text": "Joshua Wowk replied to conversation #8",
-                  "associatedEntities": []
-                },
-                "body": "Elevated user to local admin&nbsp;",
-                "source": {
-                  "type": "web",
-                  "via": "user"
-                },
-                "customer": {
-                  "id": 62,
-                  "type": "customer",
-                  "firstName": "Joshua",
-                  "lastName": "Wowk",
-                  "photoUrl": "",
-                  "email": "Joshua.Wowk@hp-ne.com"
-                },
-                "createdBy": {
-                  "id": 2,
-                  "type": "user",
-                  "firstName": "Joshua",
-                  "lastName": "Wowk",
-                  "photoUrl": "",
-                  "email": "joshua.wowk@hp-ne.com"
-                },
-                "assignedTo": {
-                  "id": 2,
-                  "type": "user",
-                  "firstName": "Joshua",
-                  "lastName": "Wowk",
-                  "photoUrl": "",
-                  "email": "joshua.wowk@hp-ne.com"
-                },
-                "to": [
-                  "joshua.wowk@hp-ne.com"
-                ],
-                "cc": [],
-                "bcc": [],
-                "createdAt": "2023-05-25T13:37:24Z",
-                "openedAt": "2023-05-25T13:48:08Z",
-                "_embedded": {
-                  "attachments": []
-                }
-              },
-              {
-                "id": 14,
-                "type": "lineitem",
-                "status": "active",
-                "state": "published",
-                "action": {
-                  "type": "",
-                  "text": "Workflow Assign new tickets to jwowk was triggered for conversation #8",
-                  "associatedEntities": []
-                },
-                "body": "",
-                "source": {
-                  "type": "web",
-                  "via": "user"
-                },
-                "customer": null,
-                "createdBy": {
-                  "id": 3,
-                  "type": "user",
-                  "firstName": "Workflow",
-                  "lastName": "",
-                  "photoUrl": "",
-                  "email": "fsworkflow@example.org"
-                },
-                "assignedTo": {
-                  "id": 2,
-                  "type": "user",
-                  "firstName": "Joshua",
-                  "lastName": "Wowk",
-                  "photoUrl": "",
-                  "email": "joshua.wowk@hp-ne.com"
-                },
-                "to": [],
-                "cc": [],
-                "bcc": [],
-                "createdAt": "2023-05-23T20:14:13Z",
-                "openedAt": null,
-                "_embedded": {
-                  "attachments": []
-                }
-              },
-              {
-                "id": 13,
-                "type": "customer",
-                "status": "active",
-                "state": "published",
-                "action": {
-                  "type": "",
-                  "text": "Joshua Wowk started a new conversation #8",
-                  "associatedEntities": []
-                },
-                "body": "\r\n<div style='font-family: \"Trebuchet MS\", Trebuchet, sans-serif; font-size: 10pt; color: rgb(0, 0, 0);' class=\"elementToProof\">\r\n<br>\r\n</div>\r\n<div class=\"elementToProof\">\r\n<div style='font-family: \"Trebuchet MS\", Trebuchet, sans-serif; font-size: 10pt; color: rgb(0, 0, 0);'>\r\n<br>\r\n</div>\r\n<div id=\"Signature\">\r\n<div>\r\n<p style=\"background: white; text-align: start; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;\">\r\n<span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>Joshua Wowk</span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'> </span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>| </span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>Sys\r\n Admin</span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(237, 125, 49);'><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\"margin: 0px; display: inline !important; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\">| </span></span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>HPNE</span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(237, 125, 49);'><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\"margin: 0px; display: inline !important; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\">| </span></span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>401-349-5153</span></p>\r\n<span style=\"margin: 0px; font-size: 14px; text-align: start; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\"> </span><span style=\"margin: 0px; font-size: 14px; text-align: start; background-color: rgb(255, 255, 255);\"><a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" style=\"font-size: 14px; margin: 0px; letter-spacing: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 13.3333px; margin: 0px; letter-spacing: -0.266667px; background-color: rgb(255, 255, 255);\"><img style=\"width: 16px; height: 16px; max-width: initial;\" width=\"16\" height=\"16\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/6/7/1/Outlook-vkncjudp.png?id=22&token=db21a592f206494b69507ae7c028b02e\"></span><span style=\"font-size: 10pt; font-family: Candara, Optima, sans-serif; margin: 0px; letter-spacing: -0.266667px; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\"><sup>Click\r\n here to book time with me</sup></span></a></span></div>\r\n</div>\r\n</div>\r\n<div id=\"appendonsend\"></div>\r\n<hr style=\"display:inline-block;width:98%\" tabindex=\"-1\">\r\n<div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" style=\"font-size:11pt\" color=\"#000000\"><b>From:</b> Kelsey Hastings &lt;kelsey.hastings@hp-ne.com&gt;<br>\r\n<b>Sent:</b> Monday, May 22, 2023 2:21 PM<br>\r\n<b>To:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br>\r\n<b>Cc:</b> Maisam Dadgar &lt;Maisam.Dadgar@hp-ne.com&gt;; Maxfield V. Nieves-Malik &lt;Maxfield.Nieves-Malik@hp-ne.com&gt;<br>\r\n<b>Subject:</b> RE: SolidWorks Upgrade</font>\r\n<div> </div>\r\n</div>\r\n<style>\r\n<!--\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\n@font-face\r\n\t{font-family:\"Calibri Light\"}\r\n@font-face\r\n\t{font-family:Candara}\r\n@font-face\r\n\t{font-family:\"Trebuchet MS\"}\r\np.x_MsoNormal, li.x_MsoNormal, div.x_MsoNormal\r\n\t{margin:0in;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.x_MsoHyperlink\r\n\t{color:blue;\r\n\ttext-decoration:underline}\r\np.x_xmsonormal, li.x_xmsonormal, div.x_xmsonormal\r\n\t{margin:0in;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\nspan.x_EmailStyle23\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.x_MsoChpDefault\r\n\t{font-size:10.0pt}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.x_WordSection1\r\n\t{}\r\n-->\r\n</style>\r\n<div lang=\"EN-US\" link=\"blue\" vlink=\"purple\" style=\"word-wrap:break-word\">\r\n<div class=\"x_WordSection1\">\r\n<p class=\"x_MsoNormal\">That would be perfect, thank you. </p>\r\n<p class=\"x_MsoNormal\"> </p>\r\n<p class=\"x_MsoNormal\">If I ever run into issues, I’ll reach out to you and/or Maxfield for help.</p>\r\n<p class=\"x_MsoNormal\"> </p>\r\n<p class=\"x_MsoNormal\">Thank you!</p>\r\n<p class=\"x_MsoNormal\"> </p>\r\n<div>\r\n<p class=\"x_MsoNormal\"><b><span style=\"color:black\">Kelsey Hastings</span></b><span style=\"color:black\"></span></p>\r\n<p class=\"x_MsoNormal\"><i><span style=\"color:#ED7D31\">Engineering Project Manager</span></i><span style=\"color:black\"></span></p>\r\n<p class=\"x_MsoNormal\"><b><span style=\"color:#ED7D31\">High Purity New England | HP-NE.com</span></b></p>\r\n<p class=\"x_MsoNormal\"><i><span style=\"color:black\">14 Thurber Blvd, Smithfield, RI 02917</span></i></p>\r\n<p class=\"x_MsoNormal\"><span style=\"color:black\">E: </span><a href=\"mailto:kelsey.hastings@hp-ne.com\"><span style=\"color:#0563C1\">kelsey.hastings@hp-ne.com</span></a> |\r\n<span style=\"color:black\">O: 401.349.4477</span></p>\r\n<p class=\"x_MsoNormal\"><b><u><span lang=\"ES\" style=\"color:#ED7D31\">ISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB</span></u></b><span lang=\"ES\"></span></p>\r\n<p class=\"x_MsoNormal\"><span lang=\"ES\" style=\"font-size:5.0pt\"> </span></p>\r\n<p class=\"x_MsoNormal\"><a href=\"https://www.linkedin.com/company/high-purity-new-england\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_Picture_x0020_6\" alt=\"signature_70785060\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/6/4/1/image001.png?id=18&token=c574b63dbeb555309ee62c4b6d1794f9\"></span></a><span lang=\"ES\"> \r\n</span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\"><b><span lang=\"ES\" style=\"font-size:10.0pt; color:#0563C1; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_Picture_x0020_5\" alt=\"signature_1576473685\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/1/0/1/image002.png?id=19&token=abd84fe050babf7a3f37b4d5048d86d4\"></span></b></a><span lang=\"ES\">  </span><a href=\"https://www.facebook.com/HighPurityNE/\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_Picture_x0020_7\" alt=\"signature_3251001740\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/9/8/1/image003.png?id=20&token=c226348d2a8bf7254f228ddef281cd14\"></span></a><span lang=\"ES\"></span></p>\r\n</div>\r\n<p class=\"x_MsoNormal\"> </p>\r\n<div>\r\n<div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\">\r\n<p class=\"x_MsoNormal\"><b>From:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt; <br>\r\n<b>Sent:</b> Monday, May 22, 2023 2:21 PM<br>\r\n<b>To:</b> Kelsey Hastings &lt;kelsey.hastings@hp-ne.com&gt;<br>\r\n<b>Cc:</b> Maisam Dadgar &lt;Maisam.Dadgar@hp-ne.com&gt;; Maxfield V. Nieves-Malik &lt;Maxfield.Nieves-Malik@hp-ne.com&gt;<br>\r\n<b>Subject:</b> Re: SolidWorks Upgrade</p>\r\n</div>\r\n</div>\r\n<p class=\"x_MsoNormal\"> </p>\r\n<div>\r\n<p class=\"x_MsoNormal\"><span style='font-size:10.0pt; font-family:\"Trebuchet MS\",sans-serif'>As long as there's no objections I'll just add you to the local administrator's group on your machine. This way you can address these things in the future as needed,\r\n assuming you're comfortable doing so.</span></p>\r\n</div>\r\n<div>\r\n<div>\r\n<p class=\"x_MsoNormal\"><span style='font-size:10.0pt; font-family:\"Trebuchet MS\",sans-serif'> </span></p>\r\n</div>\r\n<div id=\"x_Signature\">\r\n<div>\r\n<p><span style='font-size:10.0pt; font-family:\"Calibri Light\",sans-serif; border:none windowtext 1.0pt; padding:0in'>Joshua Wowk | Sys Admin | HPNE | 401-349-5153</span></p>\r\n<p class=\"x_MsoNormal\"><span style=\"font-size:10.5pt\"> <a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\"><span style=\"font-size:10.0pt; letter-spacing:-.2pt; text-decoration:none\"><img border=\"0\" width=\"16\" height=\"16\" id=\"x_Picture_x0020_1\" style=\"width:.1666in; height:.1666in\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/3/5/1/image004.png?id=21&token=b6b08d628f2e5a9a8030811b72688670\"></span><sup><span style='font-size:10.0pt; font-family:\"Candara\",sans-serif; letter-spacing:-.2pt'>Click\r\n here to book time with me</span></sup></a></span></p>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"x_MsoNormal\" align=\"center\" style=\"text-align:center\">\r\n<hr size=\"2\" width=\"98%\" align=\"center\">\r\n</div>\r\n<div id=\"x_divRplyFwdMsg\">\r\n<p class=\"x_MsoNormal\"><b><span style=\"color:black\">From:</span></b><span style=\"color:black\"> Kelsey Hastings &lt;<a href=\"mailto:kelsey.hastings@hp-ne.com\">kelsey.hastings@hp-ne.com</a>&gt;<br>\r\n<b>Sent:</b> Monday, May 22, 2023 2:16 PM<br>\r\n<b>To:</b> Joshua Wowk &lt;<a href=\"mailto:Joshua.Wowk@hp-ne.com\">Joshua.Wowk@hp-ne.com</a>&gt;<br>\r\n<b>Cc:</b> Maisam Dadgar &lt;<a href=\"mailto:Maisam.Dadgar@hp-ne.com\">Maisam.Dadgar@hp-ne.com</a>&gt;; Maxfield V. Nieves-Malik &lt;<a href=\"mailto:Maxfield.Nieves-Malik@hp-ne.com\">Maxfield.Nieves-Malik@hp-ne.com</a>&gt;<br>\r\n<b>Subject:</b> SolidWorks Upgrade</span> </p>\r\n<div>\r\n<p class=\"x_MsoNormal\"> </p>\r\n</div>\r\n</div>\r\n<div>\r\n<div>\r\n<p class=\"x_xmsonormal\">Hi Josh,</p>\r\n<p class=\"x_xmsonormal\"> </p>\r\n<p class=\"x_xmsonormal\">Hope you’re doing well. Maxfield came around earlier today and helped my team get SolidWorks 2021 on their computers. However, because he and I do not have admin rights over my computer, he was not able to upgrade it on mine. Would you\r\n mind helping me with that? Or could he and/or I be granted it for now and future? There is also another program, Drawio, that our department has been using regularly that I would love to have installed. So far, I’ve been using the web app, which is pretty\r\n inconvenient.</p>\r\n<p class=\"x_xmsonormal\"> </p>\r\n<p class=\"x_xmsonormal\">Thank you,</p>\r\n<p class=\"x_xmsonormal\">Kelsey</p>\r\n<p class=\"x_xmsonormal\"> </p>\r\n<p class=\"x_xmsonormal\"><b><span style=\"color:black\">Kelsey Hastings</span></b></p>\r\n<p class=\"x_xmsonormal\"><i><span style=\"color:#ED7D31\">Engineering Project Manager</span></i></p>\r\n<p class=\"x_xmsonormal\"><b><span style=\"color:#ED7D31\">High Purity New England | HP-NE.com</span></b></p>\r\n<p class=\"x_xmsonormal\"><i><span style=\"color:black\">14 Thurber Blvd, Smithfield, RI 02917</span></i></p>\r\n<p class=\"x_xmsonormal\"><span style=\"color:black\">E: </span><a href=\"mailto:kelsey.hastings@hp-ne.com\"><span style=\"color:#0563C1\">kelsey.hastings@hp-ne.com</span></a> |\r\n<span style=\"color:black\">O: 401.349.4477</span></p>\r\n<p class=\"x_xmsonormal\"><b><u><span lang=\"ES\" style=\"color:#ED7D31\">ISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB</span></u></b></p>\r\n<p class=\"x_xmsonormal\"><span lang=\"ES\" style=\"font-size:5.0pt\"> </span></p>\r\n<p class=\"x_xmsonormal\"><a href=\"https://www.linkedin.com/company/high-purity-new-england\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_x_Picture_x0020_1\" alt=\"signature_70785060\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/6/4/1/image001.png?id=18&token=c574b63dbeb555309ee62c4b6d1794f9\"></span></a><span lang=\"ES\"> \r\n</span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\"><b><span lang=\"ES\" style=\"font-size:10.0pt; color:#0563C1; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_x_Picture_x0020_5\" alt=\"signature_1576473685\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/1/0/1/image002.png?id=19&token=abd84fe050babf7a3f37b4d5048d86d4\"></span></b></a><span lang=\"ES\">  </span><a href=\"https://www.facebook.com/HighPurityNE/\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_x_Picture_x0020_3\" alt=\"signature_3251001740\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/9/8/1/image003.png?id=20&token=c226348d2a8bf7254f228ddef281cd14\"></span></a></p>\r\n<p class=\"x_xmsonormal\"> </p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n",
-                "source": {
-                  "type": "email",
-                  "via": "customer"
-                },
-                "customer": {
-                  "id": 62,
-                  "type": "customer",
-                  "firstName": "Joshua",
-                  "lastName": "Wowk",
-                  "photoUrl": "",
-                  "email": "Joshua.Wowk@hp-ne.com"
-                },
-                "createdBy": {
-                  "id": 62,
-                  "type": "customer",
-                  "firstName": "Joshua",
-                  "lastName": "Wowk",
-                  "photoUrl": "",
-                  "email": "Joshua.Wowk@hp-ne.com"
-                },
-                "assignedTo": null,
-                "to": [
-                  "servicedesk@hp-ne.com"
-                ],
-                "cc": [],
-                "bcc": [],
-                "createdAt": "2023-05-23T20:14:13Z",
-                "openedAt": null,
-                "_embedded": {
-                  "attachments": [
-                    {
-                      "id": 18,
-                      "fileName": "image001.png",
-                      "fileUrl": "https://freescout.hp-ne.us/storage/attachment/6/4/1/image001.png?id=18&token=c574b63dbeb555309ee62c4b6d1794f9",
-                      "mimeType": "image/png",
-                      "size": 49790
-                    },
-                    {
-                      "id": 19,
-                      "fileName": "image002.png",
-                      "fileUrl": "https://freescout.hp-ne.us/storage/attachment/1/0/1/image002.png?id=19&token=abd84fe050babf7a3f37b4d5048d86d4",
-                      "mimeType": "image/png",
-                      "size": 2470
-                    },
-                    {
-                      "id": 20,
-                      "fileName": "image003.png",
-                      "fileUrl": "https://freescout.hp-ne.us/storage/attachment/9/8/1/image003.png?id=20&token=c226348d2a8bf7254f228ddef281cd14",
-                      "mimeType": "image/png",
-                      "size": 1301
-                    },
-                    {
-                      "id": 21,
-                      "fileName": "image004.png",
-                      "fileUrl": "https://freescout.hp-ne.us/storage/attachment/3/5/1/image004.png?id=21&token=b6b08d628f2e5a9a8030811b72688670",
-                      "mimeType": "image/png",
-                      "size": 361
-                    },
-                    {
-                      "id": 22,
-                      "fileName": "Outlook-vkncjudp.png",
-                      "fileUrl": "https://freescout.hp-ne.us/storage/attachment/6/7/1/Outlook-vkncjudp.png?id=22&token=db21a592f206494b69507ae7c028b02e",
-                      "mimeType": "image/png",
-                      "size": 361
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "customFields": [
-            {
-              "id": 2,
-              "name": "Type",
-              "value": "2",
-              "text": "Request"
-            },
-            {
-              "id": 3,
-              "name": "Category",
-              "value": "1",
-              "text": "Applications"
-            },
-            {
-              "id": 1,
-              "name": "Applications",
-              "value": "13",
-              "text": "SolidWorks"
-            },
-            {
-              "id": 4,
-              "name": "Progress",
-              "value": "",
-              "text": ""
-            },
-            {
-              "id": 5,
-              "name": "ClickUp ID",
-              "value": "",
-              "text": ""
-            },
-            {
-              "id": 6,
-              "name": "ClickUp URL",
-              "value": "",
-              "text": ""
-            },
-            {
-              "id": 7,
-              "name": "Due Date",
-              "value": "",
-              "text": ""
-            }
-          ]
         },
         "pairedItem": {
           "item": 0
@@ -3050,6 +2754,9 @@
               "text": ""
             }
           ]
+        },
+        "pairedItem": {
+          "item": 0
         }
       }
     ]
@@ -3058,6 +2765,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-05-26T02:59:00.000Z",
-  "versionId": "d9ad675e-30fe-411d-af98-d79c634a0ef9"
+  "updatedAt": "2023-05-30T21:56:24.000Z",
+  "versionId": "39ca1228-e898-40f3-b300-475684664d5e"
 }
