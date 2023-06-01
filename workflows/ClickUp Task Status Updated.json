@@ -121,8 +121,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1840,
-        540
+        1800,
+        480
       ],
       "notesInFlow": true,
       "credentials": {
@@ -203,6 +203,6 @@
   },
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-05-30T22:16:46.000Z",
-  "versionId": "9c8b6715-a260-412b-9fa8-f4e55ff6c624"
+  "updatedAt": "2023-06-01T03:48:06.000Z",
+  "versionId": "aff72304-5988-489e-adc0-5376d38f407e"
 }
