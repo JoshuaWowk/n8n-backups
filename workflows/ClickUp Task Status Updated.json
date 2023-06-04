@@ -2108,12 +2108,12 @@
       "secret": "HHQYAS50GB4MKXWW3XHUTJ3ZVH7ORDU3Y54KHPKWL9J1QC228M2PRUUZVIOY2AO7"
     },
     "node:Trigger-StatusUpdate": {
-      "webhookId": "e667bfe6-048e-4acf-b7b6-3dcf271936ff",
-      "secret": "DRT237L6JL8OQF6V76CWWCGGNUBNGESHZ1Y071C547KDHD98Q8BH60QIBOB83I8S"
+      "webhookId": "1d57083d-867f-430e-918a-4c3449fe8a38",
+      "secret": "NSGOXOI9FS4Y7XZU7WU0UJO6HMDK1542D0P0XW0XVESNKST8YG9PESMECFGD7BVZ"
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-01T14:50:13.000Z",
+  "updatedAt": "2023-06-03T21:07:01.000Z",
   "versionId": "e372c347-175e-4c4c-9226-571bea52544e"
 }
