@@ -1,0 +1,525 @@
+{
+  "active": false,
+  "connections": {
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StripDown": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "StripDown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-09T12:17:51.885Z",
+  "id": "14",
+  "name": "FreeScout Updated - Draft",
+  "nodes": [
+    {
+      "parameters": {
+        "html": "={{ $json.ThreadBody[0] }}",
+        "destinationKey": "ThreadBody[0]",
+        "options": {}
+      },
+      "id": "581fd096-d69d-4ac0-bb26-1c4aac8649bb",
+      "name": "Markdown",
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        920,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "comment",
+        "commentOn": "task",
+        "id": "={{ $json.ClickUp.ID[0] }}",
+        "commentText": "={{ $json.ThreadAction[0] }}: {{ $json.ThreadBody[0] }}",
+        "additionalFields": {}
+      },
+      "id": "ad2d88a2-21af-4e84-910f-34a328ef0c45",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        460
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "body.id",
+              "renameField": true,
+              "outputFieldName": "TicketID"
+            },
+            {
+              "fieldToAggregate": "body.subject",
+              "renameField": true,
+              "outputFieldName": "TicketSubject"
+            },
+            {
+              "fieldToAggregate": "body._embedded.threads[0].id",
+              "renameField": true,
+              "outputFieldName": "ThreadID"
+            },
+            {
+              "fieldToAggregate": "body._embedded.threads[0].action.text",
+              "renameField": true,
+              "outputFieldName": "ThreadAction"
+            },
+            {
+              "fieldToAggregate": "body._embedded.threads[0].body",
+              "renameField": true,
+              "outputFieldName": "ThreadBody"
+            },
+            {
+              "fieldToAggregate": "body.customFields[3].value",
+              "renameField": true,
+              "outputFieldName": "ClickUp.ID"
+            },
+            {
+              "fieldToAggregate": "body.customFields[4].value",
+              "renameField": true,
+              "outputFieldName": "ClickUp.URL"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c51c0d63-e633-4305-afcf-3d58416ce18a",
+      "name": "StripDown",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        700,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "70974618-5c07-461d-9d33-41290d06c82b",
+        "options": {}
+      },
+      "id": "c2687c18-4876-44ee-a3da-815fe71e399e",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        480,
+        460
+      ],
+      "webhookId": "70974618-5c07-461d-9d33-41290d06c82b"
+    }
+  ],
+  "pinData": {
+    "StripDown": [
+      {
+        "json": {
+          "TicketID": [
+            42
+          ],
+          "TicketSubject": [
+            "View your Teams Phone Mobile invoice"
+          ],
+          "ThreadID": [
+            144
+          ],
+          "ThreadAction": [
+            "Joshua Wowk replied to conversation #42"
+          ],
+          "ThreadBody": [
+            "<div>retry test</div>"
+          ],
+          "ClickUp": {
+            "ID": [
+              "85zt7529g"
+            ],
+            "URL": [
+              "https://app.clickup.com/t/85zt7529g"
+            ]
+          }
+        }
+      }
+    ],
+    "Markdown": [
+      {
+        "json": {
+          "TicketID": [
+            42
+          ],
+          "TicketSubject": [
+            "View your Teams Phone Mobile invoice"
+          ],
+          "ThreadID": [
+            144
+          ],
+          "ThreadAction": [
+            "Joshua Wowk replied to conversation #42"
+          ],
+          "ThreadBody": [
+            "retry test"
+          ],
+          "ClickUp": {
+            "ID": [
+              "85zt7529g"
+            ],
+            "URL": [
+              "https://app.clickup.com/t/85zt7529g"
+            ]
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.hp-ne.us",
+            "x-real-ip": "172.104.218.99",
+            "x-forwarded-for": "172.104.218.99",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "18317",
+            "user-agent": "GuzzleHttp/6.3.3 curl/7.81.0 PHP/8.1.2-1ubuntu2.9",
+            "content-type": "application/json",
+            "x-freescout-event": "convo.status",
+            "x-freescout-signature": "4qSKYHSBxWRsl9MJGRiEHkjK/dI="
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": 46,
+            "number": 46,
+            "threadsCount": 1,
+            "type": "email",
+            "folderId": 3,
+            "status": "pending",
+            "state": "published",
+            "subject": "Re: Move Production Schedule Out of Archive Folder",
+            "preview": "Apologies, meant to tag @HPNE/IT Service Desk to create a ticket for this. Joshua Wowk| Sys Admin | HPNE | 401-349-5153 Click here to book time with me From: Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;Sent: Thursday, June 8, 2023 9:59 AMTo: Kursten Annotti ",
+            "mailboxId": 1,
+            "assignee": {
+              "id": 2,
+              "type": "user",
+              "firstName": "Joshua",
+              "lastName": "Wowk",
+              "photoUrl": "",
+              "email": "joshua.wowk@hp-ne.com"
+            },
+            "createdBy": {
+              "id": 62,
+              "type": "customer",
+              "firstName": "Joshua",
+              "lastName": "Wowk",
+              "photoUrl": "",
+              "email": "Joshua.Wowk@hp-ne.com"
+            },
+            "createdAt": "2023-06-08T14:03:59Z",
+            "updatedAt": "2023-06-09T12:22:24Z",
+            "closedBy": null,
+            "closedByUser": null,
+            "closedAt": null,
+            "userUpdatedAt": "2023-06-09T12:22:24Z",
+            "customerWaitingSince": {
+              "time": "2023-06-08T14:03:59Z",
+              "friendly": "22 hours ago",
+              "latestReplyFrom": "customer"
+            },
+            "source": {
+              "type": "email",
+              "via": "customer"
+            },
+            "cc": [
+              "robert.brodeur@hp-ne.com",
+              "mark.hurley@hp-ne.com",
+              "david.ferchen@hp-ne.com",
+              "sha.barboza@hp-ne.com",
+              "kursten.annotti@hp-ne.com"
+            ],
+            "bcc": [],
+            "customer": {
+              "id": 62,
+              "type": "customer",
+              "firstName": "Joshua",
+              "lastName": "Wowk",
+              "photoUrl": "",
+              "email": "Joshua.Wowk@hp-ne.com"
+            },
+            "_embedded": {
+              "threads": [
+                {
+                  "id": 153,
+                  "type": "lineitem",
+                  "status": "pending",
+                  "state": "published",
+                  "action": {
+                    "type": "changed-ticket-status",
+                    "text": "Joshua Wowk marked as Pending conversation #46",
+                    "associatedEntities": []
+                  },
+                  "body": null,
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": {
+                    "id": 62,
+                    "type": "customer",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "Joshua.Wowk@hp-ne.com"
+                  },
+                  "createdBy": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "assignedTo": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-09T12:22:24Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                },
+                {
+                  "id": 152,
+                  "type": "lineitem",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "",
+                    "text": "Workflow Assign new tickets to jwowk was triggered for conversation #46",
+                    "associatedEntities": []
+                  },
+                  "body": "",
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": null,
+                  "createdBy": {
+                    "id": 3,
+                    "type": "user",
+                    "firstName": "Workflow",
+                    "lastName": "",
+                    "photoUrl": "",
+                    "email": "fsworkflow@example.org"
+                  },
+                  "assignedTo": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-08T14:03:59Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                },
+                {
+                  "id": 151,
+                  "type": "customer",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "",
+                    "text": "Joshua Wowk started a new conversation #46",
+                    "associatedEntities": []
+                  },
+                  "body": "\r\n<div style='font-family: \"Trebuchet MS\", Trebuchet, sans-serif; font-size: 10pt; color: rgb(0, 0, 0);' class=\"elementToProof\">\r\nApologies, meant to tag <a id=\"OWAAM137363\" class=\"tWKOu mention ms-bgc-nlr ms-fcl-b\" href=\"mailto:servicedesk@hp-ne.com\">\r\n@HPNE/IT Service Desk</a> to create a ticket for this.</div>\r\n<div class=\"elementToProof\">\r\n<div style='font-family: \"Trebuchet MS\", Trebuchet, sans-serif; font-size: 10pt; color: rgb(0, 0, 0);'>\r\n<br>\r\n</div>\r\n<div id=\"Signature\">\r\n<div>\r\n<p style=\"background: white; text-align: start; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;\">\r\n<span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>Joshua Wowk</span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'> </span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>| </span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>Sys\r\n Admin</span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(237, 125, 49);'><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\"margin: 0px; display: inline !important; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\">| </span></span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>HPNE</span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(237, 125, 49);'><span style=\"color: rgb(222, 106, 25);\"> </span><span style=\"margin: 0px; display: inline !important; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\">| </span></span><span style='margin: 0px; padding: 0in; border: 1pt none windowtext; font-size: 10pt; font-family: \"Calibri Light\"; color: rgb(222, 106, 25);'>401-349-5153</span></p>\r\n<span style=\"margin: 0px; font-size: 14px; text-align: start; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\"> </span><span style=\"margin: 0px; font-size: 14px; text-align: start; background-color: rgb(255, 255, 255);\"><a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" style=\"font-size: 14px; margin: 0px; letter-spacing: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 13.3333px; margin: 0px; letter-spacing: -0.266667px; background-color: rgb(255, 255, 255);\"><img style=\"width: 16px; height: 16px; max-width: initial;\" width=\"16\" height=\"16\" data-outlook-trace=\"F:1|T:1\" src=\"https://freescout.hp-ne.us/storage/attachment/3/8/1/Outlook-wfgqtjh2.png?id=176&token=1c4edfc17f97e157c06dafb5700b8aeb\"></span><span style=\"font-size: 10pt; font-family: Candara, Optima, sans-serif; margin: 0px; letter-spacing: -0.266667px; color: rgb(222, 106, 25); background-color: rgb(255, 255, 255);\"><sup>Click\r\n here to book time with me</sup></span></a></span></div>\r\n</div>\r\n</div>\r\n<div id=\"appendonsend\"></div>\r\n<hr style=\"display:inline-block;width:98%\" tabindex=\"-1\">\r\n<div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" style=\"font-size:11pt\" color=\"#000000\"><b>From:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br>\r\n<b>Sent:</b> Thursday, June 8, 2023 9:59 AM<br>\r\n<b>To:</b> Kursten Annotti &lt;Kursten.Annotti@hp-ne.com&gt;<br>\r\n<b>Cc:</b> Robert Brodeur &lt;Robert.Brodeur@hp-ne.com&gt;; Mark Hurley &lt;Mark.Hurley@hp-ne.com&gt;; David Ferchen &lt;david.ferchen@hp-ne.com&gt;; Sha Barboza &lt;Sha.Barboza@hp-ne.com&gt;; Cindy Croft &lt;Cindy.Croft@hp-ne.com&gt;; Derek Sullivan &lt;Derek.Sullivan@hp-ne.com&gt;; Jeremy Tripodi\r\n &lt;jeremy.tripodi@hp-ne.com&gt;<br>\r\n<b>Subject:</b> Re: Move Production Schedule Out of Archive Folder</font>\r\n<div> </div>\r\n</div>\r\n<style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style>\r\n<div dir=\"ltr\">\r\n<div class=\"x_elementToProof\" style='font-family:\"Trebuchet MS\",Trebuchet,sans-serif; font-size:10pt; color:rgb(0,0,0)'>\r\nSure thing, let me review this all quickly and I'll get it sorted out. </div>\r\n<div class=\"x_elementToProof\" style='font-family:\"Trebuchet MS\",Trebuchet,sans-serif; font-size:10pt; color:rgb(0,0,0)'>\r\n<br>\r\n</div>\r\n<div class=\"x_elementToProof\">\r\n<div id=\"x_Signature\">\r\n<div>\r\n<p style=\"background:white; text-align:start; margin:0in; font-size:11pt; font-family:Calibri,sans-serif\">\r\n<span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(222,106,25)'>Joshua Wowk</span><span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(222,106,25)'> </span><span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(222,106,25)'>| </span><span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(222,106,25)'>Sys\r\n Admin</span><span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(237,125,49)'><span style=\"color:rgb(222,106,25)\"> </span><span style=\"margin:0px; display:inline!important; color:rgb(222,106,25); background-color:rgb(255,255,255)\">| </span></span><span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(222,106,25)'>HPNE</span><span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(237,125,49)'><span style=\"color:rgb(222,106,25)\"> </span><span style=\"margin:0px; display:inline!important; color:rgb(222,106,25); background-color:rgb(255,255,255)\">| </span></span><span style='margin:0px; padding:0in; border:1pt none windowtext; font-size:10pt; font-family:\"Calibri Light\"; color:rgb(222,106,25)'>401-349-5153</span></p>\r\n<span style=\"margin:0px; font-size:14px; text-align:start; color:rgb(222,106,25); background-color:rgb(255,255,255)\"> </span><span style=\"margin:0px; font-size:14px; text-align:start; background-color:rgb(255,255,255)\"><a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" style=\"font-size:14px; margin:0px; letter-spacing:normal; background-color:rgb(255,255,255)\"><span style=\"font-size:13.3333px; margin:0px; letter-spacing:-0.266667px; background-color:rgb(255,255,255)\"><img width=\"16\" height=\"16\" style=\"width:16px; height:16px; max-width:initial\" data-outlook-trace=\"F:2|T:2\" src=\"https://freescout.hp-ne.us/storage/attachment/8/2/1/Outlook-bkwudetr.png?id=175&token=f4d464c2fdabbcd47aef1d1f70a04e28\"></span><span style=\"font-size:10pt; font-family:Candara,Optima,sans-serif; margin:0px; letter-spacing:-0.266667px; color:rgb(222,106,25); background-color:rgb(255,255,255)\"><sup>Click\r\n here to book time with me</sup></span></a></span></div>\r\n</div>\r\n</div>\r\n<div id=\"x_appendonsend\"></div>\r\n<hr tabindex=\"-1\" style=\"display:inline-block; width:98%\">\r\n<div id=\"x_divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Kursten Annotti &lt;Kursten.Annotti@hp-ne.com&gt;<br>\r\n<b>Sent:</b> Thursday, June 8, 2023 9:42 AM<br>\r\n<b>To:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br>\r\n<b>Cc:</b> Robert Brodeur &lt;Robert.Brodeur@hp-ne.com&gt;; Mark Hurley &lt;Mark.Hurley@hp-ne.com&gt;; David Ferchen &lt;david.ferchen@hp-ne.com&gt;; Sha Barboza &lt;Sha.Barboza@hp-ne.com&gt;; Cindy Croft &lt;Cindy.Croft@hp-ne.com&gt;; Derek Sullivan &lt;Derek.Sullivan@hp-ne.com&gt;; Jeremy Tripodi\r\n &lt;jeremy.tripodi@hp-ne.com&gt;<br>\r\n<b>Subject:</b> Move Production Schedule Out of Archive Folder</font>\r\n<div> </div>\r\n</div>\r\n<style>\r\n<!--\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.x_x_MsoNormal, li.x_x_MsoNormal, div.x_x_MsoNormal\r\n\t{margin:0in;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\nspan.x_x_EmailStyle17\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.x_x_MsoChpDefault\r\n\t{font-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\n-->\r\n</style>\r\n<div lang=\"EN-US\" style=\"word-wrap:break-word\">\r\n<div class=\"x_x_WordSection1\">\r\n<p class=\"x_x_MsoNormal\">Good day Josh,</p>\r\n<p class=\"x_x_MsoNormal\"> </p>\r\n<p class=\"x_x_MsoNormal\">Per our conversation, When you have a moment, would you kindly move the Production Schedule out of the current Archive folder to a more accessible location for all who currently access the schedule.\r\n</p>\r\n<p class=\"x_x_MsoNormal\">In addition, if you could also remove all the items labeled delete.\r\n</p>\r\n<p class=\"x_x_MsoNormal\">The screen shot is so you have the path to the current location.\r\n</p>\r\n<p class=\"x_x_MsoNormal\">Thank you so much, just let us know once complete. </p>\r\n<p class=\"x_x_MsoNormal\"> </p>\r\n<p class=\"x_x_MsoNormal\"><img width=\"1920\" height=\"1040\" id=\"x_x_Picture_x0020_4\" alt=\"A screenshot of a computer\n\nDescription automatically generated with medium confidence\" style=\"width:20.0in; height:10.8333in\" data-outlook-trace=\"F:2|T:2\" src=\"https://freescout.hp-ne.us/storage/attachment/8/2/1/image004.png?id=174&token=12790c739aabd1821071eb24ab45ebc9\"></p>\r\n<p class=\"x_x_MsoNormal\"> </p>\r\n<p class=\"x_x_MsoNormal\">Sincerely, <span style=\"\"></span></p>\r\n<p class=\"x_x_MsoNormal\"> </p>\r\n<p class=\"x_x_MsoNormal\"><b>Kursten Annotti</b></p>\r\n<p class=\"x_x_MsoNormal\"> </p>\r\n<p class=\"x_x_MsoNormal\"><i><span style=\"color:#ED7D31\">Production Scheduler </span>\r\n</i></p>\r\n<p class=\"x_x_MsoNormal\"><b><span style=\"color:#ED7D31\">High Purity New England | HP-NE.com</span></b></p>\r\n<p class=\"x_x_MsoNormal\"><i><span style=\"color:black\">2 Thurber Blvd, Smithfield, RI 02917</span></i></p>\r\n<p class=\"x_x_MsoNormal\"><span style=\"color:black\">E: </span><a href=\"mailto:Kursten.Annotti@hp-ne.com\"><span style=\"color:#0563C1\">Kursten.Annotti@hp-ne.com</span></a> |\r\n<span style=\"color:black\">O: 401.349.4477 </span>|<span style=\"color:black\"> D: 401.349.5120</span></p>\r\n<p class=\"x_x_MsoNormal\"><b><u><span lang=\"ES\" style=\"color:#ED7D31\">ISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB</span></u></b></p>\r\n<p class=\"x_x_MsoNormal\"><b><span lang=\"ES\" style=\"font-size:8.0pt; color:#ED7D31\"> </span></b></p>\r\n<p class=\"x_x_MsoNormal\"><a href=\"https://www.linkedin.com/company/high-purity-new-england\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_x_Picture_x0020_1\" alt=\"Icon\n\nDescription automatically generated\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:2|T:2\" src=\"https://freescout.hp-ne.us/storage/attachment/4/0/1/image001.png?id=171&token=5feae9005e63fedfe2bf681276fdaaf3\"></span></a><span lang=\"ES\"> \r\n</span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\"><b><span lang=\"ES\" style=\"font-size:10.0pt; color:#0563C1; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_x_Picture_x0020_2\" alt=\"Logo\n\nDescription automatically generated\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:2|T:2\" src=\"https://freescout.hp-ne.us/storage/attachment/1/8/1/image002.gif?id=172&token=3b69fde12f8e9b930f752c4f02196f18\"></span></b></a><span lang=\"ES\">  </span><a href=\"https://www.facebook.com/HighPurityNE/\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"x_x_Picture_x0020_3\" alt=\"Icon\n\nDescription automatically generated\" style=\"width:.2708in; height:.2708in\" data-outlook-trace=\"F:2|T:2\" src=\"https://freescout.hp-ne.us/storage/attachment/7/6/1/image003.gif?id=173&token=03a096a50821a916fb1734215d1e0605\"></span></a></p>\r\n<p class=\"x_x_MsoNormal\"> </p>\r\n</div>\r\n</div>\r\n</div>\r\n",
+                  "source": {
+                    "type": "email",
+                    "via": "customer"
+                  },
+                  "customer": {
+                    "id": 62,
+                    "type": "customer",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "Joshua.Wowk@hp-ne.com"
+                  },
+                  "createdBy": {
+                    "id": 62,
+                    "type": "customer",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "Joshua.Wowk@hp-ne.com"
+                  },
+                  "assignedTo": null,
+                  "to": [
+                    "kursten.annotti@hp-ne.com",
+                    "servicedesk@hp-ne.com"
+                  ],
+                  "cc": [
+                    "robert.brodeur@hp-ne.com",
+                    "mark.hurley@hp-ne.com",
+                    "david.ferchen@hp-ne.com",
+                    "sha.barboza@hp-ne.com"
+                  ],
+                  "bcc": [],
+                  "createdAt": "2023-06-08T14:03:59Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": [
+                      {
+                        "id": 171,
+                        "fileName": "image001.png",
+                        "fileUrl": "https://freescout.hp-ne.us/storage/attachment/4/0/1/image001.png?id=171&token=5feae9005e63fedfe2bf681276fdaaf3",
+                        "mimeType": "image/png",
+                        "size": 630
+                      },
+                      {
+                        "id": 172,
+                        "fileName": "image002.gif",
+                        "fileUrl": "https://freescout.hp-ne.us/storage/attachment/1/8/1/image002.gif?id=172&token=3b69fde12f8e9b930f752c4f02196f18",
+                        "mimeType": "image/gif",
+                        "size": 2682
+                      },
+                      {
+                        "id": 173,
+                        "fileName": "image003.gif",
+                        "fileUrl": "https://freescout.hp-ne.us/storage/attachment/7/6/1/image003.gif?id=173&token=03a096a50821a916fb1734215d1e0605",
+                        "mimeType": "image/gif",
+                        "size": 1901
+                      },
+                      {
+                        "id": 174,
+                        "fileName": "image004.png",
+                        "fileUrl": "https://freescout.hp-ne.us/storage/attachment/8/2/1/image004.png?id=174&token=12790c739aabd1821071eb24ab45ebc9",
+                        "mimeType": "image/png",
+                        "size": 108721
+                      },
+                      {
+                        "id": 175,
+                        "fileName": "Outlook-bkwudetr.png",
+                        "fileUrl": "https://freescout.hp-ne.us/storage/attachment/8/2/1/Outlook-bkwudetr.png?id=175&token=f4d464c2fdabbcd47aef1d1f70a04e28",
+                        "mimeType": "image/png",
+                        "size": 361
+                      },
+                      {
+                        "id": 176,
+                        "fileName": "Outlook-wfgqtjh2.png",
+                        "fileUrl": "https://freescout.hp-ne.us/storage/attachment/3/8/1/Outlook-wfgqtjh2.png?id=176&token=1c4edfc17f97e157c06dafb5700b8aeb",
+                        "mimeType": "image/png",
+                        "size": 361
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "customFields": [
+              {
+                "id": 2,
+                "name": "Type",
+                "value": "2",
+                "text": "Request"
+              },
+              {
+                "id": 3,
+                "name": "Category",
+                "value": "1",
+                "text": "Applications"
+              },
+              {
+                "id": 1,
+                "name": "Applications",
+                "value": "3",
+                "text": "Egnyte"
+              },
+              {
+                "id": 5,
+                "name": "ClickUp ID",
+                "value": "",
+                "text": ""
+              },
+              {
+                "id": 6,
+                "name": "ClickUp URL",
+                "value": "https://app.clickup.com/t/85zt8d992",
+                "text": ""
+              },
+              {
+                "id": 7,
+                "name": "Due Date",
+                "value": "",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-06-09T12:23:03.000Z",
+  "versionId": "5a58187c-0649-4150-b2a2-0ee89e76d437"
+}
