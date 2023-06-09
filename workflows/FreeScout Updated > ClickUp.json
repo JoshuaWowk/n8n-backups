@@ -12,22 +12,22 @@
         ]
       ]
     },
-    "TicketUpdated": {
+    "StripDown": {
       "main": [
         [
           {
-            "node": "StripDown",
+            "node": "Markdown",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "StripDown": {
+    "Trigger-ConvoUpdated": {
       "main": [
         [
           {
-            "node": "Markdown",
+            "node": "StripDown",
             "type": "main",
             "index": 0
           }
@@ -76,22 +76,6 @@
           "name": "ClickUp account"
         }
       }
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "dff3629a-7ba8-4fb9-abfb-0d88520eab4c",
-        "options": {}
-      },
-      "id": "c839ba3f-5755-4c2f-be4a-14bd06493052",
-      "name": "TicketUpdated",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        480,
-        460
-      ],
-      "webhookId": "dff3629a-7ba8-4fb9-abfb-0d88520eab4c"
     },
     {
       "parameters": {
@@ -145,10 +129,89 @@
         700,
         460
       ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dff3629a-7ba8-4fb9-abfb-0d88520eab4c",
+        "options": {}
+      },
+      "id": "c839ba3f-5755-4c2f-be4a-14bd06493052",
+      "name": "Trigger-ConvoUpdated",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        480,
+        460
+      ],
+      "webhookId": "dff3629a-7ba8-4fb9-abfb-0d88520eab4c",
+      "notesInFlow": true,
+      "notes": "Ticket Convo Updated"
     }
   ],
   "pinData": {
-    "TicketUpdated": [
+    "StripDown": [
+      {
+        "json": {
+          "TicketID": [
+            42
+          ],
+          "TicketSubject": [
+            "View your Teams Phone Mobile invoice"
+          ],
+          "ThreadID": [
+            144
+          ],
+          "ThreadAction": [
+            "Joshua Wowk replied to conversation #42"
+          ],
+          "ThreadBody": [
+            "<div>retry test</div>"
+          ],
+          "ClickUp": {
+            "ID": [
+              "85zt7529g"
+            ],
+            "URL": [
+              "https://app.clickup.com/t/85zt7529g"
+            ]
+          }
+        }
+      }
+    ],
+    "Markdown": [
+      {
+        "json": {
+          "TicketID": [
+            42
+          ],
+          "TicketSubject": [
+            "View your Teams Phone Mobile invoice"
+          ],
+          "ThreadID": [
+            144
+          ],
+          "ThreadAction": [
+            "Joshua Wowk replied to conversation #42"
+          ],
+          "ThreadBody": [
+            "retry test"
+          ],
+          "ClickUp": {
+            "ID": [
+              "85zt7529g"
+            ],
+            "URL": [
+              "https://app.clickup.com/t/85zt7529g"
+            ]
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Trigger-ConvoUpdated": [
       {
         "json": {
           "headers": {
@@ -460,73 +523,12 @@
           "item": 0
         }
       }
-    ],
-    "StripDown": [
-      {
-        "json": {
-          "TicketID": [
-            42
-          ],
-          "TicketSubject": [
-            "View your Teams Phone Mobile invoice"
-          ],
-          "ThreadID": [
-            144
-          ],
-          "ThreadAction": [
-            "Joshua Wowk replied to conversation #42"
-          ],
-          "ThreadBody": [
-            "<div>retry test</div>"
-          ],
-          "ClickUp": {
-            "ID": [
-              "85zt7529g"
-            ],
-            "URL": [
-              "https://app.clickup.com/t/85zt7529g"
-            ]
-          }
-        }
-      }
-    ],
-    "Markdown": [
-      {
-        "json": {
-          "TicketID": [
-            42
-          ],
-          "TicketSubject": [
-            "View your Teams Phone Mobile invoice"
-          ],
-          "ThreadID": [
-            144
-          ],
-          "ThreadAction": [
-            "Joshua Wowk replied to conversation #42"
-          ],
-          "ThreadBody": [
-            "retry test"
-          ],
-          "ClickUp": {
-            "ID": [
-              "85zt7529g"
-            ],
-            "URL": [
-              "https://app.clickup.com/t/85zt7529g"
-            ]
-          }
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
     ]
   },
   "settings": {},
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-04T06:29:01.000Z",
-  "versionId": "af8bf571-f234-4a75-afef-5b81bc3e2476"
+  "updatedAt": "2023-06-09T12:19:11.000Z",
+  "versionId": "ed2d4532-b1f1-4b89-8cdc-27bf08f26eb5"
 }
