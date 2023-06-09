@@ -38,7 +38,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request1",
+            "node": "Set ClickUpURL",
             "type": "main",
             "index": 0
           }
@@ -67,11 +67,11 @@
         ]
       ]
     },
-    "HTTP Request1": {
+    "Set ClickUpURL": {
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "Set ClickUpID",
             "type": "main",
             "index": 0
           }
@@ -103,34 +103,6 @@
       ],
       "notesInFlow": true,
       "notes": "Description Text/Body"
-    },
-    {
-      "parameters": {
-        "method": "PUT",
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"Trigger-NewTicket\"].json[\"body\"][\"id\"] }}/custom_fields",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\"customFields\":[{\"id\":6,\"value\":\"{{ $node.CreateTask.json.url }}\"}]} ",
-        "options": {}
-      },
-      "id": "366ef6ce-8b72-4b4a-a991-f39743fa1a85",
-      "name": "HTTP Request1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        2460,
-        580
-      ],
-      "notesInFlow": true,
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "9",
-          "name": "X-FreeScout-API-Key"
-        }
-      },
-      "notes": "Task URL -> FreeScout"
     },
     {
       "parameters": {
@@ -257,15 +229,43 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\"customFields\":[{\"id\":6,\"value\":\"{{ $node.CreateTask.json.url }}\"}]} ",
+        "jsonBody": "={\"customFields\":[{\"id\":5,\"value\":\"{{ $node.CreateTask.json.url }}\"}]} ",
         "options": {}
       },
       "id": "24b1adc0-fb86-44cd-90d7-f1c27fb622a4",
-      "name": "HTTP Request",
+      "name": "Set ClickUpID",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
         2640,
+        580
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "X-FreeScout-API-Key"
+        }
+      },
+      "notes": "Task URL -> FreeScout"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"Trigger-NewTicket\"].json[\"body\"][\"id\"] }}/custom_fields",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"customFields\":[{\"id\":6,\"value\":\"{{ $node.CreateTask.json.url }}\"}]} ",
+        "options": {}
+      },
+      "id": "366ef6ce-8b72-4b4a-a991-f39743fa1a85",
+      "name": "Set ClickUpURL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2460,
         580
       ],
       "notesInFlow": true,
@@ -2837,6 +2837,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-05T17:05:31.000Z",
-  "versionId": "30abea91-ed07-4778-8f3f-354d3b1e53af"
+  "updatedAt": "2023-06-09T12:28:30.000Z",
+  "versionId": "18b920e2-6db8-45f6-b34d-74b652022919"
 }
