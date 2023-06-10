@@ -190,8 +190,21 @@
   "staticData": {
     "node:ClickUp Trigger": {}
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-06-09T19:54:53.274Z",
+      "updatedAt": "2023-06-09T19:54:53.274Z",
+      "id": "8",
+      "name": "Disabled"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2023-05-14T15:44:10.000Z",
-  "versionId": "e49a8ec1-64a4-4685-ae13-86720fda54e8"
+  "updatedAt": "2023-06-09T19:56:51.000Z",
+  "versionId": "eafb56f6-2b13-47f6-a345-54a36315ef93"
 }
