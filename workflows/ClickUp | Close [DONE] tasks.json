@@ -231,8 +231,21 @@
       "secret": "POTI2ZL43ZN3U6MHGQHVQ4BZ0TCGS0RMQ75BALZ72FD5XJUIM5F3UWVM42SGNEP4"
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-06-09T19:54:53.274Z",
+      "updatedAt": "2023-06-09T19:54:53.274Z",
+      "id": "8",
+      "name": "Disabled"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2023-05-14T15:39:01.000Z",
-  "versionId": "aa415e08-2042-4a65-8ba1-b86b54f2be6b"
+  "updatedAt": "2023-06-09T19:57:03.000Z",
+  "versionId": "f9bcdbf5-82f3-48e4-8e35-12b9419b3c3c"
 }
