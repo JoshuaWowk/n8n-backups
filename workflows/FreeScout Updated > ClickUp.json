@@ -527,8 +527,33 @@
   },
   "settings": {},
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-06-09T19:52:42.669Z",
+      "updatedAt": "2023-06-09T19:52:42.669Z",
+      "id": "4",
+      "name": "FreeScout"
+    },
+    {
+      "createdAt": "2023-06-09T19:53:13.180Z",
+      "updatedAt": "2023-06-09T19:53:13.180Z",
+      "id": "6",
+      "name": "Enabled"
+    },
+    {
+      "createdAt": "2023-06-09T19:54:26.868Z",
+      "updatedAt": "2023-06-09T19:54:36.928Z",
+      "id": "7",
+      "name": "Trigger:Change/Update"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2023-06-09T12:19:11.000Z",
-  "versionId": "ed2d4532-b1f1-4b89-8cdc-27bf08f26eb5"
+  "updatedAt": "2023-06-09T19:55:06.000Z",
+  "versionId": "5eff6150-430a-4d34-993a-7411ceaa966c"
 }
