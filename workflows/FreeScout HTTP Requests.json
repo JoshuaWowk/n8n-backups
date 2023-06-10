@@ -59,8 +59,27 @@
   "pinData": {},
   "settings": {},
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-06-09T19:52:42.669Z",
+      "updatedAt": "2023-06-09T19:52:42.669Z",
+      "id": "4",
+      "name": "FreeScout"
+    },
+    {
+      "createdAt": "2023-06-09T19:54:53.274Z",
+      "updatedAt": "2023-06-09T19:54:53.274Z",
+      "id": "8",
+      "name": "Disabled"
+    },
+    {
+      "createdAt": "2023-06-09T19:56:21.501Z",
+      "updatedAt": "2023-06-09T19:56:21.501Z",
+      "id": "9",
+      "name": "Reference"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2023-05-26T03:01:09.124Z",
-  "versionId": "fc7fbba4-fb39-4007-b739-0713a5fef6a5"
+  "updatedAt": "2023-06-09T19:56:28.000Z",
+  "versionId": "4bcf933d-b382-4b40-a3d8-9b86f4aa2797"
 }
