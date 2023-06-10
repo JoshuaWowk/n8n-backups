@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "IfDone",
+            "node": "IfDone/Closed",
             "type": "main",
             "index": 0
           }
@@ -15,6 +15,11 @@
     "GetTask": {
       "main": [
         [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          },
           {
             "node": "Filter",
             "type": "main",
@@ -38,25 +43,25 @@
       "main": [
         [
           {
-            "node": "PutActive",
+            "node": "PutActiveTag",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "IfClosed",
+            "node": "IfWaiting",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IfDone": {
+    "IfBacklog": {
       "main": [
         [
           {
-            "node": "PutPending",
+            "node": "PutBacklogTag",
             "type": "main",
             "index": 0
           }
@@ -70,11 +75,51 @@
         ]
       ]
     },
-    "IfClosed": {
+    "IfDone/Closed": {
       "main": [
         [
           {
-            "node": "PutClosed",
+            "node": "PutClosedTag",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IfBacklog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfWaiting": {
+      "main": [
+        [
+          {
+            "node": "PutWaitingTag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Microsoft Excel 365",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Filter",
             "type": "main",
             "index": 0
           }
@@ -102,7 +147,7 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 1,
       "position": [
-        1320,
+        1920,
         580
       ]
     },
@@ -168,7 +213,28 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1720,
+        2600,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "backlog"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "2c715450-042f-41f4-a7ca-6cd59b11a629",
+      "name": "IfBacklog",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2380,
         660
       ]
     },
@@ -182,43 +248,39 @@
             },
             {
               "value1": "={{ $node.GetTask.json.status.status }}",
-              "value2": "backlog"
-            },
-            {
-              "value1": "={{ $node.GetTask.json.status.status }}",
-              "value2": "on-deck"
+              "value2": "closed"
             }
           ]
         },
         "combineOperation": "any"
       },
       "id": "e5a5c05c-5998-45a3-962b-eed972582af7",
-      "name": "IfDone",
+      "name": "IfDone/Closed",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1480,
+        2140,
         580
       ]
     },
     {
       "parameters": {
         "method": "PUT",
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"GetTask\"].json.custom_fields[31].value }}/",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"GetTask\"].json.custom_fields[31].value }}/tags",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\"byUser\":2,\"status\":\"pending\"}",
+        "jsonBody": "={\"tags\":[\"backlog\"]}",
         "options": {}
       },
-      "id": "ec7e5f04-f128-4ff1-bf2d-0ce4c30ccbe4",
-      "name": "PutPending",
+      "id": "3451f2d8-b511-42ee-8516-ba200128ad46",
+      "name": "PutBacklogTag",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1720,
-        460
+        2600,
+        580
       ],
       "notesInFlow": true,
       "credentials": {
@@ -227,26 +289,26 @@
           "name": "X-FreeScout-API-Key"
         }
       },
-      "notes": "Change Status: Pending"
+      "notes": "Add \"backlog\" tag. FreeScout should then change the ticket's status to \"pending\""
     },
     {
       "parameters": {
         "method": "PUT",
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"GetTask\"].json.custom_fields[31].value }}/",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"GetTask\"].json.custom_fields[31].value }}/tags",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\"byUser\":2,\"status\":\"active\"}",
+        "jsonBody": "={\"tags\":[\"active\"]}",
         "options": {}
       },
       "id": "495ea4f2-c0f1-4d20-b0cd-7d6ede175084",
-      "name": "PutActive",
+      "name": "PutActiveTag",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1940,
-        560
+        2820,
+        660
       ],
       "notesInFlow": true,
       "credentials": {
@@ -260,21 +322,21 @@
     {
       "parameters": {
         "method": "PUT",
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"GetTask\"].json.custom_fields[31].value }}/",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"GetTask\"].json.custom_fields[31].value }}/tags",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\"byUser\":2,\"status\":\"closed\"}",
+        "jsonBody": "={\"tags\":[\"closed\"]}",
         "options": {}
       },
-      "id": "593358ab-ebe4-4f27-bd4a-bec338eee83e",
-      "name": "PutClosed",
+      "id": "ec7e5f04-f128-4ff1-bf2d-0ce4c30ccbe4",
+      "name": "PutClosedTag",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2160,
-        660
+        2380,
+        460
       ],
       "notesInFlow": true,
       "credentials": {
@@ -291,18 +353,110 @@
           "string": [
             {
               "value1": "={{ $node.GetTask.json.status.status }}",
-              "value2": "closed"
+              "value2": "waiting"
             }
           ]
         }
       },
-      "id": "3d66ec25-72f6-4143-a76f-9f93843b7a8c",
-      "name": "IfClosed",
+      "id": "e602c9f0-45c9-4455-a804-f1099669d0d4",
+      "name": "IfWaiting",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1940,
+        2820,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $node[\"GetTask\"].json.custom_fields[31].value }}/tags",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"tags\":[\"waiting\"]}",
+        "options": {}
+      },
+      "id": "bf7a79ef-3c0e-4193-9d99-294a6ad7db0b",
+      "name": "PutWaitingTag",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3040,
         760
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "X-FreeScout-API-Key"
+        }
+      },
+      "notes": "Change Status: Closed"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "custom_fields",
+        "options": {}
+      },
+      "id": "42e08baf-3154-413a-8f9b-7b5199c77066",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        1320,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "id",
+        "include": "selectedOtherFields",
+        "fieldsToInclude": {
+          "fields": [
+            {
+              "fieldName": "name"
+            },
+            {
+              "fieldName": "type"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "46a0b329-0439-4544-b90b-11e81f67373c",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        1760,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "worksheet",
+        "operation": "update",
+        "workbook": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "worksheet": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "b677fc11-1be8-49df-a0c3-7d6875defed0",
+      "name": "Microsoft Excel 365",
+      "type": "n8n-nodes-base.microsoftExcel",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        440
       ]
     }
   ],
@@ -2099,6 +2253,437 @@
           "item": 0
         }
       }
+    ],
+    "Item Lists": [
+      {
+        "json": {
+          "id": "c3f30ac7-c55b-4ae7-b743-41f0f720e131",
+          "name": "To-Do List",
+          "type": "url",
+          "type_config": {},
+          "date_created": "1675897429885",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "92e0d999-b950-4b1a-8db4-631892318a08",
+          "name": "Under 15 mins",
+          "type": "checkbox",
+          "type_config": {},
+          "date_created": "1676415225279",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "2d594d9c-48a5-4f3a-9f53-84439a44924e",
+          "name": "Location/Bldg.",
+          "type": "drop_down",
+          "type_config": {
+            "default": 0,
+            "placeholder": null,
+            "new_drop_down": true,
+            "options": [
+              {
+                "id": "db151350-9d34-4e74-a11e-75cdc12ad5fc",
+                "name": "N/A",
+                "color": "#667684",
+                "orderindex": 0
+              },
+              {
+                "id": "bda703d9-6389-4b06-b31d-e954778c6e74",
+                "name": "2 Thurber",
+                "color": "#2ecd6f",
+                "orderindex": 1
+              },
+              {
+                "id": "4b213ac1-a7a2-4489-aa78-7bf60fa7cb86",
+                "name": "14 Thurber",
+                "color": "#FF4081",
+                "orderindex": 2
+              },
+              {
+                "id": "b78ef126-c1da-4a13-9fe6-9880006551a9",
+                "name": "36 Thurber Blvd.",
+                "color": "#02BCD4",
+                "orderindex": 3
+              },
+              {
+                "id": "3e8aac86-eadb-4438-a819-6a7cc1c01ce6",
+                "name": "Remote",
+                "color": "#7C4DFF",
+                "orderindex": 4
+              },
+              {
+                "id": "d6149f8b-617e-4bf4-ba04-628f5c7044a9",
+                "name": "Other",
+                "color": "#b5bcc2",
+                "orderindex": 5
+              }
+            ]
+          },
+          "date_created": "1660100952182",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "4792913d-eb2a-490f-92b4-6046c66f620e",
+          "name": "Computer",
+          "type": "text",
+          "type_config": {},
+          "date_created": "1660101008386",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "8d47ae36-24cf-4442-b363-d0b0ab572ef8",
+          "name": "Manager/Supervisor",
+          "type": "short_text",
+          "type_config": {},
+          "date_created": "1660100980068",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "17862224-0d09-49b1-8b7b-8825c234448f",
+          "name": "Department",
+          "type": "drop_down",
+          "type_config": {
+            "default": 0,
+            "placeholder": null,
+            "new_drop_down": true,
+            "options": [
+              {
+                "id": "b513e4e1-0a44-4a52-b25e-e3530e8feba5",
+                "name": "N/A",
+                "color": "#667684",
+                "orderindex": 0
+              },
+              {
+                "id": "17ebed35-3dc2-4347-b316-fe1af0724128",
+                "name": "Administration",
+                "color": "#81B1FF",
+                "orderindex": 1
+              },
+              {
+                "id": "50538d84-99e1-4a7a-82fe-8c168992d97d",
+                "name": "Client Services",
+                "color": "#f9d900",
+                "orderindex": 2
+              },
+              {
+                "id": "096d352e-334e-4084-869d-89608ebc0e69",
+                "name": "Engineering | Single-Use Design ",
+                "color": "#04A9F4",
+                "orderindex": 3
+              },
+              {
+                "id": "c0e8fbf2-22eb-4914-91ea-637fcc8c753d",
+                "name": "Engineering | Special Projects",
+                "color": "#3082B7",
+                "orderindex": 4
+              },
+              {
+                "id": "3885960d-d01b-4230-b764-a0734304f23f",
+                "name": "Executive",
+                "color": "#1bbc9c",
+                "orderindex": 5
+              },
+              {
+                "id": "7187d1f5-f25a-4342-b5a8-0ea1eceb777f",
+                "name": "FlexConnexx",
+                "color": "#1bbc9c",
+                "orderindex": 6
+              },
+              {
+                "id": "8449d12b-48b5-4585-8973-d4ecff5d46cc",
+                "name": "Finance",
+                "color": "#059312",
+                "orderindex": 7
+              },
+              {
+                "id": "b6f3fcfc-91d8-49a0-9f50-fad04927705f",
+                "name": "Human Resources",
+                "color": "#FF7FAB",
+                "orderindex": 8
+              },
+              {
+                "id": "46b7072e-8b4e-43f0-a61d-6649893e4dc5",
+                "name": "IT",
+                "color": "#0076ff",
+                "orderindex": 9
+              },
+              {
+                "id": "fbceef85-58b3-42e3-8ac2-ddbf8c0f346f",
+                "name": "Kitting",
+                "color": "#7C4DFF",
+                "orderindex": 10
+              },
+              {
+                "id": "3ddcd582-6a03-4a76-842d-28a71b3fca01",
+                "name": "Logistics & Warehouse",
+                "color": "#3397dd",
+                "orderindex": 11
+              },
+              {
+                "id": "07597f80-8670-4bbb-b82b-2a4a8f870436",
+                "name": "Marketing",
+                "color": "#0231E8",
+                "orderindex": 12
+              },
+              {
+                "id": "8ebb08d6-9e92-4c92-a624-fc99d6bf18c2",
+                "name": "Materials",
+                "color": "#b5bcc2",
+                "orderindex": 13
+              },
+              {
+                "id": "524c4294-7ae1-4308-839e-276e21dcbd43",
+                "name": "Production",
+                "color": "#ff7800",
+                "orderindex": 14
+              },
+              {
+                "id": "01526da1-a17d-4dd5-842e-40895a7442e5",
+                "name": "Quality",
+                "color": "#E65100",
+                "orderindex": 15
+              },
+              {
+                "id": "5998fcda-54b6-4751-bbbc-2fef46b4c3ad",
+                "name": "RDVS",
+                "color": "#7C4DFF",
+                "orderindex": 16
+              },
+              {
+                "id": "27702d8d-08a2-437f-b3d1-4a352088abb0",
+                "name": "Sales",
+                "color": "#e50000",
+                "orderindex": 17
+              },
+              {
+                "id": "b9b1af36-f6f0-4445-9f1e-7a07729a8a07",
+                "name": "Special Projects",
+                "color": "#0af11f",
+                "orderindex": 18
+              },
+              {
+                "id": "1b01a7e1-09d9-4441-8c27-bf8569fe78c6",
+                "name": "Other",
+                "color": "#b5bcc2",
+                "orderindex": 19
+              }
+            ]
+          },
+          "date_created": "1659376509441",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "26411698-562d-49e2-b606-d1225639acf4",
+          "name": "Hire-Type",
+          "type": "drop_down",
+          "type_config": {
+            "default": 0,
+            "placeholder": null,
+            "new_drop_down": true,
+            "options": [
+              {
+                "id": "5474196b-597b-45d6-9052-1a702aafd8dd",
+                "name": "New-Hire",
+                "color": "#f9d900",
+                "orderindex": 0
+              },
+              {
+                "id": "949dfcd4-1841-4efc-91ab-03b7171ac69e",
+                "name": "Rehire",
+                "color": "#2ecd6f",
+                "orderindex": 1
+              },
+              {
+                "id": "c8e9efd8-9f95-4c6c-9116-d7c58372eebf",
+                "name": "Returning From Leave",
+                "color": "#04A9F4",
+                "orderindex": 2
+              },
+              {
+                "id": "4b07dcca-f517-4731-bbe1-af5a8015df8a",
+                "name": "Other",
+                "color": "#b5bcc2",
+                "orderindex": 3
+              }
+            ]
+          },
+          "date_created": "1675206311966",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "7aed0fc8-82a0-462c-8ff8-cc04c9ded58d",
+          "name": "Effort",
+          "type": "emoji",
+          "type_config": {
+            "count": 5,
+            "code_point": "1f92c"
+          },
+          "date_created": "1674833057210",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "990ed3bd-f551-428e-8fc1-2c0fa92f5d59",
+          "name": "Apps-LABELS",
+          "type": "labels",
+          "type_config": {
+            "options": [
+              {
+                "id": "fff5c2ed-c0d2-4ee3-9d1e-e665cc7dd490",
+                "label": "QuickBooks",
+                "color": "#2ecd6f"
+              },
+              {
+                "id": "8c6793cc-3444-4049-9e5d-8ff0af0c2feb",
+                "label": "Egnyte",
+                "color": "#1bbc9c"
+              },
+              {
+                "id": "eaa32f69-5ae6-4037-a1b3-d1c267e7a065",
+                "label": "Epicor",
+                "color": "#3082B7"
+              },
+              {
+                "id": "24284a0a-d2b8-4047-970f-ccc653cddceb",
+                "label": "SolidWorks",
+                "color": "#800000"
+              },
+              {
+                "id": "6c39fc0d-6863-4c31-9207-fb23ee395dff",
+                "label": "VPN",
+                "color": "#04A9F4"
+              },
+              {
+                "id": "c3fdcc3b-8ed2-4dce-9460-e158a4263547",
+                "label": "ITSRI Agent",
+                "color": "#667684"
+              },
+              {
+                "id": "a2891db2-851e-4718-9681-17596df17627",
+                "label": "Microsoft 365",
+                "color": "#ff7800"
+              },
+              {
+                "id": "09a4852a-4990-4aaf-af70-d54acf3bc87b",
+                "label": "Office Desktop",
+                "color": "#f9d900"
+              },
+              {
+                "id": "18de840d-2182-458b-bbe3-bc6a22888c30",
+                "label": "Microsoft Project",
+                "color": "#2ecd6f"
+              },
+              {
+                "id": "8b1f508f-effb-417c-9809-3765d7ef37af",
+                "label": "Microsoft Viso",
+                "color": "#0231E8"
+              },
+              {
+                "id": "6588f5b2-0374-42c6-b6b4-83fc04c3496a",
+                "label": "Adobe Acrobat Pro",
+                "color": "#e50000"
+              }
+            ]
+          },
+          "date_created": "1675976727512",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": "ba5055a8-5fe3-482a-b956-150ed9761f6a",
+          "name": "Job Title",
+          "type": "drop_down",
+          "type_config": {
+            "default": 0,
+            "placeholder": null,
+            "new_drop_down": true,
+            "options": [
+              {
+                "id": "45fa9a31-0a91-43c0-a9ec-6468b94d0e45",
+                "name": "Technical Product Manager",
+                "color": "#b5bcc2",
+                "orderindex": 0
+              },
+              {
+                "id": "cd089fe8-33fd-4d17-ad9a-93d0d7281eb5",
+                "name": "Sr. Mechanical Engineer",
+                "color": "#04A9F4",
+                "orderindex": 1
+              },
+              {
+                "id": "c5213047-24bd-427b-ab16-660fe62437bd",
+                "name": "Client Services Specialist",
+                "color": "#f9d900",
+                "orderindex": 2
+              },
+              {
+                "id": "3145d5d0-0235-4e3e-ad32-a188d0ecc015",
+                "name": "Design Engineer",
+                "color": "#1bbc9c",
+                "orderindex": 3
+              }
+            ]
+          },
+          "date_created": "1675976829768",
+          "hide_from_guests": false,
+          "required": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
     ]
   },
   "settings": {},
@@ -2108,12 +2693,37 @@
       "secret": "HHQYAS50GB4MKXWW3XHUTJ3ZVH7ORDU3Y54KHPKWL9J1QC228M2PRUUZVIOY2AO7"
     },
     "node:Trigger-StatusUpdate": {
-      "webhookId": "1d57083d-867f-430e-918a-4c3449fe8a38",
-      "secret": "NSGOXOI9FS4Y7XZU7WU0UJO6HMDK1542D0P0XW0XVESNKST8YG9PESMECFGD7BVZ"
+      "webhookId": "26f8e91c-fac6-4fc1-9803-e45110e3be70",
+      "secret": "F4MQRJ5FD9LELPCFIRMOI8C56F936BRO5C2IXCJVJOEDWEX24VK3LRAR4FXJFUV2"
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-06-09T19:52:42.669Z",
+      "updatedAt": "2023-06-09T19:52:42.669Z",
+      "id": "4",
+      "name": "FreeScout"
+    },
+    {
+      "createdAt": "2023-06-09T19:53:13.180Z",
+      "updatedAt": "2023-06-09T19:53:13.180Z",
+      "id": "6",
+      "name": "Enabled"
+    },
+    {
+      "createdAt": "2023-06-09T19:54:26.868Z",
+      "updatedAt": "2023-06-09T19:54:36.928Z",
+      "id": "7",
+      "name": "Trigger:Change/Update"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2023-06-03T21:07:01.000Z",
-  "versionId": "e372c347-175e-4c4c-9226-571bea52544e"
+  "updatedAt": "2023-06-09T22:12:43.000Z",
+  "versionId": "a4dc660e-7bf4-4be8-bc42-a4eab7e2e301"
 }
