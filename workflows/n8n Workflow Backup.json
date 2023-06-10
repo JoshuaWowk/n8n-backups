@@ -495,8 +495,27 @@
     "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-06-09T19:53:13.180Z",
+      "updatedAt": "2023-06-09T19:53:13.180Z",
+      "id": "6",
+      "name": "Enabled"
+    },
+    {
+      "createdAt": "2023-06-09T19:57:16.990Z",
+      "updatedAt": "2023-06-09T19:57:16.990Z",
+      "id": "10",
+      "name": "n8n"
+    },
+    {
+      "createdAt": "2023-06-09T19:57:28.890Z",
+      "updatedAt": "2023-06-09T19:57:28.890Z",
+      "id": "11",
+      "name": "Trigger:Date/Time"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2023-04-23T14:06:58.000Z",
-  "versionId": "3fcb8ed6-b811-4134-ab51-a7d26941de7a"
+  "updatedAt": "2023-06-09T19:57:30.000Z",
+  "versionId": "7c2f64a7-c092-4cbe-bad2-f55497561fe2"
 }
