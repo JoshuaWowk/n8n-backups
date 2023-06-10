@@ -1894,8 +1894,21 @@
       "secret": "Q0H31QDVT1LR0J5AGXZVYRDPVNICOTTPQF70K8NTMEVHF85FZR5W18XDZDTMCWWF"
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-06-09T19:54:53.274Z",
+      "updatedAt": "2023-06-09T19:54:53.274Z",
+      "id": "8",
+      "name": "Disabled"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2023-06-03T19:22:52.000Z",
-  "versionId": "4d90efe3-4928-412e-ae25-070775177750"
+  "updatedAt": "2023-06-09T19:55:51.000Z",
+  "versionId": "3f89a74e-77a5-434b-93ca-9ab06dd44fe6"
 }
