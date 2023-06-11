@@ -2693,8 +2693,8 @@
       "secret": "HHQYAS50GB4MKXWW3XHUTJ3ZVH7ORDU3Y54KHPKWL9J1QC228M2PRUUZVIOY2AO7"
     },
     "node:Trigger-StatusUpdate": {
-      "webhookId": "26f8e91c-fac6-4fc1-9803-e45110e3be70",
-      "secret": "F4MQRJ5FD9LELPCFIRMOI8C56F936BRO5C2IXCJVJOEDWEX24VK3LRAR4FXJFUV2"
+      "webhookId": "d0ecb28c-331c-4ed4-9b12-79f3027a6df5",
+      "secret": "N4K2JEU5TFLX7MNF06MG5J5WSQU9S2CH76D6T0EX05S6EMWUD2H2EARK2E5YKSHR"
     }
   },
   "tags": [
@@ -2724,6 +2724,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-06-09T22:12:43.000Z",
+  "updatedAt": "2023-06-11T01:01:01.000Z",
   "versionId": "a4dc660e-7bf4-4be8-bc42-a4eab7e2e301"
 }
