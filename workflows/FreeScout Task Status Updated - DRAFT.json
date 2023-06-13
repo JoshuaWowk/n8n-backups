@@ -1,0 +1,742 @@
+{
+  "active": false,
+  "connections": {
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfActive": {
+      "main": [
+        [],
+        [
+          {
+            "node": "IfWaiting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfBacklog": {
+      "main": [
+        [],
+        [
+          {
+            "node": "IfActive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfDone/Closed": {
+      "main": [
+        [],
+        [
+          {
+            "node": "IfBacklog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfWaiting": {
+      "main": [
+        [],
+        [
+          {
+            "node": "IfNew",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfNew": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "IfDone/Closed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-13T11:51:54.449Z",
+  "id": "15",
+  "name": "FreeScout Task Status Updated - DRAFT",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.customFields[3].value }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "6ad27e9c-02a6-4b5d-b16d-81e2f6d18a39",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        580
+      ],
+      "notesInFlow": true,
+      "notes": "FreeScoutID Check"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "Active"
+            },
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "active"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "9f0ca656-cc47-4545-9c0d-d64c0ed68637",
+      "name": "IfActive",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "Backlog"
+            },
+            {
+              "value1": "{{ $node.GetTask.json.status.status }}",
+              "value2": "backlog"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "c0c8cb2d-efe4-496b-a95a-3797788f5bb1",
+      "name": "IfBacklog",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2600,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "done"
+            },
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "closed"
+            },
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "Done"
+            },
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "Closed"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "8a66b001-89f6-4d8e-bee2-1ea7d7d6debe",
+      "name": "IfDone/Closed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "Waiting"
+            },
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "waiting"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "5abfa518-014f-4f36-8ef0-0f890f7a7fbf",
+      "name": "IfWaiting",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        3040,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "New"
+            },
+            {
+              "value1": "={{ $node.GetTask.json.status.status }}",
+              "value2": "new"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "0fd6f49b-4846-4bee-9431-af733c331106",
+      "name": "IfNew",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        3260,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "77a4a9b8-942f-405a-81c0-4cb087250668",
+        "options": {}
+      },
+      "id": "338f644a-a5ac-40cd-8040-67ceb4e103ab",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        580
+      ],
+      "webhookId": "77a4a9b8-942f-405a-81c0-4cb087250668"
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "body.id"
+            },
+            {
+              "fieldToAggregate": "body.subject"
+            },
+            {
+              "fieldToAggregate": "body.status"
+            },
+            {
+              "fieldToAggregate": "body.customFields[3].value"
+            },
+            {
+              "fieldToAggregate": "body.customFields[4].value"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "26a26782-ce3e-41da-8f21-c896a5d4fb26",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        2140,
+        580
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.hp-ne.us",
+            "x-real-ip": "172.104.218.99",
+            "x-forwarded-for": "172.104.218.99",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "52465",
+            "user-agent": "GuzzleHttp/6.3.3 curl/7.81.0 PHP/8.1.2-1ubuntu2.9",
+            "content-type": "application/json",
+            "x-freescout-event": "convo.status",
+            "x-freescout-signature": "u8Zps8uKRyiiorwuYQizUPfMZrI="
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": 60,
+            "number": 60,
+            "threadsCount": 1,
+            "type": "email",
+            "folderId": 3,
+            "status": "active",
+            "state": "published",
+            "subject": "Extend your trial to keep using your product",
+            "preview": "Your trial will end on Tuesday, June 20, 2023. Your trial is ending—sign up to extend your trial You have a trial that will expire on June 20, 2023. Public preview availability for Microsoft Defender Vulnerability Management is extended into 2023. We’re i",
+            "mailboxId": 1,
+            "assignee": {
+              "id": 2,
+              "type": "user",
+              "firstName": "Joshua",
+              "lastName": "Wowk",
+              "photoUrl": "",
+              "email": "joshua.wowk@hp-ne.com"
+            },
+            "createdBy": {
+              "id": 325,
+              "type": "customer",
+              "firstName": "Microsoft",
+              "lastName": null,
+              "photoUrl": "",
+              "email": "microsoft-noreply@microsoft.com"
+            },
+            "createdAt": "2023-06-13T11:42:58Z",
+            "updatedAt": "2023-06-13T12:10:19Z",
+            "closedBy": null,
+            "closedByUser": null,
+            "closedAt": null,
+            "userUpdatedAt": "2023-06-13T12:10:19Z",
+            "customerWaitingSince": {
+              "time": "2023-06-13T11:42:58Z",
+              "friendly": "27 min ago",
+              "latestReplyFrom": "customer"
+            },
+            "source": {
+              "type": "email",
+              "via": "customer"
+            },
+            "cc": [],
+            "bcc": [],
+            "customer": {
+              "id": 325,
+              "type": "customer",
+              "firstName": "Microsoft",
+              "lastName": null,
+              "photoUrl": "",
+              "email": "microsoft-noreply@microsoft.com"
+            },
+            "_embedded": {
+              "threads": [
+                {
+                  "id": 231,
+                  "type": "lineitem",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "changed-ticket-status",
+                    "text": "Joshua Wowk marked as Active conversation #60",
+                    "associatedEntities": []
+                  },
+                  "body": null,
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": {
+                    "id": 325,
+                    "type": "customer",
+                    "firstName": "Microsoft",
+                    "lastName": null,
+                    "photoUrl": "",
+                    "email": "microsoft-noreply@microsoft.com"
+                  },
+                  "createdBy": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "assignedTo": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-13T12:10:19Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                },
+                {
+                  "id": 230,
+                  "type": "lineitem",
+                  "status": "pending",
+                  "state": "published",
+                  "action": {
+                    "type": "changed-ticket-status",
+                    "text": "Joshua Wowk marked as Pending conversation #60",
+                    "associatedEntities": []
+                  },
+                  "body": null,
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": {
+                    "id": 325,
+                    "type": "customer",
+                    "firstName": "Microsoft",
+                    "lastName": null,
+                    "photoUrl": "",
+                    "email": "microsoft-noreply@microsoft.com"
+                  },
+                  "createdBy": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "assignedTo": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-13T12:08:17Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                },
+                {
+                  "id": 229,
+                  "type": "lineitem",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "",
+                    "text": "Workflow Active tag = active status was triggered for conversation #60",
+                    "associatedEntities": []
+                  },
+                  "body": "",
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": null,
+                  "createdBy": {
+                    "id": 3,
+                    "type": "user",
+                    "firstName": "Workflow",
+                    "lastName": "",
+                    "photoUrl": "",
+                    "email": "fsworkflow@example.org"
+                  },
+                  "assignedTo": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-13T12:06:34Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                },
+                {
+                  "id": 225,
+                  "type": "lineitem",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "",
+                    "text": "Workflow New Tickets = new tag was triggered for conversation #60",
+                    "associatedEntities": []
+                  },
+                  "body": "",
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": null,
+                  "createdBy": {
+                    "id": 3,
+                    "type": "user",
+                    "firstName": "Workflow",
+                    "lastName": "",
+                    "photoUrl": "",
+                    "email": "fsworkflow@example.org"
+                  },
+                  "assignedTo": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-13T11:42:59Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                },
+                {
+                  "id": 224,
+                  "type": "lineitem",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "",
+                    "text": "Workflow Assign new tickets to jwowk was triggered for conversation #60",
+                    "associatedEntities": []
+                  },
+                  "body": "",
+                  "source": {
+                    "type": "web",
+                    "via": "user"
+                  },
+                  "customer": null,
+                  "createdBy": {
+                    "id": 3,
+                    "type": "user",
+                    "firstName": "Workflow",
+                    "lastName": "",
+                    "photoUrl": "",
+                    "email": "fsworkflow@example.org"
+                  },
+                  "assignedTo": {
+                    "id": 2,
+                    "type": "user",
+                    "firstName": "Joshua",
+                    "lastName": "Wowk",
+                    "photoUrl": "",
+                    "email": "joshua.wowk@hp-ne.com"
+                  },
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-13T11:42:59Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                },
+                {
+                  "id": 223,
+                  "type": "customer",
+                  "status": "active",
+                  "state": "published",
+                  "action": {
+                    "type": "",
+                    "text": "Microsoft started a new conversation #60",
+                    "associatedEntities": []
+                  },
+                  "body": "\r\n        <div class=\"preheader\" style=\"display: none;visibility: hidden;opacity: 0;color: #f4f4f4;height: 0;width: 0;line-height: 1px;font-size: 1px;max-height: 0;max-width: 0;overflow: hidden;mso-hide: all\">Your trial will end on Tuesday, June 20, 2023.                                                                                                                                                                                                                                                              </div>\r\n    <table role=\"presentation\" class=\"body \" data-made-with-foundation=\"data-made-with-foundation\" style='border-spacing: 0;border-collapse: collapse;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;height: 100%;width: 100%;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n        <tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n            <td class=\"float-center\" align=\"center\" valign=\"top\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;font-size: 14px;line-height: 20px;Margin: 0 auto;float: none;text-align: center'>\r\n                <center class=\"main-container\" style=\"width: 100%;min-width: 640px\">\r\n                    <table role=\"presentation\" bgcolor=\"#ffffff\" align=\"center\" class=\"float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;Margin: 0 auto;float: none;text-align: center\">\r\n                        <tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                            <td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                                \r\n\r\n\r\n<table role=\"presentation\" dir=\"ltr\" align=\"center\" class=\"container header-container section\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;width: 640px;Margin: 0 auto;text-align: inherit\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n    <table role=\"presentation\" align=\"left\" class=\"wrapper outer-wrapper text-left\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%;text-align: left\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-top: 0;mso-padding-top-alt: 0;padding-bottom: 0;mso-padding-bottom-alt: 0'>\r\n        <table role=\"presentation\" align=\"left\" class=\"row header-section text-left\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;text-align: left;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n            <th class=\"text-left small-12 large-12 columns first last\" align=\"left\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;text-align: left;padding-left: 24px;padding-right: 24px;padding-top: 24px;mso-padding-top-alt: 24px;padding-bottom: 24px;mso-padding-bottom-alt: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                <img height=\"20\" width=\"auto\" src=\"https://images.ecomm.microsoft.com/cdn/mediahandler/azure-emails-templates/production/shared/images/templates/shared/microsoft-2x.png\" alt=\"Microsoft\" title=\"Microsoft\" class=\"logo-microsoft text-left\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;max-width: 100%;clear: both;display: block;height: 20px;max-height: 20px;width: auto\">\r\n            </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n        </tr></tbody></table>\r\n    </td></tr></tbody></table>\r\n</td></tr></tbody></table>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<table role=\"presentation\" align=\"center\" class=\"container template-container section\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;width: 640px;Margin: 0 auto;text-align: inherit\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n    <table role=\"presentation\" class=\"wrapper outer-wrapper\" align=\"center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-top: 6px;mso-padding-top-alt: 6px'>\r\n        <center style=\"width: 100%;min-width: 640px\">\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px;padding-top: 6px;mso-padding-top-alt: 6px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <h1 style='padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;color: inherit;Margin-bottom: 16px;-webkit-hyphens: none;-moz-hyphens: none;-ms-hyphens: none;hyphens: none;letter-spacing: -.01em;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600;font-size: 28px;line-height: 36px;mso-line-height-alt: 36px;word-wrap: normal;-webkit-text-size-adjust: none'>Your trial is ending—sign up to extend your trial</h1>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'>You have a trial that will expire on June 20, 2023.</p>\r\n                    <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0;mso-margin-bottom-alt: 0'>Public preview availability for Microsoft Defender Vulnerability Management is extended into 2023. We’re inviting public preview customers to ensure continued access to premium features by signing up for a new free 180-day trial.</p>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <table role=\"presentation\" class=\"button\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;Margin: 0;width: auto\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;font-size: 14px;line-height: 20px;color: #ffffff;background: #0078d4;border: 0;border-radius: 2px;text-align: center'><a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fsignup.microsoft.com%2Fget-started%2Fsignup%3Fproducts%3DE8AEC735-F13E-4371-9A0B-7502F321C95B&amp;p=bT1jZmNjODIwMy1hNTRlLTQ0NzAtOTRiMi1iZDAyNGI5Y2NiNGQmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1zaWdudXA%3D\" style='text-underline: none;mso-text-underline: none;font-size: 16px;color: #ffffff;text-decoration: none;text-align: left;display: inline-block;padding: 12px 16px 12px 16px;border: 0 solid #0078d4;border-radius: 2px;line-height: 1;mso-border-alt: 8px solid #0078d4;mso-padding-alt: 0;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Sign up here &gt;</a></td></tr></tbody></table></td></tr></tbody></table>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'>If you don’t purchase a new subscription by June 20, 2023, your trial data will be available to all people in your organization for about 30 days. At that time, the subscription status changes to <strong style='font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Disabled</strong>, and only admins will have access to trial data for about another 90 days. After that, your trial is permanently deleted.</p>\r\n                    <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0;mso-margin-bottom-alt: 0'>Your trial that will expire:</p>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <table role=\"presentation\" class=\"table-default table-heading-columns table-cols-3\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;max-width: 592px;width: 100%\">\r\n                        <thead>\r\n                            <tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                                <th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;color: #11100f;Margin: 0;text-align: left;line-height: 20px;word-break: break-word;padding-left: 6px;mso-padding-left-alt: 6px;padding-top: 6px;mso-padding-top-alt: 6px;padding-right: 6px;mso-padding-right-alt: 6px;padding-bottom: 6px;mso-padding-bottom-alt: 6px;max-width: 147.33333px;width: 33.33333%;border-bottom: none;border-top: none;font-size: 14px;vertical-align: bottom;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Product</th>\r\n                                <th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;color: #11100f;Margin: 0;text-align: left;line-height: 20px;word-break: break-word;padding-left: 6px;mso-padding-left-alt: 6px;padding-top: 6px;mso-padding-top-alt: 6px;padding-right: 6px;mso-padding-right-alt: 6px;padding-bottom: 6px;mso-padding-bottom-alt: 6px;max-width: 147.33333px;width: 33.33333%;border-bottom: none;border-top: none;font-size: 14px;vertical-align: bottom;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Total licenses</th>\r\n                                <th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;color: #11100f;Margin: 0;text-align: left;line-height: 20px;word-break: break-word;padding-left: 6px;mso-padding-left-alt: 6px;padding-top: 6px;mso-padding-top-alt: 6px;padding-right: 6px;mso-padding-right-alt: 6px;padding-bottom: 6px;mso-padding-bottom-alt: 6px;max-width: 147.33333px;width: 33.33333%;border-bottom: none;border-top: none;font-size: 14px;vertical-align: bottom;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Start date</th>\r\n                            </tr>\r\n                        </thead>\r\n                        <tbody>\r\n                            <tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                                <td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;Margin: 0;text-align: left;line-height: 20px;word-break: break-word;padding-left: 6px;mso-padding-left-alt: 6px;padding-top: 6px;mso-padding-top-alt: 6px;padding-right: 6px;mso-padding-right-alt: 6px;padding-bottom: 6px;mso-padding-bottom-alt: 6px;border-top: solid 1px #dedede;font-size: 12px;max-width: 147.33333px;width: 33.33333%;border-bottom: none'>Microsoft Defender Vulnerability Management Extended Public Preview Trial</td>\r\n                                <td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;Margin: 0;text-align: left;line-height: 20px;word-break: break-word;padding-left: 6px;mso-padding-left-alt: 6px;padding-top: 6px;mso-padding-top-alt: 6px;padding-right: 6px;mso-padding-right-alt: 6px;padding-bottom: 6px;mso-padding-bottom-alt: 6px;border-top: solid 1px #dedede;font-size: 12px;max-width: 147.33333px;width: 33.33333%;border-bottom: none'>1000000</td>\r\n                                <td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;Margin: 0;text-align: left;line-height: 20px;word-break: break-word;padding-left: 6px;mso-padding-left-alt: 6px;padding-top: 6px;mso-padding-top-alt: 6px;padding-right: 6px;mso-padding-right-alt: 6px;padding-bottom: 6px;mso-padding-bottom-alt: 6px;border-top: solid 1px #dedede;font-size: 12px;max-width: 147.33333px;width: 33.33333%;border-bottom: none'>December 20, 2022</td>\r\n                            </tr>\r\n                        </tbody>\r\n                    </table>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <h2 style='padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;color: inherit;Margin-bottom: 16px;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600;font-size: 24px;line-height: 32px;mso-line-height-alt: 32px;word-wrap: normal;-webkit-text-size-adjust: none'>Additional information</h2>\r\n                    <ul class=\"list-items\" style=\"Margin-bottom: 15px;mso-margin-bottom-alt: 15px;Margin-left: 17px;mso-margin-left-alt: 17px;padding: 0px;mso-padding-alt: 0px;-webkit-padding-start: 0px\">\r\n                        <li style=\"font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;Margin-top: 4px;mso-margin-top-alt: 4px;Margin-bottom: 4px;mso-margin-bottom-alt: 4px;Margin-left: 0px;mso-margin-left-alt: 0px;Margin-right: 0px;mso-margin-right-alt: 0px;text-align: -webkit-match-parent;display: list-item\">\r\n                            How to <a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fmicrosoft-365%2Fcommerce%2Ftry-or-buy-microsoft-365%3Fview%3Do365-worldwide&amp;p=bT1jZmNjODIwMy1hNTRlLTQ0NzAtOTRiMi1iZDAyNGI5Y2NiNGQmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD10cnktb3ItYnV5LW1pY3Jvc29mdC0zNjU%3D\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none'>extend a trial</a>.\r\n                        </li>\r\n                        <li style=\"font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;Margin-top: 4px;mso-margin-top-alt: 4px;Margin-bottom: 4px;mso-margin-bottom-alt: 4px;Margin-left: 0px;mso-margin-left-alt: 0px;Margin-right: 0px;mso-margin-right-alt: 0px;text-align: -webkit-match-parent;display: list-item\">\r\n                            How to <a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fmicrosoft-365%2Fcommerce%2Fsubscriptions%2Fcancel-your-subscription%3Fview%3Do365-worldwideq&amp;p=bT1jZmNjODIwMy1hNTRlLTQ0NzAtOTRiMi1iZDAyNGI5Y2NiNGQmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1jYW5jZWwteW91ci1zdWJzY3JpcHRpb24%3D\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none'>cancel a trial</a>.\r\n                        </li>\r\n                    </ul>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n        </center>\r\n    </td></tr></tbody></table>\r\n    \r\n<table role=\"presentation\" class=\"wrapper outer-wrapper divider-light-top\" align=\"center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%;border-top: 1px solid #eaebec\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px'>\r\n    <center style=\"width: 100%;min-width: 640px\">\r\n        <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n            <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                <h2 style='padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;color: inherit;Margin-bottom: 16px;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600;font-size: 24px;line-height: 32px;mso-line-height-alt: 32px;word-wrap: normal;-webkit-text-size-adjust: none'>Account information</h2>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'><strong style='font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Organization name:</strong> High Purity New England</p>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0;mso-margin-bottom-alt: 0'><strong style='font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Expiration date</strong> June 20, 2023</p>\r\n            </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n        </tr></tbody></table>\r\n    </center>\r\n</td></tr></tbody></table>\r\n\r\n</td></tr></tbody></table>\r\n\r\n                                <table role=\"presentation\" dir=\"ltr\" align=\"center\" class=\"container footer-template\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;width: 640px;Margin: 0 auto;text-align: inherit\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                                    <table role=\"presentation\" class=\"wrapper outer-wrapper footer-wrapper\" align=\"center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%;background-color: #F0F0F0\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px'>\r\n                                        <center style=\"width: 100%;min-width: 640px\">\r\n                                                                                        \r\n                                            \r\n\r\n    \r\n<table role=\"presentation\" class=\"row\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n    <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;padding-left: 24px;padding-right: 24px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;width: auto'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>        \r\n        <p class=\"margin-bottom-0\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0px;mso-margin-bottom-alt: 0px;font-size: 12px;line-height: 16px;mso-line-height-alt: 16px;color: #484644'>\r\n\r\n            <a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fgo.microsoft.com%2Ffwlink%2F%3FLinkId%3D521839&amp;p=bT1jZmNjODIwMy1hNTRlLTQ0NzAtOTRiMi1iZDAyNGI5Y2NiNGQmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1wcml2YWN5LXN0YXRlbWVudA%3D%3D\" title=\"Privacy Statement\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;color: #484644;display: inline-block;text-decoration: underline;text-underline: single'>Privacy Statement</a>            \r\n        </p>\r\n        <p class=\"margin-top-8\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;Margin-bottom: 12px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-top: 8px;mso-margin-top-alt: 8px;font-size: 12px;line-height: 16px;mso-line-height-alt: 16px;color: #484644'>Microsoft Corporation, <span class=\"no-wrap\" style=\"display: inline-block;word-break: keep-all;hyphens: none\">One Microsoft Way, ​Redmond, WA 98052​</span></p>\r\n        <img height=\"20\" width=\"auto\" class=\"logo-microsoft\" src=\"https://images.ecomm.microsoft.com/cdn/mediahandler/azure-emails-templates/production/shared/images/templates/shared/images/logos/microsoft-logo-2x.png\" alt=\"Microsoft\" title=\"Microsoft\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;max-width: 100%;clear: both;display: block;height: 20px;max-height: 20px;width: auto\">\r\n    </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n</tr></tbody></table>\r\n\r\n                                        </center>\r\n                                    </td></tr></tbody></table>\r\n                                </td></tr></tbody></table>\r\n                            </td>\r\n                        </tr>\r\n                    </tbody></table>\r\n                </center>\r\n            </td>\r\n        </tr>\r\n    </tbody></table>\r\n        <img height=\"\" width=\"auto\" src=\"https://nam.safelink.emails.azure.net/trackingpixel/?p=bT1jZmNjODIwMy1hNTRlLTQ0NzAtOTRiMi1iZDAyNGI5Y2NiNGQmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8%3D\" alt=\"\" role=\"presentation\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;width: auto;max-width: 100%;clear: both;display: block\">\r\n    \r\n\r\n",
+                  "source": {
+                    "type": "email",
+                    "via": "customer"
+                  },
+                  "customer": {
+                    "id": 325,
+                    "type": "customer",
+                    "firstName": "Microsoft",
+                    "lastName": null,
+                    "photoUrl": "",
+                    "email": "microsoft-noreply@microsoft.com"
+                  },
+                  "createdBy": {
+                    "id": 325,
+                    "type": "customer",
+                    "firstName": "Microsoft",
+                    "lastName": null,
+                    "photoUrl": "",
+                    "email": "microsoft-noreply@microsoft.com"
+                  },
+                  "assignedTo": null,
+                  "to": [
+                    "servicedesk@hp-ne.com"
+                  ],
+                  "cc": [],
+                  "bcc": [],
+                  "createdAt": "2023-06-13T11:42:58Z",
+                  "openedAt": null,
+                  "_embedded": {
+                    "attachments": []
+                  }
+                }
+              ]
+            },
+            "customFields": [
+              {
+                "id": 2,
+                "name": "Type",
+                "value": "2",
+                "text": "Request"
+              },
+              {
+                "id": 3,
+                "name": "Category",
+                "value": "1",
+                "text": "Applications"
+              },
+              {
+                "id": 1,
+                "name": "Applications",
+                "value": "",
+                "text": ""
+              },
+              {
+                "id": 5,
+                "name": "ClickUp ID",
+                "value": "85zt9ey7j",
+                "text": ""
+              },
+              {
+                "id": 6,
+                "name": "ClickUp URL",
+                "value": "https://app.clickup.com/t/85zt9ey7j",
+                "text": ""
+              },
+              {
+                "id": 7,
+                "name": "Due Date",
+                "value": "",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Item Lists": [
+      {
+        "json": {
+          "id": [
+            60
+          ],
+          "subject": [
+            "Extend your trial to keep using your product"
+          ],
+          "status": [
+            "active"
+          ],
+          "value": [
+            "https://app.clickup.com/t/85zt9ey7j"
+          ]
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": {
+    "node:Trigger-StatusUpdate": {
+      "webhookId": "37472ca0-d048-43a4-8573-d6583c695b50",
+      "secret": "ISJ1DQBQX0N5CATHOTSNCJ3V2R1ZH9399HD0XXV3RT9EXZEYKY1WLBOZCYJG7DRG"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-04-23T13:06:32.653Z",
+      "updatedAt": "2023-04-23T13:06:32.653Z",
+      "id": "1",
+      "name": "ClickUp"
+    },
+    {
+      "createdAt": "2023-06-09T19:52:42.669Z",
+      "updatedAt": "2023-06-09T19:52:42.669Z",
+      "id": "4",
+      "name": "FreeScout"
+    },
+    {
+      "createdAt": "2023-06-09T19:53:13.180Z",
+      "updatedAt": "2023-06-09T19:53:13.180Z",
+      "id": "6",
+      "name": "Enabled"
+    },
+    {
+      "createdAt": "2023-06-09T19:54:26.868Z",
+      "updatedAt": "2023-06-09T19:54:36.928Z",
+      "id": "7",
+      "name": "Trigger:Change/Update"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-06-13T13:41:15.000Z",
+  "versionId": "a3233570-d8c1-4e24-bcf7-ab8fae270cc2"
+}
