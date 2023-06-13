@@ -12,7 +12,62 @@
         ]
       ]
     },
-    "StripDown": {
+    "Trigger-ConvoUpdated": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "SelectNewest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetConversation": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SelectNewest": {
       "main": [
         [
           {
@@ -23,11 +78,16 @@
         ]
       ]
     },
-    "Trigger-ConvoUpdated": {
+    "ClickUp": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request": {
       "main": [
         [
           {
-            "node": "StripDown",
+            "node": "ClickUp1",
             "type": "main",
             "index": 0
           }
@@ -41,8 +101,8 @@
   "nodes": [
     {
       "parameters": {
-        "html": "={{ $json.ThreadBody[0] }}",
-        "destinationKey": "ThreadBody[0]",
+        "html": "={{ $json.body }}",
+        "destinationKey": "ThreadBody",
         "options": {}
       },
       "id": "1a619fbb-c8a4-4d98-9c79-57e6fa87b19e",
@@ -50,16 +110,16 @@
       "type": "n8n-nodes-base.markdown",
       "typeVersion": 1,
       "position": [
-        920,
-        460
+        1440,
+        220
       ]
     },
     {
       "parameters": {
         "resource": "comment",
         "commentOn": "task",
-        "id": "={{ $json.ClickUp.ID[0] }}",
-        "commentText": "={{ $json.ThreadAction[0] }}: {{ $json.ThreadBody[0] }}",
+        "id": "85zt99mtk",
+        "commentText": "=FreeScout | {{ $json.action.text }}:  {{ $json.ThreadBody }}",
         "additionalFields": {}
       },
       "id": "c94c34a5-3c22-44e6-a169-17aa692b97a8",
@@ -67,8 +127,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        1160,
-        460
+        1680,
+        220
       ],
       "credentials": {
         "clickUpApi": {
@@ -76,59 +136,6 @@
           "name": "ClickUp account"
         }
       }
-    },
-    {
-      "parameters": {
-        "operation": "aggregateItems",
-        "fieldsToAggregate": {
-          "fieldToAggregate": [
-            {
-              "fieldToAggregate": "body.id",
-              "renameField": true,
-              "outputFieldName": "TicketID"
-            },
-            {
-              "fieldToAggregate": "body.subject",
-              "renameField": true,
-              "outputFieldName": "TicketSubject"
-            },
-            {
-              "fieldToAggregate": "body._embedded.threads[0].id",
-              "renameField": true,
-              "outputFieldName": "ThreadID"
-            },
-            {
-              "fieldToAggregate": "body._embedded.threads[0].action.text",
-              "renameField": true,
-              "outputFieldName": "ThreadAction"
-            },
-            {
-              "fieldToAggregate": "body._embedded.threads[0].body",
-              "renameField": true,
-              "outputFieldName": "ThreadBody"
-            },
-            {
-              "fieldToAggregate": "body.customFields[3].value",
-              "renameField": true,
-              "outputFieldName": "ClickUp.ID"
-            },
-            {
-              "fieldToAggregate": "body.customFields[4].value",
-              "renameField": true,
-              "outputFieldName": "ClickUp.URL"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "ea95f8f8-338c-4a22-84e7-4173bbe7ac9c",
-      "name": "StripDown",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 2.1,
-      "position": [
-        700,
-        460
-      ]
     },
     {
       "parameters": {
@@ -141,76 +148,199 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        480,
-        460
+        -60,
+        440
       ],
       "webhookId": "dff3629a-7ba8-4fb9-abfb-0d88520eab4c",
       "notesInFlow": true,
       "notes": "Ticket Convo Updated"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body._embedded.threads",
+        "options": {}
+      },
+      "id": "4d97950d-ca95-4d78-831c-8ce0199fc14b",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        400,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.type }}",
+              "operation": "notContains",
+              "value2": "lineitem"
+            },
+            {
+              "value1": "={{ $json.body }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "0394a245-408f-41d3-81c2-312b30538d2b",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        980,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "limit"
+      },
+      "id": "ca99fb00-124b-4d1d-ae4e-b5fa6b72b45c",
+      "name": "SelectNewest",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        1220,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "SetSubject",
+              "value": "={{ $('Trigger-ConvoUpdated').item.json.body.subject }}"
+            },
+            {
+              "name": "ClickUpURL",
+              "value": "={{ $('Trigger-ConvoUpdated').item.json.body.customFields[4].value }}"
+            },
+            {
+              "name": "ClickUpID",
+              "value": "={{ $('Trigger-ConvoUpdated').item.json.body.customFields[3].value }}"
+            },
+            {
+              "name": "TicketType",
+              "value": "={{ $('Trigger-ConvoUpdated').item.json.body.customFields[0].text }}"
+            },
+            {
+              "name": "TicketCategory",
+              "value": "={{ $('Trigger-ConvoUpdated').item.json.body.customFields[1].text }}"
+            },
+            {
+              "name": "TicketApps",
+              "value": "={{ $('Trigger-ConvoUpdated').item.json.body.customFields[2].text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ea5a6b84-d14d-4b11-ad85-af59b9364cab",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        700,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $json.body.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "3bf38041-4d78-4304-8962-e2bcd645987f",
+      "name": "GetConversation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        820,
+        460
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "X-FreeScout-API-Key"
+        }
+      },
+      "notes": "GetTicket (GetThread)"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "85zt99mtk",
+        "updateFields": {
+          "status": ""
+        }
+      },
+      "id": "42da7b83-6d55-48ed-b45d-cd8559e7e527",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        460
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://freescout.hp-ne.us/api/tags",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "conversationId",
+              "value": "59"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f595f3e7-b793-4d92-bfc3-b8be0999040e",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1040,
+        460
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9",
+          "name": "X-FreeScout-API-Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Finish logic to update ClickUp status"
+      },
+      "id": "7bcfdddf-e8e5-4f19-9c89-2c362f9cce43",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        980,
+        660
+      ]
     }
   ],
   "pinData": {
-    "StripDown": [
-      {
-        "json": {
-          "TicketID": [
-            42
-          ],
-          "TicketSubject": [
-            "View your Teams Phone Mobile invoice"
-          ],
-          "ThreadID": [
-            144
-          ],
-          "ThreadAction": [
-            "Joshua Wowk replied to conversation #42"
-          ],
-          "ThreadBody": [
-            "<div>retry test</div>"
-          ],
-          "ClickUp": {
-            "ID": [
-              "85zt7529g"
-            ],
-            "URL": [
-              "https://app.clickup.com/t/85zt7529g"
-            ]
-          }
-        }
-      }
-    ],
-    "Markdown": [
-      {
-        "json": {
-          "TicketID": [
-            42
-          ],
-          "TicketSubject": [
-            "View your Teams Phone Mobile invoice"
-          ],
-          "ThreadID": [
-            144
-          ],
-          "ThreadAction": [
-            "Joshua Wowk replied to conversation #42"
-          ],
-          "ThreadBody": [
-            "retry test"
-          ],
-          "ClickUp": {
-            "ID": [
-              "85zt7529g"
-            ],
-            "URL": [
-              "https://app.clickup.com/t/85zt7529g"
-            ]
-          }
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ],
     "Trigger-ConvoUpdated": [
       {
         "json": {
@@ -523,6 +653,345 @@
           "item": 0
         }
       }
+    ],
+    "Set": [
+      {
+        "json": {
+          "id": 144,
+          "type": "message",
+          "status": "pending",
+          "state": "published",
+          "action": {
+            "type": "",
+            "text": "Joshua Wowk replied to conversation #42",
+            "associatedEntities": []
+          },
+          "body": "<div>retry test</div>",
+          "source": {
+            "type": "web",
+            "via": "user"
+          },
+          "customer": {
+            "id": 325,
+            "type": "customer",
+            "firstName": "Microsoft",
+            "lastName": null,
+            "photoUrl": "",
+            "email": "microsoft-noreply@microsoft.com"
+          },
+          "createdBy": {
+            "id": 2,
+            "type": "user",
+            "firstName": "Joshua",
+            "lastName": "Wowk",
+            "photoUrl": "",
+            "email": "joshua.wowk@hp-ne.com"
+          },
+          "assignedTo": {
+            "id": 2,
+            "type": "user",
+            "firstName": "Joshua",
+            "lastName": "Wowk",
+            "photoUrl": "",
+            "email": "joshua.wowk@hp-ne.com"
+          },
+          "to": [
+            "microsoft-noreply@microsoft.com"
+          ],
+          "cc": [],
+          "bcc": [],
+          "createdAt": "2023-06-03T19:46:57Z",
+          "openedAt": null,
+          "_embedded": {
+            "attachments": []
+          },
+          "SetSubject": "View your Teams Phone Mobile invoice",
+          "ClickUpURL": "https://app.clickup.com/t/85zt7529g",
+          "ClickUpID": "",
+          "TicketType": "Incident",
+          "TicketCategory": "Applications",
+          "TicketApps": ""
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "id": 143,
+          "type": "message",
+          "status": "active",
+          "state": "published",
+          "action": {
+            "type": "",
+            "text": "Joshua Wowk replied to conversation #42",
+            "associatedEntities": []
+          },
+          "body": "<div>n8n workflow testing</div>",
+          "source": {
+            "type": "web",
+            "via": "user"
+          },
+          "customer": {
+            "id": 325,
+            "type": "customer",
+            "firstName": "Microsoft",
+            "lastName": null,
+            "photoUrl": "",
+            "email": "microsoft-noreply@microsoft.com"
+          },
+          "createdBy": {
+            "id": 2,
+            "type": "user",
+            "firstName": "Joshua",
+            "lastName": "Wowk",
+            "photoUrl": "",
+            "email": "joshua.wowk@hp-ne.com"
+          },
+          "assignedTo": {
+            "id": 2,
+            "type": "user",
+            "firstName": "Joshua",
+            "lastName": "Wowk",
+            "photoUrl": "",
+            "email": "joshua.wowk@hp-ne.com"
+          },
+          "to": [
+            "microsoft-noreply@microsoft.com"
+          ],
+          "cc": [],
+          "bcc": [],
+          "createdAt": "2023-06-03T19:38:53Z",
+          "openedAt": "2023-06-03T19:39:16Z",
+          "_embedded": {
+            "attachments": []
+          },
+          "SetSubject": "View your Teams Phone Mobile invoice",
+          "ClickUpURL": "https://app.clickup.com/t/85zt7529g",
+          "ClickUpID": "",
+          "TicketType": "Incident",
+          "TicketCategory": "Applications",
+          "TicketApps": ""
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      },
+      {
+        "json": {
+          "id": 140,
+          "type": "lineitem",
+          "status": "active",
+          "state": "published",
+          "action": {
+            "type": "",
+            "text": "Workflow Assign new tickets to jwowk was triggered for conversation #42",
+            "associatedEntities": []
+          },
+          "body": "",
+          "source": {
+            "type": "web",
+            "via": "user"
+          },
+          "customer": null,
+          "createdBy": {
+            "id": 3,
+            "type": "user",
+            "firstName": "Workflow",
+            "lastName": "",
+            "photoUrl": "",
+            "email": "fsworkflow@example.org"
+          },
+          "assignedTo": {
+            "id": 2,
+            "type": "user",
+            "firstName": "Joshua",
+            "lastName": "Wowk",
+            "photoUrl": "",
+            "email": "joshua.wowk@hp-ne.com"
+          },
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "createdAt": "2023-06-03T02:45:30Z",
+          "openedAt": null,
+          "_embedded": {
+            "attachments": []
+          },
+          "SetSubject": "View your Teams Phone Mobile invoice",
+          "ClickUpURL": "https://app.clickup.com/t/85zt7529g",
+          "ClickUpID": "",
+          "TicketType": "Incident",
+          "TicketCategory": "Applications",
+          "TicketApps": ""
+        },
+        "pairedItem": {
+          "item": 2
+        }
+      },
+      {
+        "json": {
+          "id": 139,
+          "type": "customer",
+          "status": "active",
+          "state": "published",
+          "action": {
+            "type": "",
+            "text": "Microsoft started a new conversation #42",
+            "associatedEntities": []
+          },
+          "body": "\r\n        <div class=\"preheader\" style=\"display: none;visibility: hidden;opacity: 0;color: #f4f4f4;height: 0;width: 0;line-height: 1px;font-size: 1px;max-height: 0;max-width: 0;overflow: hidden;mso-hide: all\">Sign in to the Microsoft 365 admin center to view your invoice.                                                                                                                                                                                                                                             </div>\r\n    <table role=\"presentation\" class=\"body \" data-made-with-foundation=\"data-made-with-foundation\" style='border-spacing: 0;border-collapse: collapse;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;height: 100%;width: 100%;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n        <tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n            <td class=\"float-center\" align=\"center\" valign=\"top\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;font-size: 14px;line-height: 20px;Margin: 0 auto;float: none;text-align: center'>\r\n                <center class=\"main-container\" style=\"width: 100%;min-width: 640px\">\r\n                    <table role=\"presentation\" bgcolor=\"#ffffff\" align=\"center\" class=\"float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;Margin: 0 auto;float: none;text-align: center\">\r\n                        <tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                            <td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                                \r\n\r\n\r\n<table role=\"presentation\" dir=\"ltr\" align=\"center\" class=\"container header-container section\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;width: 640px;Margin: 0 auto;text-align: inherit\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n    <table role=\"presentation\" align=\"left\" class=\"wrapper outer-wrapper text-left\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%;text-align: left\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-top: 0;mso-padding-top-alt: 0;padding-bottom: 0;mso-padding-bottom-alt: 0'>\r\n        <table role=\"presentation\" align=\"left\" class=\"row header-section text-left\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;text-align: left;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n            <th class=\"text-left small-12 large-12 columns first last\" align=\"left\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;text-align: left;padding-left: 24px;padding-right: 24px;padding-top: 24px;mso-padding-top-alt: 24px;padding-bottom: 24px;mso-padding-bottom-alt: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                <img height=\"20\" width=\"auto\" src=\"https://images.ecomm.microsoft.com/cdn/mediahandler/azure-emails-templates/production/shared/images/templates/shared/microsoft-2x.png\" alt=\"Microsoft\" title=\"Microsoft\" class=\"logo-microsoft text-left\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;max-width: 100%;clear: both;display: block;height: 20px;max-height: 20px;width: auto\">\r\n            </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n        </tr></tbody></table>\r\n    </td></tr></tbody></table>\r\n</td></tr></tbody></table>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<table role=\"presentation\" align=\"center\" class=\"container template-container section\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;width: 640px;Margin: 0 auto;text-align: inherit\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n    <table role=\"presentation\" class=\"wrapper outer-wrapper\" align=\"center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-top: 6px;mso-padding-top-alt: 6px'>\r\n        <center style=\"width: 100%;min-width: 640px\">\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px;padding-top: 6px;mso-padding-top-alt: 6px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <h1 style='padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;color: inherit;Margin-bottom: 16px;-webkit-hyphens: none;-moz-hyphens: none;-ms-hyphens: none;hyphens: none;letter-spacing: -.01em;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600;font-size: 28px;line-height: 36px;mso-line-height-alt: 36px;word-wrap: normal;-webkit-text-size-adjust: none'>Sign in to view your Teams Phone Mobile invoice</h1>\r\n                    <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0;mso-margin-bottom-alt: 0'>Your Teams Phone Mobile invoice is now available in the Microsoft 365 admin center. Sign in to view it.</p>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <table role=\"presentation\" class=\"button \" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;Margin: 0;width: auto\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;font-size: 14px;line-height: 20px;color: #ffffff;background: #0078d4;border: 0;border-radius: 2px;text-align: center'><a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fadmin.microsoft.com%2FAdminportal%2FHome%3Fref%3Dbilloverview%2Finvoice-list&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1Ib21l\" style='text-underline: none;mso-text-underline: none;font-size: 16px;color: #ffffff;text-decoration: none;text-align: left;display: inline-block;padding: 12px 16px 12px 16px;border: 0 solid #0078d4;border-radius: 2px;line-height: 1;mso-border-alt: 8px solid #0078d4;mso-padding-alt: 0;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>View your invoice &gt;</a></td></tr></tbody></table></td></tr></tbody></table>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'>If you’ve already paid, disregard this email.</p>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'>If you’re set up to pay by credit card, no action is required—we’ll charge your card within 24 hours of the invoice date.</p>\r\n                    <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0;mso-margin-bottom-alt: 0'>To review changes made to this subscription, <a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fadmin.microsoft.com%2FAdminportal%2Fhome%3FshowActivityLog%3Dtrue%23%2Fsubscriptions%2Fwebdirect%2Fa895900e-da2a-4d53-8ae0-9303c27a4fa4&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1ob21l\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none;Margin: inherit;mso-margin-alt: inherit'>go to the subscription history in the Microsoft 365 admin center</a>.</p>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n            <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n                <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                    <h3 style='padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;color: inherit;Margin-bottom: 16px;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600;font-size: 20px;line-height: 28px;mso-line-height-alt: 28px;word-wrap: normal;-webkit-text-size-adjust: none'>Additional resources</h3>\r\n                    <ul class=\"list-items\" style=\"Margin-bottom: 15px;mso-margin-bottom-alt: 15px;Margin-left: 17px;mso-margin-left-alt: 17px;padding: 0px;mso-padding-alt: 0px;-webkit-padding-start: 0px\">\r\n                        <li style=\"font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;Margin-top: 4px;mso-margin-top-alt: 4px;Margin-bottom: 4px;mso-margin-bottom-alt: 4px;Margin-left: 0px;mso-margin-left-alt: 0px;Margin-right: 0px;mso-margin-right-alt: 0px;text-align: -webkit-match-parent;display: list-item\"><a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Foffice365%2Fadmin%2Fsubscriptions-and-billing%2Funderstand-your-invoice%3Fview%3Do365-worldwide&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD11bmRlcnN0YW5kLXlvdXItaW52b2ljZQ%3D%3D\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none'>Learn more about your invoice</a></li>\r\n                        <li style=\"font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;Margin-top: 4px;mso-margin-top-alt: 4px;Margin-bottom: 4px;mso-margin-bottom-alt: 4px;Margin-left: 0px;mso-margin-left-alt: 0px;Margin-right: 0px;mso-margin-right-alt: 0px;text-align: -webkit-match-parent;display: list-item\"><a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Foffice365%2Fadmin%2Fsubscriptions-and-billing%2Fview-your-bill-or-invoice%3Fview%3Do365-worldwide&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD12aWV3LXlvdXItYmlsbC1vci1pbnZvaWNl\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none'>Learn how to navigate your invoices</a></li>\r\n                        <li style=\"font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;Margin-top: 4px;mso-margin-top-alt: 4px;Margin-bottom: 4px;mso-margin-bottom-alt: 4px;Margin-left: 0px;mso-margin-left-alt: 0px;Margin-right: 0px;mso-margin-right-alt: 0px;text-align: -webkit-match-parent;display: list-item\"><a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Foffice365%2Fadmin%2Fsubscriptions-and-billing%2Fpay-for-your-subscription%3Fview%3Do365-worldwide%23receive-a-copy-of-your-billing-statement-in-email&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1wYXktZm9yLXlvdXItc3Vic2NyaXB0aW9u\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none'>Change the way you receive invoices</a></li>\r\n                        <li style=\"font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;Margin-top: 4px;mso-margin-top-alt: 4px;Margin-bottom: 4px;mso-margin-bottom-alt: 4px;Margin-left: 0px;mso-margin-left-alt: 0px;Margin-right: 0px;mso-margin-right-alt: 0px;text-align: -webkit-match-parent;display: list-item\"><a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Foffice365%2Fadmin%2Fsubscriptions-and-billing%2Fchange-payment-method%3Fview%3Do365-worldwide&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1jaGFuZ2UtcGF5bWVudC1tZXRob2Q%3D\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none'>Change your payment method</a></li>\r\n                        <li style=\"font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;Margin-top: 4px;mso-margin-top-alt: 4px;Margin-bottom: 4px;mso-margin-bottom-alt: 4px;Margin-left: 0px;mso-margin-left-alt: 0px;Margin-right: 0px;mso-margin-right-alt: 0px;text-align: -webkit-match-parent;display: list-item\"><a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fmicrosoft-365%2Fcommerce%2Fbilling-and-payments%2Fchange-your-billing-addresses%3Fview%3Do365-worldwide&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1jaGFuZ2UteW91ci1iaWxsaW5nLWFkZHJlc3Nlcw%3D%3D\" style='color: #0078d4;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;text-decoration: none;text-underline: none;mso-text-underline: none'>Change your billing address</a></li>\r\n                    </ul>\r\n                </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n            </tr></tbody></table>\r\n        </center>\r\n    </td></tr></tbody></table>\r\n\r\n<table role=\"presentation\" class=\"wrapper outer-wrapper divider-light-top\" align=\"center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%;border-top: 1px solid #eaebec\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px'>\r\n    <center style=\"width: 100%;min-width: 640px\">\r\n        <table role=\"presentation\" align=\"center\" class=\"row float-center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;Margin: 0 auto;float: none;text-align: center;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n            <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;width: 616px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;padding-left: 24px;padding-right: 24px'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                <h2 style='padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;color: inherit;Margin-bottom: 16px;font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600;font-size: 24px;line-height: 32px;mso-line-height-alt: 32px;word-wrap: normal;-webkit-text-size-adjust: none'>Account information</h2>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'><strong style='font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Organization name:</strong> High Purity New England</p>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'><strong style='font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Domain:</strong> hp-ne.com</p>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 12px;mso-margin-bottom-alt: 12px'><strong style='font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Subscription name:</strong> Teams Phone Mobile</p>\r\n                        <p style='color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 16px;line-height: 22px;mso-line-height-alt: 22px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0;mso-margin-bottom-alt: 0'><strong style='font-family: Segoe UI Semibold, SegoeUISemibold, Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 600'>Subscription expiration date:</strong> July 1, 2023</p>\r\n            </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n        </tr></tbody></table>\r\n    </center>\r\n</td></tr></tbody></table>\r\n\r\n</td></tr></tbody></table>\r\n\r\n                                <table role=\"presentation\" dir=\"ltr\" align=\"center\" class=\"container footer-template\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;mso-table-lspace: -1pt;mso-table-rspace: -1pt;background: #ffffff;width: 640px;Margin: 0 auto;text-align: inherit\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n                                    <table role=\"presentation\" class=\"wrapper outer-wrapper footer-wrapper\" align=\"center\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%;background-color: #F0F0F0\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><td class=\"wrapper-inner\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-right: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px'>\r\n                                        <center style=\"width: 100%;min-width: 640px\">\r\n                                            \r\n    \r\n\r\n\r\n<table role=\"presentation\" class=\"row\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n    <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;padding-left: 24px;padding-right: 24px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;width: auto'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>\r\n        <p class=\"text-mini prefooter link--blue link--no-underline\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0;mso-margin-bottom-alt: 0;font-size: 12px;line-height: 16px;mso-line-height-alt: 16px;color: #484644'>\r\n            <a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fadmin.microsoft.com%2Fadminportal%2Fhome%23%2FBillingNotifications&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1hZG1pbiUzQWJpbGxpbmctbm90aWZpY2F0aW9u\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;display: inline-block;text-underline: single;color: #0078d4;text-decoration: none'>View or update your billing notification preferences</a>.\r\n        </p>\r\n    </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n</tr></tbody></table>\r\n                                            \r\n                                            \r\n\r\n    \r\n<table role=\"presentation\" class=\"row\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;padding: 0;width: 100%;position: relative;display: table\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\">\r\n    <th class=\"small-12 large-12 columns first last\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;text-align: left;font-size: 14px;line-height: 20px;Margin: 0 auto;padding-left: 24px;padding-right: 24px;padding-top: 12px;mso-padding-top-alt: 12px;padding-bottom: 12px;mso-padding-bottom-alt: 12px;width: auto'><table role=\"presentation\" style=\"border-spacing: 0;border-collapse: collapse;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left;mso-table-lspace: -1pt;mso-table-rspace: -1pt;width: 100%\"><tbody><tr style=\"padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;vertical-align: top;text-align: left\"><th style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px'>        \r\n        <p class=\"margin-bottom-0\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;word-wrap: normal;-webkit-text-size-adjust: none;Margin-bottom: 0px;mso-margin-bottom-alt: 0px;font-size: 12px;line-height: 16px;mso-line-height-alt: 16px;color: #484644'>\r\n\r\n            <a href=\"https://nam.safelink.emails.azure.net/redirect/?destination=https%3A%2F%2Fgo.microsoft.com%2Ffwlink%2F%3FLinkId%3D521839&amp;p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8mbD1wcml2YWN5LXN0YXRlbWVudA%3D%3D\" title=\"Privacy Statement\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding: 0;text-align: left;line-height: 20px;color: #484644;display: inline-block;text-decoration: underline;text-underline: single'>Privacy Statement</a>            \r\n        </p>\r\n        <p class=\"margin-top-8\" style='font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;Margin-bottom: 12px;word-wrap: normal;-webkit-text-size-adjust: none;Margin-top: 8px;mso-margin-top-alt: 8px;font-size: 12px;line-height: 16px;mso-line-height-alt: 16px;color: #484644'>Microsoft Corporation, <span class=\"no-wrap\" style=\"display: inline-block;word-break: keep-all;hyphens: none\">One Microsoft Way, ​Redmond, WA 98052​</span></p>\r\n        <img height=\"20\" width=\"auto\" class=\"logo-microsoft\" src=\"https://images.ecomm.microsoft.com/cdn/mediahandler/azure-emails-templates/production/shared/images/templates/shared/images/logos/microsoft-logo-2x.png\" alt=\"Microsoft\" title=\"Microsoft\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;max-width: 100%;clear: both;display: block;height: 20px;max-height: 20px;width: auto\">\r\n    </th>\r\n<th class=\"expander\" style='word-wrap: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;border-collapse: collapse;vertical-align: top;color: #11100f;font-family: Segoe UI, SegoeUI, Roboto, \"Helvetica Neue\", Arial, sans-serif;font-weight: 400;padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;Margin: 0;text-align: left;font-size: 14px;line-height: 20px;visibility: hidden;width: 0;padding: 0'></th></tr></tbody></table></th>\r\n</tr></tbody></table>\r\n\r\n                                        </center>\r\n                                    </td></tr></tbody></table>\r\n                                </td></tr></tbody></table>\r\n                            </td>\r\n                        </tr>\r\n                    </tbody></table>\r\n                </center>\r\n            </td>\r\n        </tr>\r\n    </tbody></table>\r\n        <img height=\"\" width=\"auto\" src=\"https://nam.safelink.emails.azure.net/trackingpixel/?p=bT01ZWRmZGEyYi0zNGZkLTRjNzgtYWYwMS0zMjQ2NjZjZWY2YzYmcz0wMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAmdT1hZW8%3D\" alt=\"\" role=\"presentation\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;width: auto;max-width: 100%;clear: both;display: block\">\r\n    \r\n\r\n",
+          "source": {
+            "type": "email",
+            "via": "customer"
+          },
+          "customer": {
+            "id": 325,
+            "type": "customer",
+            "firstName": "Microsoft",
+            "lastName": null,
+            "photoUrl": "",
+            "email": "microsoft-noreply@microsoft.com"
+          },
+          "createdBy": {
+            "id": 325,
+            "type": "customer",
+            "firstName": "Microsoft",
+            "lastName": null,
+            "photoUrl": "",
+            "email": "microsoft-noreply@microsoft.com"
+          },
+          "assignedTo": null,
+          "to": [
+            "servicedesk@hp-ne.com"
+          ],
+          "cc": [],
+          "bcc": [],
+          "createdAt": "2023-06-03T02:45:30Z",
+          "openedAt": null,
+          "_embedded": {
+            "attachments": [
+              {
+                "id": 155,
+                "fileName": "81671089268.pdf",
+                "fileUrl": "https://freescout.hp-ne.us/storage/attachment/2/7/1/81671089268.pdf?id=155&token=b49a5978707c2998693897f278af649b",
+                "mimeType": "application/pdf",
+                "size": 251881
+              }
+            ]
+          },
+          "SetSubject": "View your Teams Phone Mobile invoice",
+          "ClickUpURL": "https://app.clickup.com/t/85zt7529g",
+          "ClickUpID": "",
+          "TicketType": "Incident",
+          "TicketCategory": "Applications",
+          "TicketApps": ""
+        },
+        "pairedItem": {
+          "item": 3
+        }
+      }
+    ],
+    "Markdown": [
+      {
+        "json": {
+          "id": 144,
+          "type": "message",
+          "status": "pending",
+          "state": "published",
+          "action": {
+            "type": "",
+            "text": "Joshua Wowk replied to conversation #42",
+            "associatedEntities": []
+          },
+          "body": "<div>retry test</div>",
+          "source": {
+            "type": "web",
+            "via": "user"
+          },
+          "customer": {
+            "id": 325,
+            "type": "customer",
+            "firstName": "Microsoft",
+            "lastName": null,
+            "photoUrl": "",
+            "email": "microsoft-noreply@microsoft.com"
+          },
+          "createdBy": {
+            "id": 2,
+            "type": "user",
+            "firstName": "Joshua",
+            "lastName": "Wowk",
+            "photoUrl": "",
+            "email": "joshua.wowk@hp-ne.com"
+          },
+          "assignedTo": {
+            "id": 2,
+            "type": "user",
+            "firstName": "Joshua",
+            "lastName": "Wowk",
+            "photoUrl": "",
+            "email": "joshua.wowk@hp-ne.com"
+          },
+          "to": [
+            "microsoft-noreply@microsoft.com"
+          ],
+          "cc": [],
+          "bcc": [],
+          "createdAt": "2023-06-03T19:46:57Z",
+          "openedAt": null,
+          "_embedded": {
+            "attachments": []
+          },
+          "SetSubject": "View your Teams Phone Mobile invoice",
+          "ClickUpURL": "https://app.clickup.com/t/85zt7529g",
+          "ClickUpID": "",
+          "TicketType": "Incident",
+          "TicketCategory": "Applications",
+          "TicketApps": "",
+          "ThreadBody": "retry test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "ClickUp": [
+      {
+        "json": {
+          "id": 90020028938701,
+          "hist_id": "3536824610186657702",
+          "date": 1686607314145
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "HTTP Request": [
+      {
+        "json": {
+          "_embedded": {
+            "tags": [
+              {
+                "id": 1,
+                "name": "new",
+                "counter": 7,
+                "color": 4
+              }
+            ]
+          },
+          "page": {
+            "size": 50,
+            "totalElements": 1,
+            "totalPages": 1,
+            "number": 1
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
     ]
   },
   "settings": {},
@@ -554,6 +1023,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-06-09T19:55:06.000Z",
-  "versionId": "5eff6150-430a-4d34-993a-7411ceaa966c"
+  "updatedAt": "2023-06-12T22:12:18.000Z",
+  "versionId": "34b68865-cea8-478a-b22e-0d2d40dfd964"
 }
