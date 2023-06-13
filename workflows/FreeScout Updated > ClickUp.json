@@ -56,38 +56,11 @@
         ]
       ]
     },
-    "GetConversation": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "SelectNewest": {
       "main": [
         [
           {
             "node": "Markdown",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "ClickUp": {
-      "main": [
-        []
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "ClickUp1",
             "type": "main",
             "index": 0
           }
@@ -247,84 +220,6 @@
         700,
         220
       ]
-    },
-    {
-      "parameters": {
-        "url": "=https://freescout.hp-ne.us/api/conversations/{{ $json.body.id }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "options": {}
-      },
-      "id": "3bf38041-4d78-4304-8962-e2bcd645987f",
-      "name": "GetConversation",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        820,
-        460
-      ],
-      "notesInFlow": true,
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "9",
-          "name": "X-FreeScout-API-Key"
-        }
-      },
-      "notes": "GetTicket (GetThread)"
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "id": "85zt99mtk",
-        "updateFields": {
-          "status": ""
-        }
-      },
-      "id": "42da7b83-6d55-48ed-b45d-cd8559e7e527",
-      "name": "ClickUp1",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        1280,
-        460
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "https://freescout.hp-ne.us/api/tags",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "conversationId",
-              "value": "59"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "f595f3e7-b793-4d92-bfc3-b8be0999040e",
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1040,
-        460
-      ],
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "9",
-          "name": "X-FreeScout-API-Key"
-        }
-      }
     },
     {
       "parameters": {
@@ -967,31 +862,6 @@
           "item": 0
         }
       }
-    ],
-    "HTTP Request": [
-      {
-        "json": {
-          "_embedded": {
-            "tags": [
-              {
-                "id": 1,
-                "name": "new",
-                "counter": 7,
-                "color": 4
-              }
-            ]
-          },
-          "page": {
-            "size": 50,
-            "totalElements": 1,
-            "totalPages": 1,
-            "number": 1
-          }
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
     ]
   },
   "settings": {},
@@ -1023,6 +893,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-06-12T22:12:18.000Z",
-  "versionId": "34b68865-cea8-478a-b22e-0d2d40dfd964"
+  "updatedAt": "2023-06-13T11:51:18.000Z",
+  "versionId": "221cc818-a29b-4062-b762-d8a3445dca80"
 }
