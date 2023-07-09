@@ -120,21 +120,21 @@
   },
   "tags": [
     {
+      "id": "1",
       "createdAt": "2023-04-23T13:06:32.653Z",
       "updatedAt": "2023-04-23T13:06:32.653Z",
-      "id": "1",
       "name": "ClickUp"
     },
     {
+      "id": "2",
       "createdAt": "2023-04-23T13:06:55.331Z",
       "updatedAt": "2023-04-23T13:06:55.331Z",
-      "id": "2",
       "name": "Dev/Test"
     },
     {
+      "id": "3",
       "createdAt": "2023-04-23T13:07:18.739Z",
       "updatedAt": "2023-04-23T13:07:18.739Z",
-      "id": "3",
       "name": "Make.com Replacement"
     }
   ],
