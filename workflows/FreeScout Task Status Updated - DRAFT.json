@@ -10010,27 +10010,27 @@
   },
   "tags": [
     {
+      "id": "1",
       "createdAt": "2023-04-23T13:06:32.653Z",
       "updatedAt": "2023-04-23T13:06:32.653Z",
-      "id": "1",
       "name": "ClickUp"
     },
     {
+      "id": "4",
       "createdAt": "2023-06-09T19:52:42.669Z",
       "updatedAt": "2023-06-09T19:52:42.669Z",
-      "id": "4",
       "name": "FreeScout"
     },
     {
+      "id": "6",
       "createdAt": "2023-06-09T19:53:13.180Z",
       "updatedAt": "2023-06-09T19:53:13.180Z",
-      "id": "6",
       "name": "Enabled"
     },
     {
+      "id": "7",
       "createdAt": "2023-06-09T19:54:26.868Z",
       "updatedAt": "2023-06-09T19:54:36.928Z",
-      "id": "7",
       "name": "Trigger:Change/Update"
     }
   ],
