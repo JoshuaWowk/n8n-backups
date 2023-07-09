@@ -61,21 +61,21 @@
   "staticData": null,
   "tags": [
     {
+      "id": "4",
       "createdAt": "2023-06-09T19:52:42.669Z",
       "updatedAt": "2023-06-09T19:52:42.669Z",
-      "id": "4",
       "name": "FreeScout"
     },
     {
+      "id": "8",
       "createdAt": "2023-06-09T19:54:53.274Z",
       "updatedAt": "2023-06-09T19:54:53.274Z",
-      "id": "8",
       "name": "Disabled"
     },
     {
+      "id": "9",
       "createdAt": "2023-06-09T19:56:21.501Z",
       "updatedAt": "2023-06-09T19:56:21.501Z",
-      "id": "9",
       "name": "Reference"
     }
   ],
