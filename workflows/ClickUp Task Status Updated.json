@@ -2167,8 +2167,8 @@
   "settings": {},
   "staticData": {
     "node:Trigger-StatusUpdate": {
-      "webhookId": "c496ad18-7993-4e2a-9aa2-8de481932a09",
-      "secret": "F92G6BYZ1I99INAPBPM4722TT1UT89AUF7YWCUFY1S1HBBPJWJUHT81IHVNBR4VJ"
+      "webhookId": "cdbeff7b-7110-49e7-af27-9ef941d53909",
+      "secret": "0B5F9RFN6NSJ4F04NVRG7YLGH13ZEKTSQ3O2SQF3GIAMTDQO88G76SY76NQNRMJ8"
     }
   },
   "tags": [
@@ -2198,6 +2198,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-16T01:01:01.000Z",
+  "updatedAt": "2023-07-23T01:01:00.000Z",
   "versionId": "b5a7ce45-9c30-458e-a60e-600e9fe8fff9"
 }
