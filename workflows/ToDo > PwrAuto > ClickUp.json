@@ -56,7 +56,7 @@
       "main": [
         [
           {
-            "node": "Microsoft To Do1",
+            "node": "Microsoft To Do2",
             "type": "main",
             "index": 0
           }
@@ -193,38 +193,13 @@
           "status": "completed"
         }
       },
-      "id": "0660b55f-dec6-48c4-bb35-22b18c180625",
-      "name": "Microsoft To Do1",
-      "type": "n8n-nodes-base.microsoftToDo",
-      "typeVersion": 1,
-      "position": [
-        2020,
-        720
-      ],
-      "credentials": {
-        "microsoftToDoOAuth2Api": {
-          "id": "O6IPgun0x91zKAe5",
-          "name": "Microsoft To Do account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $('Microsoft To Do').item.json.id }}",
-        "updateFields": {
-          "content": "=ClickUp URL: {{ $json.url }}",
-          "status": "completed"
-        }
-      },
       "id": "f37e9918-b438-4f80-be40-d969c0f1efd5",
       "name": "Microsoft To Do2",
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2020,
-        560
+        2060,
+        660
       ],
       "credentials": {
         "microsoftToDoOAuth2Api": {
@@ -1086,6 +1061,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-07-26T22:25:58.000Z",
-  "versionId": "95549d24-2d47-49ed-b0ac-3fd9aee5b7e5"
+  "updatedAt": "2023-07-27T21:26:22.000Z",
+  "versionId": "e844681c-688b-49d0-839a-238f133816e1"
 }
