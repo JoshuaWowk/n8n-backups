@@ -1,0 +1,920 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft To Do": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Due-date set?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Due-date set?": {
+      "main": [
+        [
+          {
+            "node": "ClickUp-DueDate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ClickUp-NoDueDate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp-DueDate": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp-NoDueDate": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-07-27T21:23:26.340Z",
+  "id": "c5yQTMPXVIHCsmuL",
+  "name": "To-Do Inbox > ClickUp",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "1f23f9bb-5f80-4316-83c4-21cc5a277cc5",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "taskListId": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AACgGROgAAA="
+      },
+      "id": "45077f75-ebaf-4777-8554-71b4c196c707",
+      "name": "Microsoft To Do",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        560
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "notEqual",
+              "value2": "completed"
+            }
+          ]
+        }
+      },
+      "id": "072cd621-22ea-4751-a812-322e566daa11",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.dueDateTime }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "11e6aef1-62f0-4b2a-b29c-261a934eed59",
+      "name": "Due-date set?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folderless": true,
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}",
+          "dueDate": "={{ $json.dueDateTime }}"
+        }
+      },
+      "id": "3a2e4530-e0c2-47f6-8cb3-b37cf88e4716",
+      "name": "ClickUp-DueDate",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        460
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/ due date"
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folderless": true,
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}"
+        }
+      },
+      "id": "febc4820-47a0-43e6-bf62-210c26cde701",
+      "name": "ClickUp-NoDueDate",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        640
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/o due date"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
+        "taskId": "={{ $('Microsoft To Do').item.json.id }}",
+        "updateFields": {
+          "content": "=ClickUp URL: {{ $json.url }}",
+          "status": "completed"
+        }
+      },
+      "id": "1528852e-85fd-4bd6-8662-55f477906ec9",
+      "name": "Microsoft To Do2",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        560
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Microsoft To Do": [
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABLguCsQ==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "notStarted",
+          "title": "Cindy Croft asked you \"Would you please have them all set to full except for Kursten.\"",
+          "createdDateTime": "2023-07-26T18:40:11.477248Z",
+          "lastModifiedDateTime": "2023-07-26T18:40:11.6257628Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEv0JSpAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABLgtf4A==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "notStarted",
+          "title": "DMT Processing",
+          "createdDateTime": "2023-07-26T13:49:29.9256482Z",
+          "lastModifiedDateTime": "2023-07-26T13:49:30.0747991Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEv0JSoAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABIK2ZNw==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "List of managers to contact for functional groups",
+          "createdDateTime": "2023-07-10T17:23:24.7276904Z",
+          "lastModifiedDateTime": "2023-07-11T11:56:22.5147642Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEibHR_AAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-07-11T04:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABIK2ZVA==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Security groups - 2nd draft",
+          "createdDateTime": "2023-07-10T17:23:24.7508939Z",
+          "lastModifiedDateTime": "2023-07-11T11:57:17.4071083Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEibHR9AAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-07-11T04:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABIK2Yzw==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Raud Jean-Louis asked you \"If you have not done so already, please create a user account for Joe in Epicor with admin privileges.\"",
+          "createdDateTime": "2023-06-27T18:57:42.6668571Z",
+          "lastModifiedDateTime": "2023-07-11T11:52:30.4557937Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEbwvX8AAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-07-11T04:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABIK2Zvg==\"",
+          "importance": "high",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Arrive for 8:30 AM",
+          "createdDateTime": "2023-06-06T13:17:47.4771299Z",
+          "lastModifiedDateTime": "2023-07-11T11:57:40.2549337Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEPGl_1AAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-07-11T04:00:00.0000000",
+            "timeZone": "UTC"
+          },
+          "dueDateTime": {
+            "dateTime": "2023-06-05T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABDY2ndQ==\"",
+          "importance": "high",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Arrive for 8:30 AM",
+          "createdDateTime": "2023-06-06T13:17:47.4465279Z",
+          "lastModifiedDateTime": "2023-06-06T13:27:48.6549841Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEPGl_0AAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-06-06T04:00:00.0000000",
+            "timeZone": "UTC"
+          },
+          "dueDateTime": {
+            "dateTime": "2023-06-07T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABIK2Zuw==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "David - Request for user permission",
+          "createdDateTime": "2023-05-22T18:06:35.3091841Z",
+          "lastModifiedDateTime": "2023-07-11T11:57:39.7650606Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEFYGeiAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-07-11T04:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAA+5owXQ==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Would you please provide Linda Sharron with full permissions in Epicor for Tools.",
+          "createdDateTime": "2023-04-25T02:33:41.8320814Z",
+          "lastModifiedDateTime": "2023-05-10T12:15:36.5830262Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AADyWlj9AAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-05-10T04:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAy57eew==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Scheduling: Epicor Client Installation",
+          "createdDateTime": "2023-02-24T22:35:24.4687634Z",
+          "lastModifiedDateTime": "2023-02-24T22:45:26.7695956Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AADMdZyuAAA=",
+          "body": {
+            "content": "",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-02-24T05:00:00.0000000",
+            "timeZone": "UTC"
+          },
+          "linkedResources@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/todo/lists('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AACgGROgAAA%3D')/tasks('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AADMdZyuAAA%3D')/linkedResources",
+          "linkedResources": [
+            {
+              "webUrl": "https://outlook.office365.com/owa/?ItemID=AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j%2Ftt5fnT8AAAAAAEMAAAHSJsVbcC5R42j%2Ftt5fnT8AADMcPPTAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "applicationName": "Outlook",
+              "displayName": "RE: Scheduling: Epicor Client Installation",
+              "externalId": "AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AB0ibFW3AuUeNo-7beX50-AAAzHWRyAAA",
+              "id": "ae74cea4-f68a-4aa8-8c1c-1b6b84b83549"
+            }
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAyYGLCA==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "n8n Monday test",
+          "createdDateTime": "2023-02-21T01:08:04.4392983Z",
+          "lastModifiedDateTime": "2023-02-21T16:40:43.3687286Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AADKUhMDAAA=",
+          "body": {
+            "content": "",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-02-21T00:00:00.0000000",
+            "timeZone": "UTC"
+          },
+          "dueDateTime": {
+            "dateTime": "2023-02-20T05:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAA2l0Nig==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Epicor Education Center assignments",
+          "createdDateTime": "2023-02-13T19:47:42.9004648Z",
+          "lastModifiedDateTime": "2023-03-21T16:12:20.4970819Z",
+          "hasAttachments": false,
+          "categories": [
+            "Mary Ellen",
+            "Jeremy",
+            "Epicor",
+            "Change Request: Egnyte"
+          ],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AADGci1aAAA=",
+          "body": {
+            "content": "",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-03-01T00:00:00.0000000",
+            "timeZone": "UTC"
+          },
+          "linkedResources@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/todo/lists('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AACgGROgAAA%3D')/tasks('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AADGci1aAAA%3D')/linkedResources",
+          "linkedResources": [
+            {
+              "webUrl": "https://outlook.office365.com/owa/?ItemID=AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j%2Ftt5fnT8AAAAAAEMAAAHSJsVbcC5R42j%2Ftt5fnT8AADFdMvdAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "applicationName": "Outlook",
+              "displayName": "RE: Epicor Education Center assignments",
+              "externalId": "AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AB0ibFW3AuUeNo-7beX50-AAAxXYulAAA",
+              "id": "83bb3b79-a0cc-45c9-9b54-f91ad04d4fe9"
+            }
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAvCBCnQ==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Make a transfer to Alliant savings tomorrow 5:00 p.m.",
+          "createdDateTime": "2023-01-28T21:50:57.598664Z",
+          "lastModifiedDateTime": "2023-02-01T13:52:15.4330173Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC6Q-nZAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-02-01T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAvCBCog==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Order Blackstone Oil bottles for analysis",
+          "createdDateTime": "2023-01-28T21:03:53.3902053Z",
+          "lastModifiedDateTime": "2023-02-01T13:52:16.2121766Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC6Q-nYAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-02-01T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAuy7jNw==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Congestion meds",
+          "createdDateTime": "2023-01-28T21:03:53.2496042Z",
+          "lastModifiedDateTime": "2023-01-30T15:33:36.5028148Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC6Q-nXAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-01-30T05:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAuy7jOg==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Pickup imhaler @ CVS",
+          "createdDateTime": "2023-01-28T19:31:47.1757085Z",
+          "lastModifiedDateTime": "2023-01-30T15:33:37.5351445Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC6Q-nWAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-01-30T05:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAuy7jPQ==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Drop-off mom's surface to UPS",
+          "createdDateTime": "2023-01-28T19:31:47.1288407Z",
+          "lastModifiedDateTime": "2023-01-30T15:33:38.9098896Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC6Q-nVAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-01-30T05:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAvCBCqw==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Pickup organizer bins from Target",
+          "createdDateTime": "2023-01-28T19:31:47.0507304Z",
+          "lastModifiedDateTime": "2023-02-01T13:52:19.3086749Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC6Q-nUAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-02-01T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAvCBCrg==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "TEst task!",
+          "createdDateTime": "2023-01-27T20:18:13.4371207Z",
+          "lastModifiedDateTime": "2023-02-01T13:52:20.1210272Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC6Q-nTAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-02-01T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAtcoMUg==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Nana's surface serial no. 000554720153",
+          "createdDateTime": "2023-01-21T16:03:22.0063516Z",
+          "lastModifiedDateTime": "2023-01-23T02:16:47.0922214Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAC2ZuQrAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-01-22T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAz4IEHQ==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Mike Q Zeta lab machine",
+          "createdDateTime": "2023-01-19T15:26:09.2473159Z",
+          "lastModifiedDateTime": "2023-03-01T16:21:21.4343521Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AADGci1ZAAA=",
+          "body": {
+            "content": "",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-03-01T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAArVi/Cg==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "Jeremy  admin consent request for Customer Portal",
+          "createdDateTime": "2023-01-11T14:57:13.2343954Z",
+          "lastModifiedDateTime": "2023-01-12T17:46:52.5633676Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AACt7nhxAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-01-12T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AAAqSGk/w==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "completed",
+          "title": "New User: Cindy Croft",
+          "createdDateTime": "2022-12-28T14:58:41.5128892Z",
+          "lastModifiedDateTime": "2023-01-03T17:42:35.4301286Z",
+          "hasAttachments": false,
+          "categories": [
+            "Onboarding"
+          ],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAClf0j8AAA=",
+          "body": {
+            "content": "Phone 4013495364 x214\r\n",
+            "contentType": "text"
+          },
+          "completedDateTime": {
+            "dateTime": "2023-01-03T00:00:00.0000000",
+            "timeZone": "UTC"
+          },
+          "checklistItems@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/todo/lists('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AACgGROgAAA%3D')/tasks('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAClf0j8AAA%3D')/checklistItems",
+          "checklistItems": [
+            {
+              "displayName": "Phone",
+              "createdDateTime": "2022-12-28T15:02:22.9832006Z",
+              "checkedDateTime": "2022-12-28T15:02:24.7958617Z",
+              "isChecked": true,
+              "id": "b0ef0614-3d02-42ae-ab17-d23d2f3d09a6"
+            }
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Filter": [
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABLguCsQ==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "notStarted",
+          "title": "Cindy Croft asked you \"Would you please have them all set to full except for Kursten.\"",
+          "createdDateTime": "2023-07-26T18:40:11.477248Z",
+          "lastModifiedDateTime": "2023-07-26T18:40:11.6257628Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEv0JSpAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABLgtf4A==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "notStarted",
+          "title": "DMT Processing",
+          "createdDateTime": "2023-07-26T13:49:29.9256482Z",
+          "lastModifiedDateTime": "2023-07-26T13:49:30.0747991Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AACgGROgAAAHSJsVbcC5R42j-tt5fnT8AAEv0JSoAAA=",
+          "body": {
+            "content": "\r\n",
+            "contentType": "text"
+          }
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-07-31T11:23:47.000Z",
+  "versionId": "b7c4906e-9c47-485c-8943-726116de22eb"
+}
