@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Filter": {
       "main": [
@@ -2166,10 +2166,7 @@
   },
   "settings": {},
   "staticData": {
-    "node:Trigger-StatusUpdate": {
-      "webhookId": "4c3cf1ef-fee4-45a3-892a-d8bcbb0b43de",
-      "secret": "G9VR29C9X5BUNTDFT6ERX6ORMZNS6U241PM0Y335I6JD1AY988V9FAROC9JX5K9H"
-    }
+    "node:Trigger-StatusUpdate": {}
   },
   "tags": [
     {
@@ -2198,6 +2195,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-30T01:01:12.000Z",
-  "versionId": "b5a7ce45-9c30-458e-a60e-600e9fe8fff9"
+  "updatedAt": "2023-07-31T11:18:36.000Z",
+  "versionId": "f2dac96b-2252-418a-b37f-7f0c0c0131dd"
 }
