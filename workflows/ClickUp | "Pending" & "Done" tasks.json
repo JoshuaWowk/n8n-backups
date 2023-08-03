@@ -45,7 +45,7 @@
       "main": [
         [
           {
-            "node": "ClickUp1",
+            "node": "ClickUp",
             "type": "main",
             "index": 0
           }
@@ -85,7 +85,7 @@
       "main": [
         [
           {
-            "node": "ClickUp3",
+            "node": "ClickUp2",
             "type": "main",
             "index": 0
           }
@@ -241,31 +241,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2120,
-        520
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "id": "={{ $json.task_id }}",
-        "updateFields": {
-          "status": "closed"
-        }
-      },
-      "id": "90d1e07c-c3d3-48ee-ac73-25359aed81bf",
-      "name": "ClickUp1",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        2120,
-        260
+        2140,
+        380
       ],
       "credentials": {
         "clickUpApi": {
@@ -286,7 +263,7 @@
       "typeVersion": 1,
       "position": [
         2100,
-        420
+        280
       ]
     },
     {
@@ -433,31 +410,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2140,
-        1200
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "id": "={{ $json.task_id }}",
-        "updateFields": {
-          "status": "done"
-        }
-      },
-      "id": "9f05dc66-2416-41c4-bd6b-63251ca6dfee",
-      "name": "ClickUp3",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        2140,
-        940
+        2160,
+        1100
       ],
       "credentials": {
         "clickUpApi": {
@@ -478,7 +432,7 @@
       "typeVersion": 1,
       "position": [
         2120,
-        1100
+        980
       ]
     },
     {
@@ -843,12 +797,12 @@
   },
   "staticData": {
     "node:ClickUp Trigger": {
-      "webhookId": "8925caf2-d7d5-4b39-b4be-eb1dfd016893",
-      "secret": "4OHP61MM9FMW0CI3CMD8DKEKNOZK50DYCED6PTH5I8LG9FRS7GL6O7BC9ZKOQA07"
+      "webhookId": "c9b00bca-f633-4257-a8c4-d17cffe23d46",
+      "secret": "CNL9U5K6UVKH4D6BU7MJS8QUTS606DPCV7K00LUTLZ7FWOFGSGY0Y6CY25UU05DD"
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-02T22:17:12.000Z",
-  "versionId": "ba1ce612-4a64-4e06-acac-6b4a9b4f2e63"
+  "updatedAt": "2023-08-03T13:52:59.000Z",
+  "versionId": "d00d296a-9724-4b30-8f06-f5179d022331"
 }
