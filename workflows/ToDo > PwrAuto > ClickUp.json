@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Due-date set?",
+            "node": "IF",
             "type": "main",
             "index": 0
           }
@@ -45,7 +45,7 @@
       "main": [
         [
           {
-            "node": "Microsoft To Do2",
+            "node": "ClickUp Custom",
             "type": "main",
             "index": 0
           }
@@ -53,6 +53,75 @@
       ]
     },
     "ClickUp-NoDueDate": {
+      "main": [
+        [
+          {
+            "node": "ClickUp Custom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp Custom": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Due-date set?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Due-date set?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Due-date set?1": {
+      "main": [
+        [
+          {
+            "node": "ClickUp-DueDate1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ClickUp-NoDueDate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp-DueDate1": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp-NoDueDate1": {
       "main": [
         [
           {
@@ -122,8 +191,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1600,
-        660
+        1820,
+        540
       ]
     },
     {
@@ -143,8 +212,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        1820,
-        560
+        2040,
+        440
       ],
       "notesInFlow": true,
       "credentials": {
@@ -171,8 +240,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        1820,
-        740
+        2040,
+        620
       ],
       "notesInFlow": true,
       "credentials": {
@@ -198,8 +267,8 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2060,
-        660
+        2500,
+        760
       ],
       "credentials": {
         "microsoftToDoOAuth2Api": {
@@ -207,6 +276,147 @@
           "name": "Microsoft To Do account"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "team": "14335650",
+        "space": "56901433",
+        "list": "=164286867",
+        "task": "={{ $json.id }}",
+        "field": {
+          "customFieldsText": {
+            "values": [
+              {
+                "fieldId": "fa591d15-5b3e-4803-b49e-4b76f0f32ca2",
+                "fieldValue": "={{ $('Microsoft To Do').item.json.linkedResources[0].displayName }}"
+              },
+              {
+                "fieldId": "c69df9e5-49e4-485e-9827-026545266843",
+                "fieldValue": "={{ $('Microsoft To Do').item.json.linkedResources[0].applicationName }}"
+              },
+              {
+                "fieldId": "91f4293d-d86b-44bb-b84c-ea14cb4939d9",
+                "fieldValue": "={{ $('Microsoft To Do').item.json.linkedResources[0].webUrl }}"
+              }
+            ]
+          }
+        },
+        "additionalFields": {
+          "isDateTime": false
+        }
+      },
+      "id": "7c958713-8d28-4d22-a1f6-41b337be8053",
+      "name": "ClickUp Custom",
+      "type": "@ilhamakbarki/n8n-nodes-clickup.clickUpCustom",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        560
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folderless": true,
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}",
+          "dueDate": "={{ $json.dueDateTime }}"
+        }
+      },
+      "id": "8e9390d3-0874-4079-8afd-f1cf54bbe1d7",
+      "name": "ClickUp-DueDate1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        820
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/ due date"
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folderless": true,
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}"
+        }
+      },
+      "id": "75b04376-caf2-4c09-8c43-4b5b56d76c9f",
+      "name": "ClickUp-NoDueDate1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        1000
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/o due date"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.linkedResources[0].webUrl }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "248365fa-9446-46e1-9180-75bf3b92da5d",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.dueDateTime }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "5e2b3c3d-e9bc-4c2b-b392-abf6f32189ab",
+      "name": "Due-date set?1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        880
+      ]
     }
   ],
   "pinData": {},
@@ -214,6 +424,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-07-31T11:40:29.000Z",
-  "versionId": "b6247b9f-6ff3-4ce8-9c25-0dd5a3513688"
+  "updatedAt": "2023-08-03T14:19:33.000Z",
+  "versionId": "141f12f3-6ad1-46fd-a6ee-babaf496aa2b"
 }
