@@ -103,21 +103,6 @@
         ]
       ]
     },
-    "Set ResourceURL": {
-      "main": [
-        []
-      ]
-    },
-    "Set ResourceName": {
-      "main": [
-        []
-      ]
-    },
-    "Set ResourceAppName": {
-      "main": [
-        []
-      ]
-    },
     "LinkedResource": {
       "main": [
         [
@@ -195,8 +180,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1820,
-        540
+        1880,
+        520
       ]
     },
     {
@@ -216,8 +201,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2080,
-        380
+        2200,
+        440
       ],
       "notesInFlow": true,
       "credentials": {
@@ -244,7 +229,7 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2060,
+        2200,
         600
       ],
       "notesInFlow": true,
@@ -271,8 +256,8 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2920,
-        740
+        2480,
+        700
       ],
       "credentials": {
         "microsoftToDoOAuth2Api": {
@@ -298,8 +283,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2300,
-        980
+        2200,
+        780
       ],
       "notesInFlow": true,
       "credentials": {
@@ -326,8 +311,8 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2300,
-        1160
+        2200,
+        940
       ],
       "notesInFlow": true,
       "credentials": {
@@ -354,76 +339,9 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1980,
-        1080
+        1880,
+        860
       ]
-    },
-    {
-      "parameters": {
-        "operation": "setCustomField",
-        "task": "={{ $json.id }}",
-        "field": "c69df9e5-49e4-485e-9827-026545266843",
-        "value": "= {{ $('Microsoft To Do').item.json.linkedResources[0].applicationName }}"
-      },
-      "id": "b4edd7f0-5837-4e58-96c6-0456bb4d0206",
-      "name": "Set ResourceAppName",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        3100,
-        220
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "setCustomField",
-        "task": "={{ $json.id }}",
-        "field": "91f4293d-d86b-44bb-b84c-ea14cb4939d9",
-        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].webUrl }}"
-      },
-      "id": "c884673a-a921-4952-99c8-5d046655824c",
-      "name": "Set ResourceURL",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        3100,
-        360
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "setCustomField",
-        "task": "={{ $json.id }} ",
-        "field": "fa591d15-5b3e-4803-b49e-4b76f0f32ca2",
-        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].displayName }}"
-      },
-      "id": "66a7fb5a-44ea-4d34-80c8-b8cdf88eb3bc",
-      "name": "Set ResourceName",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        3100,
-        500
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
     },
     {
       "parameters": {
@@ -444,73 +362,6 @@
         1600,
         700
       ]
-    },
-    {
-      "parameters": {
-        "operation": "setCustomField",
-        "task": "={{ $json.id }}",
-        "field": "c69df9e5-49e4-485e-9827-026545266843",
-        "value": "= {{ $('Microsoft To Do').item.json.linkedResources[0].applicationName }}"
-      },
-      "id": "0a37d950-2f9c-4832-971e-f6b5768aa51f",
-      "name": "Set ResourceAppName1",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        2760,
-        220
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "setCustomField",
-        "task": "={{ $json.id }}",
-        "field": "91f4293d-d86b-44bb-b84c-ea14cb4939d9",
-        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].webUrl }}"
-      },
-      "id": "37465667-d718-4a8d-afe6-1bd27c97ca83",
-      "name": "Set ResourceURL1",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        2760,
-        360
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "setCustomField",
-        "task": "={{ $json.id }} ",
-        "field": "fa591d15-5b3e-4803-b49e-4b76f0f32ca2",
-        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].displayName }}"
-      },
-      "id": "28120887-d0b0-4987-bd81-021b16cab3df",
-      "name": "Set ResourceName1",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        2760,
-        500
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
     }
   ],
   "pinData": {
@@ -614,6 +465,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-10T12:35:29.000Z",
-  "versionId": "6d33c596-69a5-4f97-b1b6-dff134049bbd"
+  "updatedAt": "2023-08-11T16:58:59.000Z",
+  "versionId": "d0012a21-14a3-444b-bf30-545453dc2133"
 }
