@@ -1,0 +1,866 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft To Do": {
+      "main": [
+        [
+          {
+            "node": "LinkedResourceExists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Due-date set?": {
+      "main": [
+        [
+          {
+            "node": "ClickUp-DueDate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ClickUp1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp-DueDate": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Due-date set?1": {
+      "main": [
+        [
+          {
+            "node": "ClickUp-DueDate1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ClickUp-NoDueDate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp-DueDate1": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp-NoDueDate1": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetLinkedResource": {
+      "main": [
+        [
+          {
+            "node": "IsLinkedResourceOutlook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedResourceExists": {
+      "main": [
+        [
+          {
+            "node": "GetLinkedResource",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Due-date set?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft Outlook": {
+      "main": [
+        [
+          {
+            "node": "Due-date set?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Due-date set?2": {
+      "main": [
+        [
+          {
+            "node": "ClickUp-DueDate2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ClickUp-NoDueDate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IsLinkedResourceOutlook": {
+      "main": [
+        [
+          {
+            "node": "Microsoft Outlook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp1": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-11T16:56:51.050Z",
+  "id": "a54uRlhBPgnB3Apv",
+  "name": "ToDo > PwrAuto > ClickUp copy",
+  "nodes": [
+    {
+      "parameters": {
+        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
+        "taskId": "={{ $json.body[0].Task_ID }}"
+      },
+      "id": "832ac085-e1c1-4f78-8570-231cf9387b69",
+      "name": "Microsoft To Do",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        700
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b1553754-7754-43ff-b655-ca06ecaffed2",
+        "options": {
+          "noResponseBody": false
+        }
+      },
+      "id": "aaba4e72-b025-4c21-a5bc-a4126b897b41",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        700
+      ],
+      "webhookId": "04bcba16-db02-4c84-8607-7bf21f41f86c"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('Microsoft To Do').item.json.dueDateTime }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "0ab7d1c9-90a2-4942-84bd-806e24f52ac2",
+      "name": "Due-date set?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folder": "90110187278",
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}",
+          "dueDate": "={{ $json.dueDateTime }}"
+        }
+      },
+      "id": "3c26737e-6635-4888-9835-2e21863d6055",
+      "name": "ClickUp-DueDate",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        3400,
+        160
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/ due date"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
+        "taskId": "={{ $('Microsoft To Do').item.json.id }}",
+        "updateFields": {
+          "content": "=ClickUp URL: {{ $json.url }}",
+          "status": "completed"
+        }
+      },
+      "id": "cd7da901-e97f-43af-b7ea-01012b5e4e38",
+      "name": "Microsoft To Do2",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        4260,
+        680
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folderless": true,
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}",
+          "dueDate": "={{ $json.dueDateTime }}"
+        }
+      },
+      "id": "aceda01e-08f5-465e-9a4f-5c954f2e492e",
+      "name": "ClickUp-DueDate1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        980
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/ due date"
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folderless": true,
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}"
+        }
+      },
+      "id": "bd625459-fdde-47c0-a160-1c5bd9ef4164",
+      "name": "ClickUp-NoDueDate1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        1160
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/o due date"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.dueDateTime }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "4797a9cb-9479-4ad3-a53f-8c5dc296fd95",
+      "name": "Due-date set?1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        1080
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $json.id }}",
+        "field": "c69df9e5-49e4-485e-9827-026545266843",
+        "value": "= {{ $('Microsoft To Do').item.json.linkedResources[0].applicationName }}"
+      },
+      "id": "975896d3-73d7-42cf-a9db-fe8df7f81e52",
+      "name": "Set ResourceAppName",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        140
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $json.id }}",
+        "field": "91f4293d-d86b-44bb-b84c-ea14cb4939d9",
+        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].webUrl }}"
+      },
+      "id": "06d8f2c3-11c4-4c5d-9c6f-8e5a07ab9ddf",
+      "name": "Set ResourceURL",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        280
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $json.id }} ",
+        "field": "fa591d15-5b3e-4803-b49e-4b76f0f32ca2",
+        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].displayName }}"
+      },
+      "id": "89456d6b-661d-4950-988a-a0ffc47f7054",
+      "name": "Set ResourceName",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        420
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $json.id }}",
+        "field": "c69df9e5-49e4-485e-9827-026545266843",
+        "value": "= {{ $('Microsoft To Do').item.json.linkedResources[0].applicationName }}"
+      },
+      "id": "27ce4648-278a-4a2d-8049-8fc7440e71fd",
+      "name": "Set ResourceAppName1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        140
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $json.id }}",
+        "field": "91f4293d-d86b-44bb-b84c-ea14cb4939d9",
+        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].webUrl }}"
+      },
+      "id": "85194e86-ea8e-4d31-ae75-e6652f2b89c4",
+      "name": "Set ResourceURL1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        280
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $json.id }} ",
+        "field": "fa591d15-5b3e-4803-b49e-4b76f0f32ca2",
+        "value": "={{ $('Microsoft To Do').item.json.linkedResources[0].displayName }}"
+      },
+      "id": "29fb6323-8c44-4452-a577-5c97c0d16193",
+      "name": "Set ResourceName1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        420
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "linkedResource",
+        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
+        "taskId": "={{ $json.id }}",
+        "linkedResourceId": "={{ $json.linkedResources[0].id }}"
+      },
+      "id": "f5a6ab8d-af50-4848-ba9e-03daf8e82fae",
+      "name": "GetLinkedResource",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        560
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.linkedResources[0].webUrl }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "1c975384-088b-4d92-9bff-5d57024ee00b",
+      "name": "LinkedResourceExists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.externalId }}",
+        "additionalFields": {}
+      },
+      "id": "7cb967b6-ab52-4118-9c42-f76d2709acb5",
+      "name": "Microsoft Outlook",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        460
+      ],
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "10",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.body.content }}",
+        "destinationKey": "bodyMarkdown",
+        "options": {
+          "ignore": "",
+          "keepDataImages": false,
+          "useLinkReferenceDefinitions": true
+        }
+      },
+      "id": "b3929e82-12ef-4acd-ae0e-bd272dc9b439",
+      "name": "Markdown",
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.dueDateTime }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "30c260b1-306c-4423-bc16-92536cb04d40",
+      "name": "Due-date set?2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folder": "90110187278",
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}",
+          "dueDate": "={{ $json.dueDateTime }}"
+        }
+      },
+      "id": "1507cd16-567d-4d24-81d9-964c32aa2a3f",
+      "name": "ClickUp-DueDate2",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2380,
+        0
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/ due date"
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folder": "90110187278",
+        "list": "164286867",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.body.content }}"
+        }
+      },
+      "id": "d8785daf-24c5-41ea-9618-842c3beceb24",
+      "name": "ClickUp-NoDueDate2",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        220
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "w/o due date"
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folder": "90110187278",
+        "list": "164286867",
+        "name": "={{ $('Microsoft To Do').item.json.title }}",
+        "additionalFields": {
+          "content": "={{ $('Microsoft Outlook').item.json.body.content }}"
+        }
+      },
+      "id": "377b9008-fdc8-4e11-8d34-7ad058e4e3eb",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        3400,
+        380
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.applicationName }}",
+              "value2": "Outlook"
+            }
+          ]
+        }
+      },
+      "id": "f00b9f04-4a5b-4ee3-b034-b2db84253e8f",
+      "name": "IsLinkedResourceOutlook",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2460,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "space": "56901433",
+        "folder": "90110187278",
+        "list": "164286867",
+        "name": "={{ $('Microsoft To Do').item.json.title }}",
+        "additionalFields": {}
+      },
+      "id": "2322e590-f26d-4300-a65d-d6b5f6738a5b",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        3120,
+        360
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.hp-ne.us",
+            "x-real-ip": "104.42.49.145",
+            "x-forwarded-for": "104.42.49.145",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "280",
+            "accept-language": "en-US",
+            "user-agent": "azure-logic-apps/1.0 (workflow 81f2ca28becf4bc19f4173f3c9536ce5; version 08585099398900367426) microsoft-flow/1.0",
+            "x-ms-workflow-id": "81f2ca28becf4bc19f4173f3c9536ce5",
+            "x-ms-workflow-version": "08585099398900367426",
+            "x-ms-workflow-name": "2060674a-01b4-40dc-9b19-b17bca5b358d",
+            "x-ms-workflow-system-id": "/locations/westus/scaleunits/prod-181/workflows/81f2ca28becf4bc19f4173f3c9536ce5",
+            "x-ms-workflow-run-id": "08585099364282456192102370929CU189",
+            "x-ms-workflow-run-tracking-id": "ac17f56d-b8ac-4351-a27a-aee7f6183f99",
+            "x-ms-workflow-operation-name": "HTTP",
+            "x-ms-execution-location": "westus",
+            "x-ms-workflow-subscription-id": "c44298d0-c055-4569-9fb2-6ab8693eb98a",
+            "x-ms-workflow-resourcegroup-name": "0A0B09FEF7AD496F931D3A307603E062-DD3E9CBA43CE44DE8421B75EDD52F276",
+            "x-ms-tracking-id": "53840459-8c8c-46c7-ad37-8bbc540e1388",
+            "x-ms-correlation-id": "53840459-8c8c-46c7-ad37-8bbc540e1388",
+            "x-ms-client-request-id": "53840459-8c8c-46c7-ad37-8bbc540e1388",
+            "x-ms-client-tracking-id": "08585099364901269544006741111CU108",
+            "x-ms-action-tracking-id": "d63dc468-ba09-48f1-8bda-b1ab75222e87",
+            "x-ms-client-keywords": "resubmitFlow",
+            "x-ms-activity-vector": "00.00.00.IN.0J.IN.0R.IN.06",
+            "content-type": "application/json; charset=utf-8",
+            "accept-encoding": "gzip, deflate"
+          },
+          "params": {},
+          "query": {},
+          "body": [
+            {
+              "Task_ID": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAESAAAHSJsVbcC5R42j-tt5fnT8AAE6nlcjAAA="
+            },
+            {
+              "Title": "DMReSig Group in LIVE"
+            },
+            {
+              "Status": "notStarted"
+            },
+            {
+              "Due_Date": null
+            },
+            {
+              "Importance": "normal"
+            },
+            {
+              "Body": ""
+            }
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Microsoft Outlook": [
+      {
+        "json": {
+          "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/messages/$entity",
+          "@odata.etag": "W/\"CQAAABYAAAAHSJsVbcC5R42j/tt5fnT8AAE40NBq\"",
+          "id": "AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AB0ibFW3AuUeNo-7beX50-AABOp5MfQAA",
+          "createdDateTime": "2023-08-10T11:03:19Z",
+          "lastModifiedDateTime": "2023-08-10T12:25:55Z",
+          "changeKey": "CQAAABYAAAAHSJsVbcC5R42j/tt5fnT8AAE40NBq",
+          "categories": [
+            "Epicor"
+          ],
+          "receivedDateTime": "2023-08-10T11:03:19Z",
+          "sentDateTime": "2023-08-10T11:03:07Z",
+          "hasAttachments": false,
+          "internetMessageId": "<MW4PR20MB53513D6963EF3DE9B26DC740A413A@MW4PR20MB5351.namprd20.prod.outlook.com>",
+          "subject": "Re: DMReSig Group in LIVE",
+          "bodyPreview": "The account should be setup the same, but the security group is not needed as it was only serving the BPM. I wrote the BPM to look at users in that group to perform the function.\r\n\r\n\r\nGet Outlook for iOS\r\n\r\n\r\n\r\nNick Evans\r\nSenior Consultant\r\n413-409-5323",
+          "importance": "normal",
+          "parentFolderId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBDAAAAA==",
+          "conversationId": "AAQkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAQAMUfT-Ky61FHlzyCvKl2x3k=",
+          "conversationIndex": "AQHZysq6xR9P8rLrUUeXPIK8qXbHea/irKLegACsD9uAAAX6Ww==",
+          "isDeliveryReceiptRequested": null,
+          "isReadReceiptRequested": false,
+          "isRead": true,
+          "isDraft": false,
+          "webLink": "https://outlook.office365.com/owa/?ItemID=AAkALgAAAAAAHYQDEapmEc2byACqAC%2FEWg0AB0ibFW3AuUeNo%2F7beX50%2FAABOp5MfQAA&exvsurl=1&viewmodel=ReadMessageItem",
+          "inferenceClassification": "focused",
+          "body": {
+            "contentType": "html",
+            "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body><div><div><div dir=\"ltr\"><div>The account should be setup the same, but the security group is not needed as it was only serving the BPM. I wrote the BPM to look at users in that group to perform the function.&nbsp;</div><div dir=\"ltr\"><br></div></div></div><div id=\"ms-outlook-mobile-signature\"><div><br></div>Get <a href=\"https://aka.ms/o0ukef\">Outlook for iOS</a></div></div><br><table id=\"0.zrldweoefv\" cellspacing=\"0\" cellpadding=\"0\" style=\"width:0px\"><tbody><tr><td valign=\"middle\" class=\"\" style=\"width:0px; font-family:Arial; font-size:10pt; border-width:0px 2px 0px 0px; border-left-style:initial; border-color:rgb(255,255,255) rgb(89,89,92) rgb(255,255,255) rgb(255,255,255); border-right-style:solid; border-top-style:initial; border-bottom-style:initial; padding:0px 5px 0px 0px; text-align:center\"><a href=\"https://www.epicentererp.com/\" title=\"\"></a><a href=\"https://www.epicentererp.com/?utm_campaign=email&amp;utm_source=EmailSignature&amp;utm_medium=email\" title=\"EpiCenterERP.com\"><img src=\"https://static.wixstatic.com/media/4edc63_7d91c4769af64fd9b00773a44ca04c73~mv2.png\" alt=\"\" style=\"\"></a><br><a href=\"https://www.credly.com/badges/52a1eceb-af60-48ad-ae48-b8030eb36b8a/public_url\" title=\"Verify our status!\"><img src=\"https://static.wixstatic.com/media/4edc63_e23f214f7dd54aedbefe0949c8d1062c~mv2.png\" alt=\"\"></a><a href=\"https://www.credly.com/badges/52a1eceb-af60-48ad-ae48-b8030eb36b8a/public_url\" title=\"Verify our status!\"></a><br><a href=\"https://www.epicentererp.com/?utm_campaign=email&amp;utm_source=EmailSignature&amp;utm_medium=email\" title=\"\"></a></td><td valign=\"middle\" class=\"\" style=\"width:0px; padding:0px 0px 0px 10px\"><span style=\"font-family:ARIAL; font-size:12pt; color:rgb(91,186,71)\"><span style=\"font-weight:bolder\"><span style=\"font-family:&quot;Trebuchet MS&quot;\"><span style=\"font-family:Calibri; font-size:12pt\">Nick Evans</span></span></span></span><br style=\"font-size:16px; font-family:Calibri\"><span style=\"font-family:Calibri; font-size:16px\"><span style=\"font-weight:bolder; font-size:11pt\"><span style=\"font-size:10pt\"><span style=\"font-size:11pt; color:rgb(89,89,92)\"><span style=\"font-size:10pt\"><span style=\"font-size:11pt\"><span style=\"font-size:10pt\">Senior Consultant</span></span></span></span></span></span><span style=\"font-size:10pt\"><span style=\"font-weight:bolder; font-size:10pt\"><br style=\"font-size:10pt\"></span></span></span><span style=\"font-family:Calibri; font-size:10pt\"><span style=\"font-size:10pt\"><span style=\"font-size:10pt\"><span style=\"font-size:10pt\">413-409-5323</span></span></span><br style=\"font-size:10pt\"></span><a href=\"mailto:%7BE-mail%7D\" style=\"font-size:10pt\"><span style=\"font-family:Calibri; font-size:10pt\"><span style=\"font-size:10pt\">nevans@epicentererp.com</span></span></a><span style=\"font-family:Calibri\"><span style=\"font-size:10pt\">&nbsp;</span></span></td></tr></tbody></table><br><p style=\"\"><b style=\"font-family:Calibri; font-size:10pt\"><span style=\"font-size:10pt\"><i><a href=\"https://www.epicentererp.com/learn-with-epicenter/?utm_campaign=email&amp;utm_source=EmailSignature&amp;utm_medium=email\" title=\"\">Check out our latest blog articles here!</a></i></span></b><br></p><p style=\"\"><span style=\"font-size:10pt; font-family:Calibri\"><b><span style=\"font-size:10pt\"><span style=\"font-size:6pt\">Confidential:&nbsp;</span></span></b></span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"TextRun SCXW108561071 BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">The information contained in this email communication is intended only for the use of the addressee. Unauthorized use, disclosure, or copying of this communication is strictly prohibited and may be unlawful.</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"TextRun SCXW108561071 BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">&nbsp;</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"TextRun SCXW108561071 BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">If you have received this communication in error, please notify us immediately by return email and destroy all copies of</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"TextRun SCXW108561071 BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">&nbsp;</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"TextRun SCXW108561071 BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif; font-variant-ligatures:none!important\"><span style=\"font-family:&quot;Trebuchet MS&quot;\"><span style=\"font-family:Calibri\"><span style=\"font-size:6pt\">this communication, including all attachments.</span></span></span></span><br></p><p style=\"font-size:10pt; font-family:ARIAL\"><span data-contrast=\"auto\" lang=\"EN-US\" class=\"TextRun SCXW108561071 BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif; font-variant-ligatures:none!important\"></span></p><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br><b>Sent:</b> Thursday, August 10, 2023 6:55:03 AM<br><b>To:</b> Nick Evans &lt;nevans@epicentererp.com&gt;<br><b>Subject:</b> Re: DMReSig Group in LIVE</font> <div>&nbsp;</div></div><div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"left\" width=\"100%\"><tbody><tr><td style=\"background:#ffb900; padding:5pt 2pt 5pt 2pt\"></td><td width=\"100%\" cellpadding=\"7px 6px 7px 15px\" style=\"background:#fff8e5; padding:5pt 4pt 5pt 12pt; word-wrap:break-word\"><div style=\"color:#222222\"><span style=\"color:#222; font-weight:bold\">CAUTION:</span> This email came from outside EpiCenter. Be cautious with the contents. </div></td></tr></tbody></table><br><div><div dir=\"auto\" style=\"\">OK then I'm very confused: AKAIK, in Pilot, the ETQtoEpicorInt account does not have an access scope assigned to it so it's not marked as an Integration Account. And&nbsp; there aren't any API keys setup for it. So how is ETQ getting in at all?&nbsp;</div><div dir=\"auto\" style=\"\"><br></div><div dir=\"auto\" style=\"\">I'm concerned there will be issues w/ the ETQ integration in Live. I've created the account in Live, copied the details of the account from Pilot, and&nbsp; provided the credentials to Shannon, but I don't see how it's going to work without access to anything 🤷<span></span></div><div dir=\"auto\" style=\"\"><br></div><div id=\"x_ms-outlook-mobile-signature\" dir=\"auto\"><div><br></div>Get <a href=\"https://aka.ms/AAb9ysg\">Outlook for Android</a></div><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"x_divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Nick Evans &lt;nevans@epicentererp.com&gt;<br><b>Sent:</b> Wednesday, August 9, 2023 8:26:10 PM<br><b>To:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br><b>Subject:</b> Re: DMReSig Group in LIVE</font> <div>&nbsp;</div></div><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style><div dir=\"ltr\"><div class=\"x_x_elementToProof\" style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\">Hi Josh,</div><div class=\"x_x_elementToProof\" style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\"><br></div><div class=\"x_x_elementToProof\" style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\">This was part of a BPM I built for Shannon, that she rejected.&nbsp; So this group is not needed in Live at this time.&nbsp; Thank you for verifying.</div><div class=\"x_x_elementToProof\" style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\"><br></div><div class=\"x_x_elementToProof\" style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\">I had built a BPM that would look at a user in that group to determine if a DMR should automatically be re-opened once closed, but it didn't accomplish everything Shannon needed, so we are scrapping it.</div><div class=\"x_x_elementToProof\"><div style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\"><br></div><div id=\"x_x_Signature\"><div><div style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\">Thanks,</div><div style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\"><br></div><div style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\">Nick</div><div style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\">812.736.2151 (cell)</div><div style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\"><br></div><div class=\"x_x_ContentPasted0\" style=\"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:rgb(0,0,0)\"><a href=\"https://outlook.office.com/bookwithme/user/53ee7ab4a50c47809d8a273d66e142ac@epicentererp.com?anonymous&amp;ep=pcard\" class=\"x_x_ContentPasted0\">Book time with Nick Evans </a><br></div></div></div></div><div id=\"x_x_appendonsend\"></div><br><table id=\"x_x_0.zrldweoefv\" cellspacing=\"0\" cellpadding=\"0\" style=\"width:0px\"><tbody><tr><td valign=\"middle\" class=\"\" style=\"width:0px; font-family:Arial; font-size:10pt; border-width:0px 2px 0px 0px; border-left-style:initial; border-color:rgb(255,255,255) rgb(89,89,92) rgb(255,255,255) rgb(255,255,255); border-right-style:solid; border-top-style:initial; border-bottom-style:initial; padding:0px 5px 0px 0px; text-align:center\"><a href=\"https://www.epicentererp.com/\" title=\"\"></a><a href=\"https://www.epicentererp.com/?utm_campaign=email&amp;utm_source=EmailSignature&amp;utm_medium=email\" title=\"EpiCenterERP.com\"><img src=\"https://static.wixstatic.com/media/4edc63_7d91c4769af64fd9b00773a44ca04c73~mv2.png\" alt=\"\" style=\"\"></a><br><a href=\"https://www.credly.com/badges/52a1eceb-af60-48ad-ae48-b8030eb36b8a/public_url\" title=\"Verify our status!\"><img src=\"https://static.wixstatic.com/media/4edc63_e23f214f7dd54aedbefe0949c8d1062c~mv2.png\" alt=\"\"></a><a href=\"https://www.credly.com/badges/52a1eceb-af60-48ad-ae48-b8030eb36b8a/public_url\" title=\"Verify our status!\"></a><br><a href=\"https://www.epicentererp.com/?utm_campaign=email&amp;utm_source=EmailSignature&amp;utm_medium=email\" title=\"\"></a></td><td valign=\"middle\" class=\"\" style=\"width:0px; padding:0px 0px 0px 10px\"><span style=\"font-family:ARIAL; font-size:12pt; color:rgb(91,186,71)\"><span style=\"font-weight:bolder\"><span style=\"font-family:&quot;Trebuchet MS&quot;\"><span style=\"font-family:Calibri; font-size:12pt\">Nick Evans</span></span></span></span><br style=\"font-size:16px; font-family:Calibri\"><span style=\"font-family:Calibri; font-size:16px\"><span style=\"font-weight:bolder; font-size:11pt\"><span style=\"font-size:10pt\"><span style=\"font-size:11pt; color:rgb(89,89,92)\"><span style=\"font-size:10pt\"><span style=\"font-size:11pt\"><span style=\"font-size:10pt\">Senior Consultant</span></span></span></span></span></span><span style=\"font-size:10pt\"><span style=\"font-weight:bolder; font-size:10pt\"><br style=\"font-size:10pt\"></span></span></span><span style=\"font-family:Calibri; font-size:10pt\"><span style=\"font-size:10pt\"><span style=\"font-size:10pt\"><span style=\"font-size:10pt\">413-409-5323</span></span></span><br style=\"font-size:10pt\"></span><a href=\"mailto:%7BE-mail%7D\" style=\"font-size:10pt\"><span style=\"font-family:Calibri; font-size:10pt\"><span style=\"font-size:10pt\">nevans@epicentererp.com</span></span></a><span style=\"font-family:Calibri\"><span style=\"font-size:10pt\">&nbsp;</span></span></td></tr></tbody></table><br><p style=\"\"><b style=\"font-family:Calibri; font-size:10pt\"><span style=\"font-size:10pt\"><i><a href=\"https://www.epicentererp.com/learn-with-epicenter/?utm_campaign=email&amp;utm_source=EmailSignature&amp;utm_medium=email\" title=\"\">Check out our latest blog articles here!</a></i></span></b><br></p><p style=\"\"><span style=\"font-size:10pt; font-family:Calibri\"><b><span style=\"font-size:10pt\"><span style=\"font-size:6pt\">Confidential:&nbsp;</span></span></b></span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"x_x_TextRun x_x_SCXW108561071 x_x_BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">The information contained in this email communication is intended only for the use of the addressee. Unauthorized use, disclosure, or copying of this communication is strictly prohibited and may be unlawful.</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"x_x_TextRun x_x_SCXW108561071 x_x_BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">&nbsp;</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"x_x_TextRun x_x_SCXW108561071 x_x_BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">If you have received this communication in error, please notify us immediately by return email and destroy all copies of</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"x_x_TextRun x_x_SCXW108561071 x_x_BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Calibri; font-variant-ligatures:none!important\">&nbsp;</span><span data-contrast=\"auto\" lang=\"EN-US\" class=\"x_x_TextRun x_x_SCXW108561071 x_x_BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif; font-variant-ligatures:none!important\"><span style=\"font-family:&quot;Trebuchet MS&quot;\"><span style=\"font-family:Calibri\"><span style=\"font-size:6pt\">this communication, including all attachments.</span></span></span></span><br></p><p style=\"font-size:10pt; font-family:ARIAL\"><span data-contrast=\"auto\" lang=\"EN-US\" class=\"x_x_TextRun x_x_SCXW108561071 x_x_BCX9\" style=\"margin:0px; padding:0px; color:rgba(0,0,0,0.847); font-size:6pt; font-style:italic; line-height:9px; font-family:Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif; font-variant-ligatures:none!important\"></span></p><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"x_x_divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br><b>Sent:</b> Wednesday, August 9, 2023 11:58 AM<br><b>To:</b> Nick Evans &lt;nevans@epicentererp.com&gt;<br><b>Subject:</b> DMReSig Group in LIVE</font> <div>&nbsp;</div></div><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style><div dir=\"ltr\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"left\" width=\"100%\"><tbody><tr><td style=\"background:#ffb900; padding:5pt 2pt 5pt 2pt\"></td><td width=\"100%\" cellpadding=\"7px 6px 7px 15px\" style=\"background:#fff8e5; padding:5pt 4pt 5pt 12pt; word-wrap:break-word\"><div style=\"color:#222222\"><span style=\"color:#222; font-weight:bold\">CAUTION:</span> This email came from outside EpiCenter. Be cautious with the contents. </div></td></tr></tbody></table><br><div><div class=\"x_x_x_elementToProof\" style=\"font-family:&quot;Yu Gothic UI&quot;; font-size:10pt; color:rgb(0,0,0)\">Hey Nick, so this DMReSig group isn't in Live, and I suspect its necessary for ETQ to work right. I just created the ETQtoEpicorInt account in Live yesterday but haven't been able to figure out what you did besides creating the group. I thought it had something to do with a BAQ I saw at some point but I can't recall and was unable to find anything obviously related. Any help is appreciated. Thank you!&nbsp;</div><div class=\"x_x_x_elementToProof\"><div style=\"font-family:&quot;Yu Gothic UI&quot;; font-size:10pt; color:rgb(0,0,0)\"><br></div><div id=\"x_x_x_Signature\"><div><p style=\"margin:0in; line-height:11pt; font-size:11pt; font-family:Calibri,sans-serif; background:white\"><b><span style=\"font-size:13pt; font-variant:small-caps; letter-spacing:0.1pt; border:1pt none windowtext; padding:0in; color:rgb(222,106,25)\">Joshua J. Wowk</span></b><span style=\"font-size:13pt; color:rgb(239,134,91)\"><span style=\"color:rgb(222,106,25)\">&nbsp;</span></span></p><p style=\"margin:0in; line-height:11pt; font-size:11pt; font-family:Calibri,sans-serif; background:white\"><span style=\"font-size:10pt; font-family:&quot;Calibri Light&quot;,sans-serif; text-transform:uppercase; border:1pt none windowtext; padding:0in; color:black\">Systems Administrator</span><span style=\"font-family:&quot;Calibri Light&quot;,sans-serif; text-transform:uppercase; color:black\">&nbsp;</span></p><p style=\"margin:0in; line-height:11pt; font-size:11pt; font-family:Calibri,sans-serif; background:white\"><b><span style=\"text-transform:uppercase; letter-spacing:-0.2pt; border:1pt none windowtext; padding:0in; color:rgb(222,106,25)\">High Purity New England&nbsp;| HP-NE.com</span></b><span style=\"font-size:10pt; text-transform:uppercase; letter-spacing:-0.2pt; color:rgb(239,134,91)\"><span style=\"color:rgb(222,106,25)\">&nbsp;</span></span></p><p style=\"margin:0in; line-height:11pt; font-size:11pt; font-family:Calibri,sans-serif; background:white\"><span style=\"font-size:10pt; font-family:&quot;Calibri Light&quot;,sans-serif; text-transform:uppercase; border:1pt none windowtext; padding:0in; color:black\">2 thurber blvd. smithfield, RI 02917</span><span style=\"font-size:10pt; font-family:&quot;Calibri Light&quot;,sans-serif; text-transform:uppercase; color:black\">&nbsp;</span></p><p style=\"margin:0in; line-height:11pt; font-size:11pt; font-family:Calibri,sans-serif; background:white\"><span style=\"font-weight:bold; text-transform:uppercase; letter-spacing:-0.2pt; border:1pt none windowtext; padding:0in; color:rgb(222,106,25)\">401-349-5153&nbsp;|&nbsp;Joshua.Wowk@hp-ne.com</span><span style=\"text-transform:uppercase; letter-spacing:-0.2pt; border:1pt none windowtext; padding:0in; color:rgb(239,134,91)\"><span style=\"color:rgb(222,106,25)\"></span></span></p><p style=\"margin:0in; line-height:11pt; font-size:11pt; font-family:Calibri,sans-serif; background:white\"><span style=\"text-transform:uppercase; letter-spacing:-0.2pt; border:1pt none windowtext; padding:0in; color:rgb(222,106,25)\"><br></span></p><p style=\"margin:0in; line-height:11pt; font-size:11pt; font-family:Calibri,sans-serif; background:white\"><b><span style=\"text-transform:uppercase; letter-spacing:-0.2pt; border:1pt none windowtext; padding:0in; color:rgb(222,106,25)\"><span style=\"font-weight:400; font-size:13.3333px; margin:0px; text-transform:none; color:rgb(0,0,238); background-color:rgb(255,255,255)\"><br class=\"x_x_x_ContentPasted0\"><img width=\"16\" height=\"16\" class=\"x_x_x_ContentPasted0\" data-outlook-trace=\"F:2|T:2\" src=\"cid:7fd99c10-ce69-4313-99f6-3bc20ad9109c\" style=\"margin:0px; width:16px; height:16px\"></span><span style=\"font-weight:400; font-size:10pt; font-family:Candara,Optima,sans-serif; margin:0px; text-transform:none; color:rgb(0,0,238); background-color:rgb(255,255,255)\"><sup class=\"x_x_x_ContentPasted0\"><a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com?anonymous&amp;ep=plink\">Click here to book time with me</a></sup></span><br></span></b></p></div></div></div></div></div></div></div></div></body></html>"
+          },
+          "sender": {
+            "emailAddress": {
+              "name": "Nick Evans",
+              "address": "nevans@epicentererp.com"
+            }
+          },
+          "from": {
+            "emailAddress": {
+              "name": "Nick Evans",
+              "address": "nevans@epicentererp.com"
+            }
+          },
+          "toRecipients": [
+            {
+              "emailAddress": {
+                "name": "Joshua Wowk",
+                "address": "Joshua.Wowk@hp-ne.com"
+              }
+            }
+          ],
+          "ccRecipients": [],
+          "bccRecipients": [],
+          "replyTo": [],
+          "flag": {
+            "flagStatus": "notFlagged"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-08-11T18:08:46.000Z",
+  "versionId": "0690a997-8a07-4487-afc4-35da71f7f821"
+}
