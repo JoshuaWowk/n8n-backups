@@ -553,8 +553,8 @@
       "type": "n8n-nodes-base.microsoftOutlook",
       "typeVersion": 1,
       "position": [
-        2700,
-        460
+        2620,
+        320
       ],
       "credentials": {
         "microsoftOutlookOAuth2Api": {
@@ -861,6 +861,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-11T18:08:46.000Z",
-  "versionId": "0690a997-8a07-4487-afc4-35da71f7f821"
+  "updatedAt": "2023-08-12T14:21:54.000Z",
+  "versionId": "991fe5aa-3ea0-4a00-8509-2233cf3b5006"
 }
