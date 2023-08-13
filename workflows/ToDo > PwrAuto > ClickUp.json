@@ -23,24 +23,6 @@
         ]
       ]
     },
-    "Due-date set?": {
-      "main": [
-        [
-          {
-            "node": "ClickUp-DueDate",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "ClickUp-NoDueDate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "ClickUp-DueDate": {
       "main": [
         [
@@ -107,7 +89,7 @@
       "main": [
         [
           {
-            "node": "Due-date set?",
+            "node": "IsDueDateSet",
             "type": "main",
             "index": 0
           }
@@ -115,6 +97,24 @@
         [
           {
             "node": "Due-date set?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IsDueDateSet": {
+      "main": [
+        [
+          {
+            "node": "ClickUp-DueDate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ClickUp-NoDueDate",
             "type": "main",
             "index": 0
           }
@@ -166,26 +166,6 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.dueDateTime }}",
-              "operation": "isNotEmpty"
-            }
-          ]
-        }
-      },
-      "id": "834c8692-ef6b-4e37-bcfc-25e199a37fb3",
-      "name": "Due-date set?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1880,
-        520
-      ]
-    },
-    {
-      "parameters": {
         "team": "14335650",
         "space": "56901433",
         "folder": "90110187278",
@@ -219,9 +199,9 @@
         "space": "56901433",
         "folder": "90110187278",
         "list": "164286867",
-        "name": "={{ $json.title }}",
+        "name": "={{$node[\"IsDueDateSet\"].json[\"title\"] }}",
         "additionalFields": {
-          "content": "={{ $json.body.content }}"
+          "content": "=Email: {{ $json.bodyPreview }} \n ||  \n To-Do: {{ $node[\"IsDueDateSet\"].json.body.content }} "
         }
       },
       "id": "f4f9b28f-c9d0-4a1a-a5ee-a8a45b35d99a",
@@ -256,7 +236,7 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2480,
+        2620,
         700
       ],
       "credentials": {
@@ -362,70 +342,29 @@
         1600,
         700
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.dueDateTime }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "834c8692-ef6b-4e37-bcfc-25e199a37fb3",
+      "name": "IsDueDateSet",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        520
+      ]
     }
   ],
   "pinData": {
-    "Webhook": [
-      {
-        "json": {
-          "headers": {
-            "host": "n8n.hp-ne.us",
-            "x-real-ip": "104.42.49.145",
-            "x-forwarded-for": "104.42.49.145",
-            "x-forwarded-proto": "https",
-            "x-forwarded-port": "443",
-            "connection": "close",
-            "content-length": "280",
-            "accept-language": "en-US",
-            "user-agent": "azure-logic-apps/1.0 (workflow 81f2ca28becf4bc19f4173f3c9536ce5; version 08585099398900367426) microsoft-flow/1.0",
-            "x-ms-workflow-id": "81f2ca28becf4bc19f4173f3c9536ce5",
-            "x-ms-workflow-version": "08585099398900367426",
-            "x-ms-workflow-name": "2060674a-01b4-40dc-9b19-b17bca5b358d",
-            "x-ms-workflow-system-id": "/locations/westus/scaleunits/prod-181/workflows/81f2ca28becf4bc19f4173f3c9536ce5",
-            "x-ms-workflow-run-id": "08585099364282456192102370929CU189",
-            "x-ms-workflow-run-tracking-id": "ac17f56d-b8ac-4351-a27a-aee7f6183f99",
-            "x-ms-workflow-operation-name": "HTTP",
-            "x-ms-execution-location": "westus",
-            "x-ms-workflow-subscription-id": "c44298d0-c055-4569-9fb2-6ab8693eb98a",
-            "x-ms-workflow-resourcegroup-name": "0A0B09FEF7AD496F931D3A307603E062-DD3E9CBA43CE44DE8421B75EDD52F276",
-            "x-ms-tracking-id": "53840459-8c8c-46c7-ad37-8bbc540e1388",
-            "x-ms-correlation-id": "53840459-8c8c-46c7-ad37-8bbc540e1388",
-            "x-ms-client-request-id": "53840459-8c8c-46c7-ad37-8bbc540e1388",
-            "x-ms-client-tracking-id": "08585099364901269544006741111CU108",
-            "x-ms-action-tracking-id": "d63dc468-ba09-48f1-8bda-b1ab75222e87",
-            "x-ms-client-keywords": "resubmitFlow",
-            "x-ms-activity-vector": "00.00.00.IN.0J.IN.0R.IN.06",
-            "content-type": "application/json; charset=utf-8",
-            "accept-encoding": "gzip, deflate"
-          },
-          "params": {},
-          "query": {},
-          "body": [
-            {
-              "Task_ID": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAESAAAHSJsVbcC5R42j-tt5fnT8AAE6nlcjAAA="
-            },
-            {
-              "Title": "DMReSig Group in LIVE"
-            },
-            {
-              "Status": "notStarted"
-            },
-            {
-              "Due_Date": null
-            },
-            {
-              "Importance": "normal"
-            },
-            {
-              "Body": ""
-            }
-          ]
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ],
     "Microsoft To Do": [
       {
         "json": {
@@ -465,6 +404,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-11T16:58:59.000Z",
-  "versionId": "d0012a21-14a3-444b-bf30-545453dc2133"
+  "updatedAt": "2023-08-12T22:00:20.000Z",
+  "versionId": "1710fbc5-14b1-4c98-b953-059f64030c34"
 }
