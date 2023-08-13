@@ -1,0 +1,29 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2023-08-12T20:25:06.008Z",
+  "id": "yTOm0K5olyztyvSM",
+  "name": "Sub-Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "53a77162-e7b4-4cd2-bbb2-7de73ec0f21e",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        860,
+        420
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-08-12T20:25:06.008Z",
+  "versionId": "2ad0f009-7299-4613-a547-1e5ed7e81053"
+}
