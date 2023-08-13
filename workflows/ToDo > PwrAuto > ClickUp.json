@@ -5,17 +5,6 @@
       "main": [
         [
           {
-            "node": "Microsoft To Do",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Microsoft To Do": {
-      "main": [
-        [
-          {
             "node": "LinkedResource",
             "type": "main",
             "index": 0
@@ -128,26 +117,6 @@
   "nodes": [
     {
       "parameters": {
-        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.body[0].Task_ID }}"
-      },
-      "id": "3105a0f3-930b-4d6f-99ef-31b0d6c82f32",
-      "name": "Microsoft To Do",
-      "type": "n8n-nodes-base.microsoftToDo",
-      "typeVersion": 1,
-      "position": [
-        1360,
-        700
-      ],
-      "credentials": {
-        "microsoftToDoOAuth2Api": {
-          "id": "O6IPgun0x91zKAe5",
-          "name": "Microsoft To Do account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "httpMethod": "POST",
         "path": "b1553754-7754-43ff-b655-ca06ecaffed2",
         "options": {
@@ -159,7 +128,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1140,
+        1380,
         700
       ],
       "webhookId": "b1553754-7754-43ff-b655-ca06ecaffed2"
@@ -170,7 +139,7 @@
         "space": "56901433",
         "folder": "90110187278",
         "list": "164286867",
-        "name": "={{ $json.title }}",
+        "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
           "content": "={{ $json.body.content }}",
           "dueDate": "={{ $json.dueDateTime }}"
@@ -199,9 +168,9 @@
         "space": "56901433",
         "folder": "90110187278",
         "list": "164286867",
-        "name": "={{$node[\"IsDueDateSet\"].json[\"title\"] }}",
+        "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
-          "content": "=Email: {{ $json.bodyPreview }} \n ||  \n To-Do: {{ $node[\"IsDueDateSet\"].json.body.content }} "
+          "content": "=Email: {{ $json.body[9].LinkedResource_Body_Plaintext }}\n\n\nTo-Do: {{ $json.body[5].Body }}"
         }
       },
       "id": "f4f9b28f-c9d0-4a1a-a5ee-a8a45b35d99a",
@@ -225,7 +194,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $('Microsoft To Do').item.json.id }}",
+        "taskId": "={{ $('LinkedResource').item.json.body[0].Task_ID }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -328,7 +297,7 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.linkedResources[0].webUrl }}",
+              "value1": "={{ $json.body[7].LinkedResource_ApplicationName }}",
               "operation": "isNotEmpty"
             }
           ]
@@ -348,8 +317,9 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.dueDateTime }}",
-              "operation": "isNotEmpty"
+              "value1": "={{ $json.body[3].Due_Date }}",
+              "operation": "contains",
+              "value2": "null"
             }
           ]
         }
@@ -365,32 +335,71 @@
     }
   ],
   "pinData": {
-    "Microsoft To Do": [
+    "Webhook": [
       {
         "json": {
-          "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/todo/lists('AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA%3D%3D')/tasks/$entity",
-          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABONDQZg==\"",
-          "importance": "normal",
-          "isReminderOn": false,
-          "status": "notStarted",
-          "title": "DMReSig Group in LIVE",
-          "createdDateTime": "2023-08-10T12:25:54.8739711Z",
-          "lastModifiedDateTime": "2023-08-10T12:25:54.97004Z",
-          "hasAttachments": false,
-          "categories": [],
-          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAESAAAHSJsVbcC5R42j-tt5fnT8AAE6nlcjAAA=",
-          "body": {
-            "content": "",
-            "contentType": "text"
+          "headers": {
+            "host": "n8n.hp-ne.us",
+            "x-real-ip": "104.42.49.145",
+            "x-forwarded-for": "104.42.49.145",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "2844",
+            "accept-language": "en-US",
+            "user-agent": "azure-logic-apps/1.0 (workflow 81f2ca28becf4bc19f4173f3c9536ce5; version 08585097212603219351) microsoft-flow/1.0",
+            "x-ms-workflow-id": "81f2ca28becf4bc19f4173f3c9536ce5",
+            "x-ms-workflow-version": "08585097212603219351",
+            "x-ms-workflow-name": "2060674a-01b4-40dc-9b19-b17bca5b358d",
+            "x-ms-workflow-system-id": "/locations/westus/scaleunits/prod-181/workflows/81f2ca28becf4bc19f4173f3c9536ce5",
+            "x-ms-workflow-run-id": "08585097212473135572872012120CU182",
+            "x-ms-workflow-run-tracking-id": "65219d54-6e70-4498-8d59-46f18f9d1ee8",
+            "x-ms-workflow-operation-name": "HTTP",
+            "x-ms-execution-location": "westus",
+            "x-ms-workflow-subscription-id": "c44298d0-c055-4569-9fb2-6ab8693eb98a",
+            "x-ms-workflow-resourcegroup-name": "0A0B09FEF7AD496F931D3A307603E062-DD3E9CBA43CE44DE8421B75EDD52F276",
+            "x-ms-tracking-id": "23b290ab-e287-404b-964a-b9d3f60a424a",
+            "x-ms-correlation-id": "23b290ab-e287-404b-964a-b9d3f60a424a",
+            "x-ms-client-request-id": "23b290ab-e287-404b-964a-b9d3f60a424a",
+            "x-ms-client-tracking-id": "08585097306382989571610565359CU127",
+            "x-ms-action-tracking-id": "c693cf38-6e4e-4e6f-9ae7-cd018ba2a5e0",
+            "x-ms-client-keywords": "testFlow",
+            "x-ms-activity-vector": "00.00.00.IN.0J.IN.0T.IN.06",
+            "content-type": "application/json; charset=utf-8",
+            "accept-encoding": "gzip, deflate"
           },
-          "linkedResources@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/todo/lists('AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA%3D%3D')/tasks('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAESAAAHSJsVbcC5R42j-tt5fnT8AAE6nlcjAAA%3D')/linkedResources",
-          "linkedResources": [
+          "params": {},
+          "query": {},
+          "body": [
             {
-              "webUrl": "https://outlook.office365.com/owa/?ItemID=AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j%2Ftt5fnT8AAAAAAEMAAAHSJsVbcC5R42j%2Ftt5fnT8AAE6nTWeAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-              "applicationName": "Outlook",
-              "displayName": "Re: DMReSig Group in LIVE",
-              "externalId": "AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AB0ibFW3AuUeNo-7beX50-AABOp5MfQAA",
-              "id": "0009a238-4674-425d-90d9-cdb7e75d5d77"
+              "Task_ID": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAESAAAHSJsVbcC5R42j-tt5fnT8AAE7pyfLAAA="
+            },
+            {
+              "Title": "Employee HPNE email addresses"
+            },
+            {
+              "Status": "notStarted"
+            },
+            {
+              "Due_Date": null
+            },
+            {
+              "Importance": "normal"
+            },
+            {
+              "Body": ""
+            },
+            {
+              "LinkedResource_DisplayName": "RE: Employee HPNE email addresses"
+            },
+            {
+              "LinkedResource_ApplicationName": "Outlook"
+            },
+            {
+              "LinkedResource_WebURL": "https://outlook.office365.com/owa/?ItemID=AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j%2Ftt5fnT8AAAAAAEMAAAHSJsVbcC5R42j%2Ftt5fnT8AAE7pqLIAAA%3D&exvsurl=1&viewmodel=ReadMessageItem"
+            },
+            {
+              "LinkedResource_Body_Plaintext": "Hey,\n\nI am going to call ADP to see if I can send them the CSV list to add the email\naddresses, so I don’t have to type them in separately. I don’t think I need any\nother fields, thanks.\n\nI appreciate it!\n\nLou\n\n \n\nFrom: Joshua Wowk <Joshua.Wowk@hp-ne.com>\nSent: Friday, August 11, 2023 12:55 PM\nTo: Louis Procaccini <louis.procaccini@hp-ne.com>\nSubject: Re: Employee HPNE email addresses\n\n \n\nSure thing, few quick questions.. \n\n * Were you provided with a CSV to populate? Thats usually how it works, but no\n   big deal if not.\n * Are there any other fields you need or would like? \n\n * I can add the emails to the spreadsheet you sent me on Tuesday, then send it\n   to you as a CSV if that would be helpful. Its not really any add'l work since\n   I'll be doing most of that regardless. \n\nLet me know!\n\n \n\nJoshua Wowk | Sys Admin | HPNE | 401-349-5153\n\n[cid:image004.png@01D9CC53.C25D5A30] Joshua.Wowk\n[https://teams.microsoft.com/l/chat/0/0?users=joshua.wowk@hp-ne.com] ◀ Click to\nchat in Teams!\n[https://teams.microsoft.com/l/chat/0/0?users=joshua.wowk@hp-ne.com]\n\n--------------------------------------------------------------------------------\n\nFrom: Louis Procaccini <louis.procaccini@hp-ne.com>\nSent: Friday, August 11, 2023 12:24 PM\nTo: Joshua Wowk <Joshua.Wowk@hp-ne.com>\nSubject: Employee HPNE email addresses\n\n \n\nHey Josh,\n\nIs there a way to send me a list of our employees and their HPNE emails\naddresses in CSV format?\n\nThanks,\n\nLou\n\n \n\nLou Procaccini\n\nHR Administrator\n\nHigh Purity New England | HP-NE.com\n\n2 Thurber Blvd, Smithfield, RI 02917\n\nE: louis.procaccini@hp-ne.com  | O: 401.349.5238\n\nISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB\n\n \n\nsignature_70785060 [cid:image005.png@01D9CC53.C25D5A30]\n[https://www.linkedin.com/company/high-purity-new-england]  signature_1576473685\n[cid:image006.png@01D9CC53.C25D5A30]\n[https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor]  signature_3251001740\n[cid:image007.png@01D9CC53.C25D5A30] [https://www.facebook.com/HighPurityNE/]\n\n "
             }
           ]
         },
@@ -404,6 +413,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-12T22:00:20.000Z",
-  "versionId": "1710fbc5-14b1-4c98-b953-059f64030c34"
+  "updatedAt": "2023-08-13T12:19:28.000Z",
+  "versionId": "4617a711-9e24-49ee-b1e3-15b3749f50cc"
 }
