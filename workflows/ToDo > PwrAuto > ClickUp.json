@@ -141,6 +141,7 @@
         "list": "164286867",
         "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
+          "customFieldsJson": "[ {\"id\": \"91f4293d-d86b-44bb-b84c-ea14cb4939d9\", \"value\":  \"{{ $json.body[8].LinkedResource_WebURL }}\"}, {\"id\": \"c69df9e5-49e4-485e-9827-026545266843\", \"value\": \"{{ $json.body[7].LinkedResource_ApplicationName }}\"}, {\"id\": \"593f61fb-1a7d-4935-ba13-f3de27bf6b34\", \"value\": \"{{ $json.body[0].Task_ID }}\"}, {\"id\": \"fa591d15-5b3e-4803-b49e-4b76f0f32ca2\", \"value\": \"{{ $json.body[1].Title }}\"}]",
           "content": "={{ $json.body.content }}",
           "dueDate": "={{ $json.dueDateTime }}"
         }
@@ -170,6 +171,7 @@
         "list": "164286867",
         "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
+          "customFieldsJson": "=[ {\"id\": \"91f4293d-d86b-44bb-b84c-ea14cb4939d9\", \"value\":  \"{{ $json.body[8].LinkedResource_WebURL }}\"}, {\"id\": \"c69df9e5-49e4-485e-9827-026545266843\", \"value\": \"{{ $json.body[7].LinkedResource_ApplicationName }}\"}, {\"id\": \"593f61fb-1a7d-4935-ba13-f3de27bf6b34\", \"value\": \"{{ $json.body[0].Task_ID }}\"}, {\"id\": \"fa591d15-5b3e-4803-b49e-4b76f0f32ca2\", \"value\": \"{{ $json.body[1].Title }}\"}]",
           "content": "=Email: {{ $json.body[9].LinkedResource_Body_Plaintext }}\n\n\nTo-Do: {{ $json.body[5].Body }}"
         }
       },
@@ -194,7 +196,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $('LinkedResource').item.json.body[0].Task_ID }}",
+        "taskId": "=",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -205,7 +207,7 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2620,
+        2720,
         700
       ],
       "credentials": {
@@ -413,6 +415,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-13T12:19:28.000Z",
-  "versionId": "4617a711-9e24-49ee-b1e3-15b3749f50cc"
+  "updatedAt": "2023-08-14T00:22:27.000Z",
+  "versionId": "679009a9-cd0a-4463-8fd5-81c66cd3b821"
 }
