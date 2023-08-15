@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Microsoft To Do2",
+            "node": "Microsoft To Do",
             "type": "main",
             "index": 0
           }
@@ -56,7 +56,7 @@
       "main": [
         [
           {
-            "node": "Microsoft To Do2",
+            "node": "Microsoft To Do3",
             "type": "main",
             "index": 0
           }
@@ -67,7 +67,7 @@
       "main": [
         [
           {
-            "node": "Microsoft To Do2",
+            "node": "Microsoft To Do4",
             "type": "main",
             "index": 0
           }
@@ -196,7 +196,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "=",
+        "taskId": "={{ $json.custom_fields[14].value }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -207,8 +207,8 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2720,
-        700
+        2440,
+        600
       ],
       "credentials": {
         "microsoftToDoOAuth2Api": {
@@ -334,6 +334,81 @@
         1880,
         520
       ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
+        "taskId": "={{ $json.custom_fields[14].value }}",
+        "updateFields": {
+          "content": "=ClickUp URL: {{ $json.url }}",
+          "status": "completed"
+        }
+      },
+      "id": "41994fcc-18f2-4aef-969a-df12a9e6e9f2",
+      "name": "Microsoft To Do",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        2440,
+        440
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
+        "taskId": "={{ $json.custom_fields[14].value }}",
+        "updateFields": {
+          "content": "=ClickUp URL: {{ $json.url }}",
+          "status": "completed"
+        }
+      },
+      "id": "ce9bef11-6175-47c0-89ec-0217e6039b7d",
+      "name": "Microsoft To Do3",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        2440,
+        780
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
+        "taskId": "={{ $json.custom_fields[14].value }}",
+        "updateFields": {
+          "content": "=ClickUp URL: {{ $json.url }}",
+          "status": "completed"
+        }
+      },
+      "id": "18d53287-c2b8-4334-9a61-bed01dcdf012",
+      "name": "Microsoft To Do4",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        2440,
+        940
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -415,6 +490,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-14T00:22:27.000Z",
-  "versionId": "679009a9-cd0a-4463-8fd5-81c66cd3b821"
+  "updatedAt": "2023-08-14T18:30:11.000Z",
+  "versionId": "cb77624e-a0ff-4d4b-aa1b-284ac657f2fe"
 }
