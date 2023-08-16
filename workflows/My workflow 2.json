@@ -1,0 +1,79 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-16T15:05:57.065Z",
+  "id": "owBE3D1k4njOEmdN",
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "422aaed9-e03b-4809-a11a-369c89430f2b",
+        "options": {}
+      },
+      "id": "5f3d415f-4e82-43ae-ad68-22447bbd1b57",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        960,
+        540
+      ],
+      "webhookId": "422aaed9-e03b-4809-a11a-369c89430f2b"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "team": "14335650",
+        "space": "56901433",
+        "folder": "90110187278",
+        "list": "901100421297",
+        "filters": {
+          "customFieldsUi": {
+            "customFieldsValues": [
+              {
+                "fieldId": "7823bf00-edc8-493f-a2cb-fb3b57d93d1c",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      },
+      "id": "26eec7ca-72a5-4d3b-87dc-597ee8b6ac88",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        540
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-08-16T15:05:57.065Z",
+  "versionId": "057100cc-8cb8-4bc4-984d-f895f2cf3a94"
+}
