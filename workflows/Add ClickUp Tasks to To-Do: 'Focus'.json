@@ -1,0 +1,1218 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "GetFocusTasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft To Do": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft To Do1": {
+      "main": [
+        [
+          {
+            "node": "ClickUp1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp1": {
+      "main": [
+        [
+          {
+            "node": "ClickUp2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetFocusTasks": {
+      "main": [
+        [
+          {
+            "node": "Microsoft To Do",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-16T15:05:57.065Z",
+  "id": "owBE3D1k4njOEmdN",
+  "name": "Add ClickUp Tasks to To-Do: 'Focus'",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "422aaed9-e03b-4809-a11a-369c89430f2b",
+        "options": {}
+      },
+      "id": "5f3d415f-4e82-43ae-ad68-22447bbd1b57",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        960,
+        540
+      ],
+      "webhookId": "422aaed9-e03b-4809-a11a-369c89430f2b"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "taskListId": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAA=",
+        "title": "={{ $json.name }}",
+        "additionalFields": {
+          "content": "={{ $json.text_content }}",
+          "dueDateTime": "={{ Date($json.due_date) }}",
+          "importance": "normal"
+        }
+      },
+      "id": "779fbbe0-1c08-4582-b4da-2185641ac01a",
+      "name": "Microsoft To Do",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        540
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "linkedResource",
+        "operation": "create",
+        "taskListId": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAA=",
+        "taskId": "={{ $json.id }}",
+        "displayName": "={{ $('GetFocusTasks').item.json.name }}",
+        "applicationName": "ClickUp",
+        "additionalFields": {
+          "externalId": "={{ $('GetFocusTasks').item.json.id }}",
+          "webUrl": "={{ $('GetFocusTasks').item.json.url }}"
+        }
+      },
+      "id": "9decf095-af0c-4d6b-8b60-f6e72d32aa5a",
+      "name": "Microsoft To Do1",
+      "type": "n8n-nodes-base.microsoftToDo",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        540
+      ],
+      "credentials": {
+        "microsoftToDoOAuth2Api": {
+          "id": "O6IPgun0x91zKAe5",
+          "name": "Microsoft To Do account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $('GetFocusTasks').item.json.id }}",
+        "field": "0b3f7cfd-a829-4414-ba87-2e8202a646ed",
+        "value": "=https://to-do.office.com/tasks/id/{{ $('Microsoft To Do').item.json.id }}"
+      },
+      "id": "4654dc2a-fd9a-4fd1-bae0-4b302495bf47",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        540
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $('GetFocusTasks').item.json.id }}",
+        "field": "593f61fb-1a7d-4935-ba13-f3de27bf6b34",
+        "value": "={{ $('Microsoft To Do').item.json.id }}"
+      },
+      "id": "9571fdf6-e6e9-4fe6-badb-26384cb7b93b",
+      "name": "ClickUp2",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        540
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "team": "14335650",
+        "space": "56901433",
+        "folder": "90110187278",
+        "list": "164286867",
+        "filters": {
+          "customFieldsUi": {
+            "customFieldsValues": [
+              {
+                "fieldId": "7823bf00-edc8-493f-a2cb-fb3b57d93d1c",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      },
+      "id": "26eec7ca-72a5-4d3b-87dc-597ee8b6ac88",
+      "name": "GetFocusTasks",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        540
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.hp-ne.us",
+            "x-real-ip": "100.20.72.176",
+            "x-forwarded-for": "100.20.72.176",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "16440",
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "user-agent": "axios/0.24.0",
+            "x-datadog-trace-id": "6585919466677731612",
+            "x-datadog-parent-id": "8474993590987227837",
+            "x-datadog-sampling-priority": "-1",
+            "x-b3-traceid": "5b65e2dc7aa8011c",
+            "x-b3-spanid": "759d39c4c08182bd",
+            "x-b3-sampled": "0",
+            "x-b3-parentspanid": "76c17f185c16aa50",
+            "b3": "5b65e2dc7aa8011c-759d39c4c08182bd-0-76c17f185c16aa50",
+            "traceparent": "00-00000000000000005b65e2dc7aa8011c-759d39c4c08182bd-00",
+            "tracestate": "dd=t.dm:3;s:-1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "4d24b60a-8d86-4869-a734-472b5baa32cc:main",
+            "trigger_id": "509ec670-593d-4663-ab17-54cda10004b7",
+            "date": "2023-08-16T15:07:12.218Z",
+            "payload": {
+              "id": "8685axy5p",
+              "custom_id": "CLKUP-1818",
+              "name": "Epicor user creation guide",
+              "text_content": "Per Jeremy, Raud & Peter need to know how to create user accounts",
+              "description": "Per Jeremy, Raud & Peter need to know how to create user accounts",
+              "status": {
+                "id": "sc164286867_wTTPSjGp",
+                "status": "active",
+                "color": "#445df3",
+                "orderindex": 2,
+                "type": "custom"
+              },
+              "orderindex": "39716792.15623310000000000000000000000000",
+              "date_created": "1692123332081",
+              "date_updated": "1692198429995",
+              "date_closed": null,
+              "date_done": null,
+              "archived": false,
+              "creator": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "color": "#7b68ee",
+                "email": "joshua.wowk@hp-ne.com",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "assignees": [
+                {
+                  "id": 32274652,
+                  "username": "Joshua Wowk",
+                  "color": "#7b68ee",
+                  "initials": "JW",
+                  "email": "joshua.wowk@hp-ne.com",
+                  "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+                }
+              ],
+              "watchers": [
+                {
+                  "id": 32274652,
+                  "username": "Joshua Wowk",
+                  "color": "#7b68ee",
+                  "initials": "JW",
+                  "email": "joshua.wowk@hp-ne.com",
+                  "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+                }
+              ],
+              "checklists": [],
+              "tags": [],
+              "parent": null,
+              "priority": {
+                "color": "#ffcc00",
+                "id": "2",
+                "orderindex": "2",
+                "priority": "high"
+              },
+              "due_date": "1692205200000",
+              "start_date": null,
+              "points": null,
+              "time_estimate": null,
+              "time_spent": 0,
+              "custom_fields": [
+                {
+                  "id": "b18d9563-75bf-4daf-a9d5-311a16564d7f",
+                  "name": "User's Email",
+                  "type": "email",
+                  "type_config": {},
+                  "date_created": "1681227976439",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "dfa269c5-4f82-449f-be36-6aa5a8665875",
+                  "name": "Project",
+                  "type": "drop_down",
+                  "type_config": {
+                    "default": 0,
+                    "placeholder": null,
+                    "new_drop_down": true,
+                    "options": [
+                      {
+                        "id": "1a5f72b2-d636-4f4a-a316-cec8ba3b337c",
+                        "name": "Conference Rooms",
+                        "color": "#7C4DFF",
+                        "orderindex": 0
+                      },
+                      {
+                        "id": "787cb611-5056-4c0b-ab13-11452e19980a",
+                        "name": "Egnyte",
+                        "color": "#1bbc9c",
+                        "orderindex": 1
+                      },
+                      {
+                        "id": "acad4ab3-0370-437c-bc06-ec664f1ea0af",
+                        "name": "Endpoint Mgmt",
+                        "color": "#f9d900",
+                        "orderindex": 2
+                      },
+                      {
+                        "id": "d99cedc3-9413-4754-aa45-9b96d47f32f9",
+                        "name": "Epicor",
+                        "color": "#3082B7",
+                        "orderindex": 3
+                      },
+                      {
+                        "id": "885019a0-112a-4ed4-965d-a95c13452cd8",
+                        "name": "IT Modernization",
+                        "color": "#ff7800",
+                        "orderindex": 4
+                      },
+                      {
+                        "id": "e041bb1a-e9da-4a69-9bc7-2a6a5ddf4d13",
+                        "name": "Microsoft 365",
+                        "color": "#bf55ec",
+                        "orderindex": 5
+                      },
+                      {
+                        "id": "ccb727d0-0069-414d-8041-1498e9be7fa5",
+                        "name": "QuickBooks",
+                        "color": "#2ecd6f",
+                        "orderindex": 6
+                      },
+                      {
+                        "id": "197b3122-d39a-4e64-ad5f-f9aeda7918b1",
+                        "name": "SolidWorks",
+                        "color": "#e50000",
+                        "orderindex": 7
+                      }
+                    ]
+                  },
+                  "date_created": "1686926237792",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "92e0d999-b950-4b1a-8db4-631892318a08",
+                  "name": "Under 15 mins",
+                  "type": "checkbox",
+                  "type_config": {},
+                  "date_created": "1676415225279",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "f1f2b105-0388-4d3d-a5d6-25b72422fae9",
+                  "name": "Due within week",
+                  "type": "checkbox",
+                  "type_config": {},
+                  "date_created": "1690842095442",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "7823bf00-edc8-493f-a2cb-fb3b57d93d1c",
+                  "name": "Add to 'Focus'",
+                  "type": "checkbox",
+                  "type_config": {},
+                  "date_created": "1692198241570",
+                  "hide_from_guests": false,
+                  "value": "true",
+                  "required": false
+                },
+                {
+                  "id": "17862224-0d09-49b1-8b7b-8825c234448f",
+                  "name": "Department",
+                  "type": "drop_down",
+                  "type_config": {
+                    "default": 0,
+                    "placeholder": null,
+                    "new_drop_down": true,
+                    "options": [
+                      {
+                        "id": "b513e4e1-0a44-4a52-b25e-e3530e8feba5",
+                        "name": "N/A",
+                        "color": "#667684",
+                        "orderindex": 0
+                      },
+                      {
+                        "id": "17ebed35-3dc2-4347-b316-fe1af0724128",
+                        "name": "Administration",
+                        "color": "#81B1FF",
+                        "orderindex": 1
+                      },
+                      {
+                        "id": "50538d84-99e1-4a7a-82fe-8c168992d97d",
+                        "name": "Client Services",
+                        "color": "#f9d900",
+                        "orderindex": 2
+                      },
+                      {
+                        "id": "096d352e-334e-4084-869d-89608ebc0e69",
+                        "name": "Engineering | Single-Use Design ",
+                        "color": "#04A9F4",
+                        "orderindex": 3
+                      },
+                      {
+                        "id": "c0e8fbf2-22eb-4914-91ea-637fcc8c753d",
+                        "name": "Engineering | Special Projects",
+                        "color": "#3082B7",
+                        "orderindex": 4
+                      },
+                      {
+                        "id": "3885960d-d01b-4230-b764-a0734304f23f",
+                        "name": "Executive",
+                        "color": "#1bbc9c",
+                        "orderindex": 5
+                      },
+                      {
+                        "id": "7187d1f5-f25a-4342-b5a8-0ea1eceb777f",
+                        "name": "FlexConnexx",
+                        "color": "#1bbc9c",
+                        "orderindex": 6
+                      },
+                      {
+                        "id": "8449d12b-48b5-4585-8973-d4ecff5d46cc",
+                        "name": "Finance",
+                        "color": "#059312",
+                        "orderindex": 7
+                      },
+                      {
+                        "id": "b6f3fcfc-91d8-49a0-9f50-fad04927705f",
+                        "name": "Human Resources",
+                        "color": "#FF7FAB",
+                        "orderindex": 8
+                      },
+                      {
+                        "id": "46b7072e-8b4e-43f0-a61d-6649893e4dc5",
+                        "name": "IT",
+                        "color": "#0076ff",
+                        "orderindex": 9
+                      },
+                      {
+                        "id": "fbceef85-58b3-42e3-8ac2-ddbf8c0f346f",
+                        "name": "Kitting",
+                        "color": "#7C4DFF",
+                        "orderindex": 10
+                      },
+                      {
+                        "id": "3ddcd582-6a03-4a76-842d-28a71b3fca01",
+                        "name": "Logistics & Warehouse",
+                        "color": "#3397dd",
+                        "orderindex": 11
+                      },
+                      {
+                        "id": "07597f80-8670-4bbb-b82b-2a4a8f870436",
+                        "name": "Marketing",
+                        "color": "#0231E8",
+                        "orderindex": 12
+                      },
+                      {
+                        "id": "8ebb08d6-9e92-4c92-a624-fc99d6bf18c2",
+                        "name": "Materials",
+                        "color": "#b5bcc2",
+                        "orderindex": 13
+                      },
+                      {
+                        "id": "524c4294-7ae1-4308-839e-276e21dcbd43",
+                        "name": "Production",
+                        "color": "#ff7800",
+                        "orderindex": 14
+                      },
+                      {
+                        "id": "01526da1-a17d-4dd5-842e-40895a7442e5",
+                        "name": "Quality",
+                        "color": "#E65100",
+                        "orderindex": 15
+                      },
+                      {
+                        "id": "5998fcda-54b6-4751-bbbc-2fef46b4c3ad",
+                        "name": "RDVS",
+                        "color": "#7C4DFF",
+                        "orderindex": 16
+                      },
+                      {
+                        "id": "27702d8d-08a2-437f-b3d1-4a352088abb0",
+                        "name": "Sales",
+                        "color": "#e50000",
+                        "orderindex": 17
+                      },
+                      {
+                        "id": "b9b1af36-f6f0-4445-9f1e-7a07729a8a07",
+                        "name": "Special Projects",
+                        "color": "#0af11f",
+                        "orderindex": 18
+                      },
+                      {
+                        "id": "1b01a7e1-09d9-4441-8c27-bf8569fe78c6",
+                        "name": "Other",
+                        "color": "#b5bcc2",
+                        "orderindex": 19
+                      }
+                    ]
+                  },
+                  "date_created": "1659376509441",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "7aed0fc8-82a0-462c-8ff8-cc04c9ded58d",
+                  "name": "Effort",
+                  "type": "emoji",
+                  "type_config": {
+                    "count": 5,
+                    "code_point": "1f92c"
+                  },
+                  "date_created": "1674833057210",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "ed124332-f2e5-41fa-925a-fca1eed08ef9",
+                  "name": "FreeScout URL",
+                  "type": "url",
+                  "type_config": {},
+                  "date_created": "1675896633438",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "a3e3972e-db69-4208-8dee-72d6e7fc2365",
+                  "name": "Progress",
+                  "type": "automatic_progress",
+                  "type_config": {
+                    "tracking": {
+                      "subtasks": true,
+                      "checklists": true,
+                      "assigned_comments": true
+                    },
+                    "complete_on": 3,
+                    "subtask_rollup": false
+                  },
+                  "date_created": "1690320512446",
+                  "hide_from_guests": false,
+                  "value": {
+                    "percent_complete": 0
+                  },
+                  "required": false
+                },
+                {
+                  "id": "ba5055a8-5fe3-482a-b956-150ed9761f6a",
+                  "name": "Job Title",
+                  "type": "drop_down",
+                  "type_config": {
+                    "default": 0,
+                    "placeholder": null,
+                    "new_drop_down": true,
+                    "options": [
+                      {
+                        "id": "45fa9a31-0a91-43c0-a9ec-6468b94d0e45",
+                        "name": "Technical Product Manager",
+                        "color": "#b5bcc2",
+                        "orderindex": 0
+                      },
+                      {
+                        "id": "cd089fe8-33fd-4d17-ad9a-93d0d7281eb5",
+                        "name": "Sr. Mechanical Engineer",
+                        "color": "#04A9F4",
+                        "orderindex": 1
+                      },
+                      {
+                        "id": "c5213047-24bd-427b-ab16-660fe62437bd",
+                        "name": "Client Services Specialist",
+                        "color": "#f9d900",
+                        "orderindex": 2
+                      },
+                      {
+                        "id": "3145d5d0-0235-4e3e-ad32-a188d0ecc015",
+                        "name": "Design Engineer",
+                        "color": "#1bbc9c",
+                        "orderindex": 3
+                      }
+                    ]
+                  },
+                  "date_created": "1675976829768",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "524548a3-20e2-49b9-a59a-067a4a5ed67d",
+                  "name": "Close Date",
+                  "type": "date",
+                  "type_config": {},
+                  "date_created": "1691000033174",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "91f4293d-d86b-44bb-b84c-ea14cb4939d9",
+                  "name": "Attachment Link",
+                  "type": "url",
+                  "type_config": {},
+                  "date_created": "1691071377601",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "c69df9e5-49e4-485e-9827-026545266843",
+                  "name": "Attachment App",
+                  "type": "short_text",
+                  "type_config": {},
+                  "date_created": "1691071953732",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "fa591d15-5b3e-4803-b49e-4b76f0f32ca2",
+                  "name": "Attachment Name",
+                  "type": "short_text",
+                  "type_config": {},
+                  "date_created": "1691071977610",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "0b3f7cfd-a829-4414-ba87-2e8202a646ed",
+                  "name": "To-Do URL",
+                  "type": "url",
+                  "type_config": {},
+                  "date_created": "1691850087194",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "593f61fb-1a7d-4935-ba13-f3de27bf6b34",
+                  "name": "To-Do ID",
+                  "type": "short_text",
+                  "type_config": {},
+                  "date_created": "1691929379604",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "2d594d9c-48a5-4f3a-9f53-84439a44924e",
+                  "name": "Location/Bldg.",
+                  "type": "drop_down",
+                  "type_config": {
+                    "default": 0,
+                    "placeholder": null,
+                    "new_drop_down": true,
+                    "options": [
+                      {
+                        "id": "db151350-9d34-4e74-a11e-75cdc12ad5fc",
+                        "name": "N/A",
+                        "color": "#667684",
+                        "orderindex": 0
+                      },
+                      {
+                        "id": "bda703d9-6389-4b06-b31d-e954778c6e74",
+                        "name": "2 Thurber",
+                        "color": "#2ecd6f",
+                        "orderindex": 1
+                      },
+                      {
+                        "id": "4b213ac1-a7a2-4489-aa78-7bf60fa7cb86",
+                        "name": "14 Thurber",
+                        "color": "#FF4081",
+                        "orderindex": 2
+                      },
+                      {
+                        "id": "b78ef126-c1da-4a13-9fe6-9880006551a9",
+                        "name": "36 Thurber Blvd.",
+                        "color": "#02BCD4",
+                        "orderindex": 3
+                      },
+                      {
+                        "id": "3e8aac86-eadb-4438-a819-6a7cc1c01ce6",
+                        "name": "Remote",
+                        "color": "#7C4DFF",
+                        "orderindex": 4
+                      },
+                      {
+                        "id": "d6149f8b-617e-4bf4-ba04-628f5c7044a9",
+                        "name": "Other",
+                        "color": "#b5bcc2",
+                        "orderindex": 5
+                      }
+                    ]
+                  },
+                  "date_created": "1660100952182",
+                  "hide_from_guests": false,
+                  "required": false
+                },
+                {
+                  "id": "8b7e235f-e50d-4b6d-b2d1-700eea0d23a0",
+                  "name": "User",
+                  "type": "short_text",
+                  "type_config": {},
+                  "date_created": "1675464175707",
+                  "hide_from_guests": false,
+                  "value": "Raud & Peter",
+                  "required": false
+                },
+                {
+                  "id": "c2d254e3-66bf-4033-8522-006928efd6cb",
+                  "name": "Type",
+                  "type": "drop_down",
+                  "type_config": {
+                    "new_drop_down": true,
+                    "options": [
+                      {
+                        "id": "ce29e9c1-479f-419a-aa94-daed12cad45c",
+                        "name": "Incident",
+                        "color": "#de5454",
+                        "orderindex": 0
+                      },
+                      {
+                        "id": "c005b218-81b9-4e42-98cf-92b12d696c97",
+                        "name": "Request",
+                        "color": "#f19035",
+                        "orderindex": 1
+                      },
+                      {
+                        "id": "291b928d-099f-44f1-b3bf-260191e3c2ec",
+                        "name": "Change Request",
+                        "color": "#fbe972",
+                        "orderindex": 2
+                      },
+                      {
+                        "id": "5ad24d1c-9867-4e1c-81cf-3f8180211e17",
+                        "name": "Operations",
+                        "color": "#1bbc9c",
+                        "orderindex": 3
+                      },
+                      {
+                        "id": "79e88217-9e6b-4c74-b576-48e1d09bf6a1",
+                        "name": "Project Task",
+                        "color": "#916ff1",
+                        "orderindex": 4
+                      },
+                      {
+                        "id": "72cdd13c-0694-45c0-aa1f-defa349a4d2e",
+                        "name": "Asset Mgmt",
+                        "color": "#efe7b1",
+                        "orderindex": 5
+                      },
+                      {
+                        "id": "cebeb648-a10d-4cf9-b760-ab0cb4310bf8",
+                        "name": "Other",
+                        "color": "#b5bcc2",
+                        "orderindex": 6
+                      },
+                      {
+                        "id": "38c70602-430f-4a04-b452-96f51a62bbf0",
+                        "name": "------------------------",
+                        "color": null,
+                        "orderindex": 7
+                      },
+                      {
+                        "id": "f8b3bee9-5db0-47a0-ba68-ccf6bac81e5e",
+                        "name": "Inquiry",
+                        "color": "#57e08f",
+                        "orderindex": 8
+                      },
+                      {
+                        "id": "073ade37-2cdd-40d1-b63e-6e10fb494e94",
+                        "name": "Idea/Innovation",
+                        "color": "#99a3fb",
+                        "orderindex": 9
+                      },
+                      {
+                        "id": "d8e1060c-c6a2-4dc0-8ede-870d6b018b7e",
+                        "name": "1:1 Topic",
+                        "color": "#f57bee",
+                        "orderindex": 10
+                      },
+                      {
+                        "id": "61291b62-fc07-47b8-8d32-eed47b56cb33",
+                        "name": "Personal",
+                        "color": "#f77da6",
+                        "orderindex": 11
+                      }
+                    ]
+                  },
+                  "date_created": "1671051092981",
+                  "hide_from_guests": false,
+                  "value": 4,
+                  "required": false
+                },
+                {
+                  "id": "f47f3453-232c-43b6-bc42-243e2810826e",
+                  "name": "Category",
+                  "type": "drop_down",
+                  "type_config": {
+                    "new_drop_down": true,
+                    "options": [
+                      {
+                        "id": "fed6c849-fc42-485f-9ed7-fe0f96d1a705",
+                        "name": "Automation",
+                        "color": "#9b59b6",
+                        "orderindex": 0
+                      },
+                      {
+                        "id": "a194767a-1435-4b72-9fca-b3596962ee30",
+                        "name": "Applications",
+                        "color": "#fb5252",
+                        "orderindex": 1
+                      },
+                      {
+                        "id": "a275b2d0-c467-41bc-9663-47007cb59326",
+                        "name": "Cloud Ops",
+                        "color": "#81B1FF",
+                        "orderindex": 2
+                      },
+                      {
+                        "id": "46211a7b-65fd-4d27-a335-4d9954acd6b9",
+                        "name": "Collaboration",
+                        "color": "#7C4DFF",
+                        "orderindex": 3
+                      },
+                      {
+                        "id": "0a3b6328-0305-416a-8d0d-527355e6def2",
+                        "name": "Data & Database",
+                        "color": "#54EAE3",
+                        "orderindex": 4
+                      },
+                      {
+                        "id": "18f53b3b-5861-409f-99db-4f1f57796586",
+                        "name": "Endpoint Mgmt",
+                        "color": "#f79238",
+                        "orderindex": 5
+                      },
+                      {
+                        "id": "d646c105-3d03-4b7a-9abe-95835d8c0c5f",
+                        "name": "Email",
+                        "color": "#f363eb",
+                        "orderindex": 6
+                      },
+                      {
+                        "id": "cb565425-2266-4787-908e-84acea844208",
+                        "name": "Facilities",
+                        "color": "#667684",
+                        "orderindex": 7
+                      },
+                      {
+                        "id": "5b9033d2-9e64-4959-a810-92f665c5cdf1",
+                        "name": "Hardware",
+                        "color": "#9d7df9",
+                        "orderindex": 8
+                      },
+                      {
+                        "id": "8b36f8d0-bcda-410a-ac62-09e69ab60503",
+                        "name": "HR/Personnel",
+                        "color": "#f5e46e",
+                        "orderindex": 9
+                      },
+                      {
+                        "id": "62564877-5389-4a56-bc10-01bd69232696",
+                        "name": "InfoSec",
+                        "color": "#e75a5a",
+                        "orderindex": 10
+                      },
+                      {
+                        "id": "6fa2ecb5-5bf3-476a-8075-2f876aafcb50",
+                        "name": "Integration",
+                        "color": "#9f7efb",
+                        "orderindex": 11
+                      },
+                      {
+                        "id": "66f44110-7275-47b2-a3b2-2d5611022ea4",
+                        "name": "Marketing",
+                        "color": "#DF0D50",
+                        "orderindex": 12
+                      },
+                      {
+                        "id": "b1a4e87c-623f-43b1-99ee-95d403219ce7",
+                        "name": "Meetings & Conf. Rooms",
+                        "color": "#4363e0",
+                        "orderindex": 13
+                      },
+                      {
+                        "id": "ae2a2b2c-3868-4232-9ea2-6d0c4376d9ca",
+                        "name": "Network & VPN",
+                        "color": "#81B1FF",
+                        "orderindex": 14
+                      },
+                      {
+                        "id": "636eef27-dc08-412b-a1c4-5a2f59964da1",
+                        "name": "Phones",
+                        "color": "#04A9F4",
+                        "orderindex": 15
+                      },
+                      {
+                        "id": "9dc4a685-aa86-48b6-96c7-e89f6c30525f",
+                        "name": "Printing & Scanning",
+                        "color": "#1bbc9c",
+                        "orderindex": 16
+                      },
+                      {
+                        "id": "51bbcbc0-e152-463c-a64f-97fcb357dd4d",
+                        "name": "Procurement",
+                        "color": "#8645d4",
+                        "orderindex": 17
+                      },
+                      {
+                        "id": "3f6f0cb1-e470-4c50-97ed-b631cd854de4",
+                        "name": "Project/Task Mgmt",
+                        "color": "#2ecd6f",
+                        "orderindex": 18
+                      },
+                      {
+                        "id": "28519db6-ed9b-4798-921a-21d169f311f5",
+                        "name": "Security",
+                        "color": "#f93b3b",
+                        "orderindex": 19
+                      },
+                      {
+                        "id": "77303d61-8fd2-468b-ab9f-0bba132a3cf4",
+                        "name": "Servers",
+                        "color": "#9D7464",
+                        "orderindex": 20
+                      },
+                      {
+                        "id": "743dfe7b-ac97-4536-898b-831d9bdd9ff0",
+                        "name": "Training",
+                        "color": "#e7d14c",
+                        "orderindex": 21
+                      },
+                      {
+                        "id": "6252c707-b9ce-412a-95a1-218d41fca4ed",
+                        "name": "User Accounts",
+                        "color": "#f14e4e",
+                        "orderindex": 22
+                      },
+                      {
+                        "id": "378c1a1f-c322-4c10-b72e-5f2b3131d9d2",
+                        "name": "Windows/OS",
+                        "color": "#2ecd6f",
+                        "orderindex": 23
+                      },
+                      {
+                        "id": "42dc83da-9282-4a10-b678-27ed59e2e944",
+                        "name": "Wiring/Cable Mgmt",
+                        "color": "#AF7E2E",
+                        "orderindex": 24
+                      },
+                      {
+                        "id": "46712d67-e8cc-4f6a-99b3-0fc5dfa294a7",
+                        "name": "Workstation/Desk",
+                        "color": "#e6793e",
+                        "orderindex": 25
+                      },
+                      {
+                        "id": "8dda593a-acb0-45d2-998b-dccf6d13ebe2",
+                        "name": "Other",
+                        "color": "#b5bcc2",
+                        "orderindex": 26
+                      }
+                    ]
+                  },
+                  "date_created": "1683756567743",
+                  "hide_from_guests": false,
+                  "value": 21,
+                  "required": false
+                },
+                {
+                  "id": "a59d846e-42c9-4b9a-ae6f-32464212d282",
+                  "name": "Apps",
+                  "type": "drop_down",
+                  "type_config": {
+                    "new_drop_down": true,
+                    "options": [
+                      {
+                        "id": "75c132ad-2f44-4645-b08f-2957b28a1c75",
+                        "name": "Azure",
+                        "color": "#0080ff",
+                        "orderindex": 0
+                      },
+                      {
+                        "id": "69f60dbb-dc25-4d8d-a03c-9342f8129f22",
+                        "name": "Adobe Acrobat",
+                        "color": "#e44040",
+                        "orderindex": 1
+                      },
+                      {
+                        "id": "2f1ac3fb-17b1-4055-af87-894ca557f2e9",
+                        "name": "ClickUp",
+                        "color": "#FF4081",
+                        "orderindex": 2
+                      },
+                      {
+                        "id": "52170e1c-0389-47d7-8e8b-8655eb0f60e7",
+                        "name": "DW Spectrum",
+                        "color": "#E65100",
+                        "orderindex": 3
+                      },
+                      {
+                        "id": "65f2c876-f046-4ba6-b378-5ae0e68c1971",
+                        "name": "Egnyte",
+                        "color": "#27b69a",
+                        "orderindex": 4
+                      },
+                      {
+                        "id": "ff0a9b36-4759-418d-8d42-ec34ea7e9056",
+                        "name": "Epicor",
+                        "color": "#3397dd",
+                        "orderindex": 5
+                      },
+                      {
+                        "id": "512b1bba-ab38-4a13-8b45-64ff057a75a5",
+                        "name": "Google Chrome",
+                        "color": "#ebda61",
+                        "orderindex": 6
+                      },
+                      {
+                        "id": "b7b82aeb-98cf-4508-8485-ab8cb1cc31b6",
+                        "name": "Intune",
+                        "color": "#81B1FF",
+                        "orderindex": 7
+                      },
+                      {
+                        "id": "0196fca4-1e28-4919-8d38-d5eb33f44b33",
+                        "name": "Microsoft 365",
+                        "color": "#486aed",
+                        "orderindex": 8
+                      },
+                      {
+                        "id": "30080f89-17a7-46ef-8d93-d31f8adf4db9",
+                        "name": "Microsoft Edge",
+                        "color": "#04A9F4",
+                        "orderindex": 9
+                      },
+                      {
+                        "id": "11f1198a-76ef-4771-b78d-d84a21a7c2ad",
+                        "name": "n8n",
+                        "color": "#e50000",
+                        "orderindex": 10
+                      },
+                      {
+                        "id": "03ba5632-76e5-4858-9c91-7b07ee8a2f7a",
+                        "name": "Office Desktop",
+                        "color": "#f79e4e",
+                        "orderindex": 11
+                      },
+                      {
+                        "id": "b0e9532e-9606-4935-aee6-f96f822950ff",
+                        "name": "OneDrive",
+                        "color": "#04A9F4",
+                        "orderindex": 12
+                      },
+                      {
+                        "id": "960b8485-9b97-49f5-a865-66838e7210d4",
+                        "name": "Outlook",
+                        "color": "#2476eb",
+                        "orderindex": 13
+                      },
+                      {
+                        "id": "9962dba8-85b4-42b7-8ae8-241febb17eb4",
+                        "name": "Power Platform",
+                        "color": "#bf55ec",
+                        "orderindex": 14
+                      },
+                      {
+                        "id": "8ff2226c-47bb-4512-9e52-9ef0f233a02b",
+                        "name": "QuickBooks",
+                        "color": "#2ecd6f",
+                        "orderindex": 15
+                      },
+                      {
+                        "id": "f295d808-075e-4e6a-ac47-0f1d7757bddd",
+                        "name": "SharePoint",
+                        "color": "#3082B7",
+                        "orderindex": 16
+                      },
+                      {
+                        "id": "43b92d7e-7f43-495b-a30a-35527c29213f",
+                        "name": "SolidWorks",
+                        "color": "#e23535",
+                        "orderindex": 17
+                      },
+                      {
+                        "id": "f766f2b6-1761-41b4-9b18-bb01b0049ec3",
+                        "name": "SSRS Report Builder",
+                        "color": "#02BCD4",
+                        "orderindex": 18
+                      },
+                      {
+                        "id": "6732ba6a-6a20-4eee-92c2-d3d2266b8a4f",
+                        "name": "Teams",
+                        "color": "#697cef",
+                        "orderindex": 19
+                      },
+                      {
+                        "id": "dd54d0c6-261b-4b14-acaa-4e4b6b63712b",
+                        "name": "VPN",
+                        "color": "#e9d441",
+                        "orderindex": 20
+                      },
+                      {
+                        "id": "73ca3d19-6674-4519-9809-f89acb94d5d5",
+                        "name": "Windows",
+                        "color": "#2ecd6f",
+                        "orderindex": 21
+                      },
+                      {
+                        "id": "2d2e174e-f55b-46c4-ae52-c2667aa6eb08",
+                        "name": "Zoom",
+                        "color": "#81B1FF",
+                        "orderindex": 22
+                      },
+                      {
+                        "id": "a1ab0061-87e4-4bef-9abe-795aca8115c9",
+                        "name": "N/A",
+                        "color": "#667684",
+                        "orderindex": 23
+                      }
+                    ]
+                  },
+                  "date_created": "1682088851650",
+                  "hide_from_guests": false,
+                  "value": 5,
+                  "required": false
+                }
+              ],
+              "dependencies": [],
+              "linked_tasks": [],
+              "team_id": "14335650",
+              "url": "https://app.clickup.com/t/8685axy5p",
+              "sharing": {
+                "public": false,
+                "public_share_expires_on": null,
+                "public_fields": [
+                  "assignees",
+                  "priority",
+                  "due_date",
+                  "content",
+                  "comments",
+                  "attachments",
+                  "customFields",
+                  "subtasks",
+                  "tags",
+                  "checklists",
+                  "coverimage"
+                ],
+                "token": null,
+                "seo_optimized": false
+              },
+              "list": {
+                "id": "164286867",
+                "name": "Active",
+                "access": true
+              },
+              "project": {
+                "id": "90110187278",
+                "name": "Active",
+                "hidden": false,
+                "access": true
+              },
+              "folder": {
+                "id": "90110187278",
+                "name": "Active",
+                "hidden": false,
+                "access": true
+              },
+              "space": {
+                "id": "56901433"
+              }
+            }
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-08-16T16:34:14.000Z",
+  "versionId": "57625bcc-e5f8-47fd-846e-4705774b48a9"
+}
