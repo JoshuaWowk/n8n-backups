@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "GetFocusTasks",
+            "node": "Microsoft To Do",
             "type": "main",
             "index": 0
           }
@@ -44,17 +44,6 @@
           }
         ]
       ]
-    },
-    "GetFocusTasks": {
-      "main": [
-        [
-          {
-            "node": "Microsoft To Do",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "createdAt": "2023-08-16T15:05:57.065Z",
@@ -72,7 +61,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        960,
+        1180,
         540
       ],
       "webhookId": "422aaed9-e03b-4809-a11a-369c89430f2b"
@@ -81,11 +70,10 @@
       "parameters": {
         "operation": "create",
         "taskListId": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAA=",
-        "title": "={{ $json.name }}",
+        "title": "={{ $json.body.payload.name }}",
         "additionalFields": {
-          "content": "={{ $json.text_content }}",
-          "dueDateTime": "={{ Date($json.due_date) }}",
-          "importance": "normal"
+          "content": "={{ $json.body.payload.text_content }}",
+          "dueDateTime": "={{ Date($json.body.payload.due_date) }}"
         }
       },
       "id": "779fbbe0-1c08-4582-b4da-2185641ac01a",
@@ -109,11 +97,11 @@
         "operation": "create",
         "taskListId": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAA=",
         "taskId": "={{ $json.id }}",
-        "displayName": "={{ $('GetFocusTasks').item.json.name }}",
+        "displayName": "={{ $('Webhook').item.json.body.payload.custom_id }}: {{ $('Webhook').item.json.body.payload.name }}",
         "applicationName": "ClickUp",
         "additionalFields": {
-          "externalId": "={{ $('GetFocusTasks').item.json.id }}",
-          "webUrl": "={{ $('GetFocusTasks').item.json.url }}"
+          "externalId": "={{ $('Webhook').item.json.body.payload.id }}",
+          "webUrl": "={{ $('Webhook').item.json.body.payload.url }}"
         }
       },
       "id": "9decf095-af0c-4d6b-8b60-f6e72d32aa5a",
@@ -134,7 +122,7 @@
     {
       "parameters": {
         "operation": "setCustomField",
-        "task": "={{ $('GetFocusTasks').item.json.id }}",
+        "task": "={{ $json.externalId }}",
         "field": "0b3f7cfd-a829-4414-ba87-2e8202a646ed",
         "value": "=https://to-do.office.com/tasks/id/{{ $('Microsoft To Do').item.json.id }}"
       },
@@ -147,17 +135,19 @@
         540
       ],
       "alwaysOutputData": true,
+      "notesInFlow": true,
       "credentials": {
         "clickUpApi": {
           "id": "1",
           "name": "ClickUp account"
         }
-      }
+      },
+      "notes": "No output"
     },
     {
       "parameters": {
         "operation": "setCustomField",
-        "task": "={{ $('GetFocusTasks').item.json.id }}",
+        "task": "={{ $('Microsoft To Do1').item.json.externalId }}",
         "field": "593f61fb-1a7d-4935-ba13-f3de27bf6b34",
         "value": "={{ $('Microsoft To Do').item.json.id }}"
       },
@@ -176,39 +166,6 @@
           "name": "ClickUp account"
         }
       }
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "team": "14335650",
-        "space": "56901433",
-        "folder": "90110187278",
-        "list": "164286867",
-        "filters": {
-          "customFieldsUi": {
-            "customFieldsValues": [
-              {
-                "fieldId": "7823bf00-edc8-493f-a2cb-fb3b57d93d1c",
-                "value": "true"
-              }
-            ]
-          }
-        }
-      },
-      "id": "26eec7ca-72a5-4d3b-87dc-597ee8b6ac88",
-      "name": "GetFocusTasks",
-      "type": "n8n-nodes-base.clickUp",
-      "typeVersion": 1,
-      "position": [
-        1180,
-        540
-      ],
-      "credentials": {
-        "clickUpApi": {
-          "id": "1",
-          "name": "ClickUp account"
-        }
-      }
     }
   ],
   "pinData": {
@@ -217,38 +174,38 @@
         "json": {
           "headers": {
             "host": "n8n.hp-ne.us",
-            "x-real-ip": "100.20.72.176",
-            "x-forwarded-for": "100.20.72.176",
+            "x-real-ip": "44.225.68.189",
+            "x-forwarded-for": "44.225.68.189",
             "x-forwarded-proto": "https",
             "x-forwarded-port": "443",
             "connection": "close",
-            "content-length": "16440",
+            "content-length": "17741",
             "accept": "application/json, text/plain, */*",
             "content-type": "application/json",
             "user-agent": "axios/0.24.0",
-            "x-datadog-trace-id": "6585919466677731612",
-            "x-datadog-parent-id": "8474993590987227837",
+            "x-datadog-trace-id": "6218042927982868696",
+            "x-datadog-parent-id": "1545716658570448297",
             "x-datadog-sampling-priority": "-1",
-            "x-b3-traceid": "5b65e2dc7aa8011c",
-            "x-b3-spanid": "759d39c4c08182bd",
+            "x-b3-traceid": "564aed19308c78d8",
+            "x-b3-spanid": "15737d1c857ecda9",
             "x-b3-sampled": "0",
-            "x-b3-parentspanid": "76c17f185c16aa50",
-            "b3": "5b65e2dc7aa8011c-759d39c4c08182bd-0-76c17f185c16aa50",
-            "traceparent": "00-00000000000000005b65e2dc7aa8011c-759d39c4c08182bd-00",
+            "x-b3-parentspanid": "647378909d9f6acb",
+            "b3": "564aed19308c78d8-15737d1c857ecda9-0-647378909d9f6acb",
+            "traceparent": "00-0000000000000000564aed19308c78d8-15737d1c857ecda9-00",
             "tracestate": "dd=t.dm:3;s:-1"
           },
           "params": {},
           "query": {},
           "body": {
-            "id": "4d24b60a-8d86-4869-a734-472b5baa32cc:main",
-            "trigger_id": "509ec670-593d-4663-ab17-54cda10004b7",
-            "date": "2023-08-16T15:07:12.218Z",
+            "id": "594e4086-b354-48a7-ba86-1d886e4068da:main",
+            "trigger_id": "4dcede07-e34b-4d19-910b-2e17bb36486c",
+            "date": "2023-08-18T21:46:40.551Z",
             "payload": {
-              "id": "8685axy5p",
-              "custom_id": "CLKUP-1818",
-              "name": "Epicor user creation guide",
-              "text_content": "Per Jeremy, Raud & Peter need to know how to create user accounts",
-              "description": "Per Jeremy, Raud & Peter need to know how to create user accounts",
+              "id": "86857mvtv",
+              "custom_id": "CLKUP-1774",
+              "name": "Android handheld device setup",
+              "text_content": "Assigned to me\nCreate Intune device profile(s)\nEnroll devices in Intune\nKiosk Mode on Handhelds – Users won’t be able to add additional profiles on them (Josh)\nTracking Software (Josh)\nHandhelds devices should be able to not be able to connect to other Wi-Fi\nNo external network should be able to connect to the handhelds\nNetwork Setup: \nHandhelds Wi-Fi network – Create VLAN for 2T and 14T\nValidating Signal Strength for Wi-Fi\nOthers \nLabel Printers Network - Printers – Static IPs Setup (Handheld 1, Handheld 2, etc…) Drivers by Seagull (Seagull Scientific site)\n\nLicensing/Activating the remaining Handhelds\nRedirect License (on the Handhelds) to production for GoLive\nLabel the Handhelds",
+              "description": "Assigned to me\nCreate Intune device profile(s)\nEnroll devices in Intune\nKiosk Mode on Handhelds – Users won’t be able to add additional profiles on them (Josh)\nTracking Software (Josh)\nHandhelds devices should be able to not be able to connect to other Wi-Fi\nNo external network should be able to connect to the handhelds\nNetwork Setup: \nHandhelds Wi-Fi network – Create VLAN for 2T and 14T\nValidating Signal Strength for Wi-Fi\nOthers \nLabel Printers Network - Printers – Static IPs Setup (Handheld 1, Handheld 2, etc…) Drivers by Seagull (Seagull Scientific site)\n\nLicensing/Activating the remaining Handhelds\nRedirect License (on the Handhelds) to production for GoLive\nLabel the Handhelds",
               "status": {
                 "id": "sc164286867_wTTPSjGp",
                 "status": "active",
@@ -256,9 +213,9 @@
                 "orderindex": 2,
                 "type": "custom"
               },
-              "orderindex": "39716792.15623310000000000000000000000000",
-              "date_created": "1692123332081",
-              "date_updated": "1692198429995",
+              "orderindex": "-40.00000000000000000000000000000000",
+              "date_created": "1691083678825",
+              "date_updated": "1692395198308",
               "date_closed": null,
               "date_done": null,
               "archived": false,
@@ -298,7 +255,7 @@
                 "orderindex": "2",
                 "priority": "high"
               },
-              "due_date": "1692205200000",
+              "due_date": "1692604800000",
               "start_date": null,
               "points": null,
               "time_estimate": null,
@@ -374,6 +331,7 @@
                   },
                   "date_created": "1686926237792",
                   "hide_from_guests": false,
+                  "value": 3,
                   "required": false
                 },
                 {
@@ -731,7 +689,7 @@
                   "type_config": {},
                   "date_created": "1675464175707",
                   "hide_from_guests": false,
-                  "value": "Raud & Peter",
+                  "value": "Raud",
                   "required": false
                 },
                 {
@@ -993,7 +951,7 @@
                   },
                   "date_created": "1683756567743",
                   "hide_from_guests": false,
-                  "value": 21,
+                  "value": 5,
                   "required": false
                 },
                 {
@@ -1158,7 +1116,7 @@
               "dependencies": [],
               "linked_tasks": [],
               "team_id": "14335650",
-              "url": "https://app.clickup.com/t/8685axy5p",
+              "url": "https://app.clickup.com/t/86857mvtv",
               "sharing": {
                 "public": false,
                 "public_share_expires_on": null,
@@ -1205,6 +1163,49 @@
           "item": 0
         }
       }
+    ],
+    "Microsoft To Do": [
+      {
+        "json": {
+          "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/todo/lists('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAA%3D')/tasks/$entity",
+          "@odata.etag": "W/\"B0ibFW3AuUeNo/7beX50/AABPcqHnQ==\"",
+          "importance": "normal",
+          "isReminderOn": false,
+          "status": "notStarted",
+          "title": "Android handheld device setup",
+          "createdDateTime": "2023-08-18T21:49:19.9531777Z",
+          "lastModifiedDateTime": "2023-08-18T21:49:20.0821974Z",
+          "hasAttachments": false,
+          "categories": [],
+          "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAAHSJsVbcC5R42j-tt5fnT8AAE-mg7JAAA=",
+          "body": {
+            "content": "Assigned to me Create Intune device profile(s) Enroll devices in Intune Kiosk Mode on Handhelds – Users won’t be able to add additional profiles on them (Josh) Tracking Software (Josh) Handhelds devices should be able to not be able to connect to other Wi-Fi No external network should be able to connect to the handhelds Network Setup: Handhelds Wi-Fi network – Create VLAN for 2T and 14T Validating Signal Strength for Wi-Fi Others Label Printers Network - Printers – Static IPs Setup (Handheld 1, Handheld 2, etc…) Drivers by Seagull (Seagull Scientific site) Licensing/Activating the remaining Handhelds Redirect License (on the Handhelds) to production for GoLive Label the Handhelds\r\n",
+            "contentType": "text"
+          },
+          "dueDateTime": {
+            "dateTime": "2023-08-18T00:00:00.0000000",
+            "timeZone": "UTC"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Microsoft To Do1": [
+      {
+        "json": {
+          "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('dd3e9cba-43ce-44de-8421-b75edd52f276')/todo/lists('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAuAAAAAACKqPYditQKR4DEScgdnGuVAQAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAA%3D')/tasks('AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAE2K1vRAAAHSJsVbcC5R42j-tt5fnT8AAE-mg7JAAA%3D')/linkedResources/$entity",
+          "webUrl": "https://app.clickup.com/t/86857mvtv",
+          "applicationName": "ClickUp",
+          "displayName": "CLKUP-1774: Android handheld device setup",
+          "externalId": "86857mvtv",
+          "id": "cb040786-880c-4964-973b-fadf813ffd48"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
     ]
   },
   "settings": {
@@ -1213,6 +1214,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-16T16:34:14.000Z",
-  "versionId": "57625bcc-e5f8-47fd-846e-4705774b48a9"
+  "updatedAt": "2023-08-18T21:59:01.000Z",
+  "versionId": "4add033f-3a97-41dc-aaaf-f3ef90ab53c7"
 }
