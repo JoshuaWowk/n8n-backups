@@ -196,7 +196,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[14].value }}",
+        "taskId": "={{ $json.custom_fields[15].value }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -339,7 +339,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[14].value }}",
+        "taskId": "={{ $json.custom_fields[15].value }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -364,7 +364,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[14].value }}",
+        "taskId": "={{ $json.custom_fields[15].value }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -389,7 +389,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[14].value }}",
+        "taskId": "={{ $json.custom_fields[15].value }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -490,6 +490,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-14T18:30:11.000Z",
-  "versionId": "cb77624e-a0ff-4d4b-aa1b-284ac657f2fe"
+  "updatedAt": "2023-08-18T20:45:15.000Z",
+  "versionId": "d1c51028-b4f2-4c70-bae6-021a3b44162c"
 }
