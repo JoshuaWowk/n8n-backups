@@ -797,12 +797,12 @@
   },
   "staticData": {
     "node:ClickUp Trigger": {
-      "webhookId": "18c24aaa-5679-4156-a436-a55d48d483a5",
-      "secret": "PU78BOZ42DP6VNWZTSKVPREXYXLFIC261F5SJ4CA6JQA93IC67IT0GLOAPMP41F9"
+      "webhookId": "3427f12e-b490-4360-bb5c-5000657d6bb5",
+      "secret": "1K8V7DIVDMZ9H5KW4I2L47IZ0SYLTOBYAYSQNVKA9EXQ2YA2TERSND6U570E13FL"
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-27T01:01:08.000Z",
+  "updatedAt": "2023-09-03T01:00:56.000Z",
   "versionId": "d00d296a-9724-4b30-8f06-f5179d022331"
 }
