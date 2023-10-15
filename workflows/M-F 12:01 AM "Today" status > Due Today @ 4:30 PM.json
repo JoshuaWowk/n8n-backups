@@ -26,6 +26,7 @@
   },
   "createdAt": "2023-04-24T12:38:49.044Z",
   "id": "3",
+  "meta": null,
   "name": "M-F 12:01 AM \"Today\" status > Due Today @ 4:30 PM",
   "nodes": [
     {
