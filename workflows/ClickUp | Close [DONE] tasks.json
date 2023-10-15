@@ -44,6 +44,7 @@
   },
   "createdAt": "2023-05-14T14:07:18.725Z",
   "id": "7",
+  "meta": null,
   "name": "ClickUp | Close [DONE] tasks",
   "nodes": [
     {
