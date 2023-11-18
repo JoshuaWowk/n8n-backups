@@ -1,0 +1,358 @@
+{
+  "active": false,
+  "connections": {
+    "ClickUp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "ClickUp1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ClickUp2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-11-17T18:23:49.819Z",
+  "id": "MHnRCx3dk9IM5og9",
+  "meta": null,
+  "name": "ClickUp Enrollment Push - Update Status",
+  "nodes": [
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskUpdated"
+        ],
+        "filters": {
+          "listId": "901101960771"
+        }
+      },
+      "id": "fa8469ca-9624-46fc-abd2-d9ced3b9a027",
+      "name": "ClickUp Trigger",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        740,
+        520
+      ],
+      "webhookId": "b2c04a97-737e-448a-b64d-d14c616f477f",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.task_id }}"
+      },
+      "id": "f78cc340-9f75-4f3c-9828-103398978262",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        520
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "What is the **status**",
+        "height": 80,
+        "width": 150
+      },
+      "id": "69cc6a9e-02d0-4b60-b3b3-86b6e97302fb",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "content": "When an **Enrollment Push** task is updated",
+        "height": 80,
+        "width": 150
+      },
+      "id": "1b74703d-2cba-4f4d-a6fc-b746e78d9e9c",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Update status to: **Staging**",
+        "height": 80,
+        "width": 150
+      },
+      "id": "c3890f28-19c4-40ff-9f66-ce3c03987bfa",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.id }}",
+        "updateFields": {
+          "status": "Staging"
+        }
+      },
+      "id": "e86a9d3b-5c9c-41fe-a6e1-92816dad4f02",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        400
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.id }}",
+        "updateFields": {
+          "status": "Active"
+        }
+      },
+      "id": "fbeb4975-a8e9-45cc-bd19-9316e94ea909",
+      "name": "ClickUp2",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        680
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Update status to: **Active**",
+        "height": 80,
+        "width": 150
+      },
+      "id": "d0d63f14-b4b0-4af7-b33e-846f7d83d09a",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.status.status }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "inbox",
+              "outputKey": "inbox"
+            },
+            {
+              "value2": "staging",
+              "outputKey": "staging"
+            },
+            {
+              "value2": "active",
+              "outputKey": "active"
+            }
+          ]
+        }
+      },
+      "id": "aa790382-8677-4da4-8251-e04114866969",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        520
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "5c674686-7dea-425e-929e-a78432ad23bc",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.history_items[0].field }}",
+              "operation": "notEqual",
+              "value2": "status"
+            }
+          ]
+        }
+      },
+      "id": "2e3e3974-1c4e-4a9c-a813-461861e40953",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        960,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Filter out status changes",
+        "height": 80,
+        "width": 150
+      },
+      "id": "470312e6-8ae3-4a3d-a9be-3ae0b496f919",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        940,
+        420
+      ]
+    }
+  ],
+  "pinData": {
+    "ClickUp Trigger": [
+      {
+        "json": {
+          "event": "taskUpdated",
+          "history_items": [
+            {
+              "id": "3765655948640255049",
+              "type": 1,
+              "date": "1700246724777",
+              "field": "status",
+              "parent_id": "901101960771",
+              "data": {
+                "status_type": "open"
+              },
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "before": {
+                "status": "active",
+                "color": "#1090e0",
+                "orderindex": 2,
+                "type": "custom"
+              },
+              "after": {
+                "status": "inbox",
+                "color": "#e16b16",
+                "orderindex": 0,
+                "type": "open"
+              }
+            }
+          ],
+          "task_id": "8686ew5hu",
+          "webhook_id": "8dd90046-0cf3-4d31-a99d-fb9b851c3b8e"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "8dd90046-0cf3-4d31-a99d-fb9b851c3b8e",
+      "secret": "817STHU19G4ZBBIXO2R97R3FITOHHVBF6AS3JK64VWL237A5RJEGEMY7MXEWWN20"
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-11-17T18:47:09.000Z",
+  "versionId": "f1ea4290-932e-4c22-be5e-27887ef9ff42"
+}
