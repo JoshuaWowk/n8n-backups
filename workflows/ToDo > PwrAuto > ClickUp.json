@@ -153,7 +153,7 @@
         "list": "164286867",
         "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
-          "customFieldsJson": "[ {\"id\": \"91f4293d-d86b-44bb-b84c-ea14cb4939d9\", \"value\":  \"{{ $json.body[8].LinkedResource_WebURL }}\"}, {\"id\": \"c69df9e5-49e4-485e-9827-026545266843\", \"value\": \"{{ $json.body[7].LinkedResource_ApplicationName }}\"}, {\"id\": \"593f61fb-1a7d-4935-ba13-f3de27bf6b34\", \"value\": \"{{ $json.body[0].Task_ID }}\"}, {\"id\": \"fa591d15-5b3e-4803-b49e-4b76f0f32ca2\", \"value\": \"{{ $json.body[1].Title }}\"}]",
+          "customFieldsJson": "=[ {\"id\": \"91f4293d-d86b-44bb-b84c-ea14cb4939d9\", \"value\":  \"{{ $json.body[8].LinkedResource_WebURL }}\"}, {\"id\": \"c69df9e5-49e4-485e-9827-026545266843\", \"value\": \"{{ $json.body[7].LinkedResource_ApplicationName }}\"}, {\"id\": \"593f61fb-1a7d-4935-ba13-f3de27bf6b34\", \"value\": \"{{ $json.body[0].Task_ID }}\"}, {\"id\": \"fa591d15-5b3e-4803-b49e-4b76f0f32ca2\", \"value\": \"{{ $json.body[1].Title }}\"}, {\"id\": \"b18d9563-75bf-4daf-a9d5-311a16564d7f\", \"value\": \"{{ $json.body[10].LinkedResource_Sender }}\"}]",
           "content": "=# Email: \n{{ $json.LinkedResource_Body_MD }}\n\n# To-Do: \n{{ $json.body[5].Body }} ",
           "dueDate": "={{ $json.dueDateTime }}",
           "markdownContent": true
@@ -184,7 +184,7 @@
         "list": "164286867",
         "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
-          "customFieldsJson": "=[ {\"id\": \"91f4293d-d86b-44bb-b84c-ea14cb4939d9\", \"value\":  \"{{ $json.body[8].LinkedResource_WebURL }}\"}, {\"id\": \"c69df9e5-49e4-485e-9827-026545266843\", \"value\": \"{{ $json.body[7].LinkedResource_ApplicationName }}\"}, {\"id\": \"593f61fb-1a7d-4935-ba13-f3de27bf6b34\", \"value\": \"{{ $json.body[0].Task_ID }}\"}, {\"id\": \"fa591d15-5b3e-4803-b49e-4b76f0f32ca2\", \"value\": \"{{ $json.body[1].Title }}\"}]",
+          "customFieldsJson": "=[ {\"id\": \"91f4293d-d86b-44bb-b84c-ea14cb4939d9\", \"value\":  \"{{ $json.body[8].LinkedResource_WebURL }}\"}, {\"id\": \"c69df9e5-49e4-485e-9827-026545266843\", \"value\": \"{{ $json.body[7].LinkedResource_ApplicationName }}\"}, {\"id\": \"593f61fb-1a7d-4935-ba13-f3de27bf6b34\", \"value\": \"{{ $json.body[0].Task_ID }}\"}, {\"id\": \"fa591d15-5b3e-4803-b49e-4b76f0f32ca2\", \"value\": \"{{ $json.body[1].Title }}\"}, {\"id\": \"b18d9563-75bf-4daf-a9d5-311a16564d7f\", \"value\": \"{{ $json.body[10].LinkedResource_Sender }}\"}]",
           "content": "=# Email: \n{{ $json.LinkedResource_Body_MD }}\n\n# To-Do: \n{{ $json.body[5].Body }} ",
           "markdownContent": true
         }
@@ -426,7 +426,7 @@
     },
     {
       "parameters": {
-        "html": "={{ $json.body[10].LinkedResource_Body_HTML }}",
+        "html": "={{ $json.body[11].LinkedResource_Body_HTML }}",
         "destinationKey": "LinkedResource_Body_MD",
         "options": {
           "keepDataImages": false,
@@ -449,42 +449,42 @@
         "json": {
           "headers": {
             "host": "n8n.hp-ne.us",
-            "x-real-ip": "104.42.49.145",
-            "x-forwarded-for": "104.42.49.145",
+            "x-real-ip": "168.62.9.74",
+            "x-forwarded-for": "168.62.9.74",
             "x-forwarded-proto": "https",
             "x-forwarded-port": "443",
             "connection": "close",
-            "content-length": "5049",
+            "content-length": "10466",
             "accept-language": "en-US",
-            "user-agent": "azure-logic-apps/1.0 (workflow 81f2ca28becf4bc19f4173f3c9536ce5; version 08585088706687127141) microsoft-flow/1.0",
+            "user-agent": "azure-logic-apps/1.0 (workflow 81f2ca28becf4bc19f4173f3c9536ce5; version 08584998738478939083) microsoft-flow/1.0",
             "x-ms-workflow-id": "81f2ca28becf4bc19f4173f3c9536ce5",
-            "x-ms-workflow-version": "08585088706687127141",
+            "x-ms-workflow-version": "08584998738478939083",
             "x-ms-workflow-name": "2060674a-01b4-40dc-9b19-b17bca5b358d",
             "x-ms-workflow-system-id": "/locations/westus/scaleunits/prod-181/workflows/81f2ca28becf4bc19f4173f3c9536ce5",
-            "x-ms-workflow-run-id": "08585088706523022299253412705CU123",
-            "x-ms-workflow-run-tracking-id": "f6378d0f-3e87-427f-b1e2-d1451df037c8",
+            "x-ms-workflow-run-id": "08584998738210330145621126163CU109",
+            "x-ms-workflow-run-tracking-id": "c608a6c7-eba9-4301-9b26-487a3b910711",
             "x-ms-workflow-operation-name": "HTTP",
             "x-ms-execution-location": "westus",
             "x-ms-workflow-subscription-id": "c44298d0-c055-4569-9fb2-6ab8693eb98a",
             "x-ms-workflow-resourcegroup-name": "0A0B09FEF7AD496F931D3A307603E062-DD3E9CBA43CE44DE8421B75EDD52F276",
-            "x-ms-tracking-id": "970e436b-2e84-40e2-9309-77d3286bd36b",
-            "x-ms-correlation-id": "970e436b-2e84-40e2-9309-77d3286bd36b",
-            "x-ms-client-request-id": "970e436b-2e84-40e2-9309-77d3286bd36b",
-            "x-ms-client-tracking-id": "08585088906634152286108882522CU122",
-            "x-ms-action-tracking-id": "ceba0d14-0ce8-439a-ac0d-a6cb52db7c51",
+            "x-ms-tracking-id": "ffc0f4ac-b84f-4b5e-b455-b7a52dfa3218",
+            "x-ms-correlation-id": "ffc0f4ac-b84f-4b5e-b455-b7a52dfa3218",
+            "x-ms-client-request-id": "ffc0f4ac-b84f-4b5e-b455-b7a52dfa3218",
+            "x-ms-client-tracking-id": "08584998765507175997795033692CU123",
+            "x-ms-action-tracking-id": "1bfd2e74-4dfc-422c-83fb-a9524c186932",
             "x-ms-client-keywords": "testFlow",
-            "x-ms-activity-vector": "00.00.00.IN.0P.IN.0R.IN.06",
-            "content-type": "application/json; charset=utf-8",
-            "accept-encoding": "gzip, deflate"
+            "x-ms-activity-vector": "00.00.00.IN.0J.IN.0R.IN.0A",
+            "accept-encoding": "gzip, deflate",
+            "content-type": "application/json; charset=utf-8"
           },
           "params": {},
           "query": {},
           "body": [
             {
-              "Task_ID": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAESAAAHSJsVbcC5R42j-tt5fnT8AAFCA0_nAAA="
+              "Task_ID": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAESAAAHSJsVbcC5R42j-tt5fnT8AAGIO99WAAA="
             },
             {
-              "Title": "QuickBooks parts information for Stephen"
+              "Title": "Andrew Miga: Epicor Installation: Education environment"
             },
             {
               "Status": "notStarted"
@@ -499,19 +499,22 @@
               "Body": ""
             },
             {
-              "LinkedResource_DisplayName": "Request from Stephen"
+              "LinkedResource_DisplayName": "RE: Epicor Installation: Education environment"
             },
             {
               "LinkedResource_ApplicationName": "Outlook"
             },
             {
-              "LinkedResource_WebURL": "https://outlook.office365.com/owa/?ItemID=AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j%2Ftt5fnT8AAAAAAEMAAAHSJsVbcC5R42j%2Ftt5fnT8AAFCAeATAAA%3D&exvsurl=1&viewmodel=ReadMessageItem"
+              "LinkedResource_WebURL": "https://outlook.office365.com/owa/?ItemID=AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j%2Ftt5fnT8AAAAAAEMAAAHSJsVbcC5R42j%2Ftt5fnT8AAGHR%2BxuAAA%3D&exvsurl=1&viewmodel=ReadMessageItem"
             },
             {
-              "LinkedResource_Body_Plaintext": "Hi Josh,\n\n \n\nStephen would like you to provide him with an Excel output for part number and\ndescription from QuickBooks. He also wants a list for part number and part\ndescription from SolidWorks. Let me know if you need further details.\n\n \n\nThanks,\n\nRaud\n\n \n\nRaud Jean-Louis\n\nIT Manager\n\nHigh Purity New England | HP-NE.com\n\n2 Thurber Blvd, Smithfield, RI 02917\n\nE: raud.jeanlouis@hp-ne.com | O: 401.349.5248\n\nISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB\n\n \n\n[cid:image001.png@01D9D4DB.A75D82B0]\n[https://www.linkedin.com/company/high-purity-new-england] \n[cid:image002.png@01D9D4DB.A75D82B0]\n[https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor]  [cid:image003.png@01D9D4DB.A75D82B0]\n[https://www.facebook.com/HighPurityNE/]\n\n "
+              "LinkedResource_Body_Plaintext": "Hey Josh,\n\n \n\nI was out on vacation during that time. What do I need to do to have this\ninstalled?\n\n \n\nBest,\n\n \n\nAndrew Miga\n\nMechanical Design Engineer\n\nHigh Purity New England | HP-NE.com\n\n2 Thurber Blvd, Smithfield, RI 02917\n\nE: Andrew.Migahp-ne.com [mds@hp-ne.com] | O: 401.349.4477\n\nISO 9001:2015 Certification 157603-2014-AQ-USA-ANAB\n\n \n\nsignature_70785060 [cid:image001.png@01DA26C5.9C735D70]\n[https://www.linkedin.com/company/high-purity-new-england]  signature_1576473685\n[cid:image002.png@01DA26C5.9C735D70]\n[https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor]  signature_3251001740\n[cid:image003.png@01DA26C5.9C735D70] [https://www.facebook.com/HighPurityNE/]\n\n \n\nFrom: Joshua Wowk <Joshua.Wowk@hp-ne.com>\nSent: Monday, November 27, 2023 4:29 PM\nCc: IT <IT@hp-ne.com>\nSubject: Epicor Installation: Education environment\n\n \n\nGood afternoon, as you probably know, we're in the process of deploying Epicor\nclients to all HPNE devices.  Your device has been identified as one of a number\nthat require some manual steps to complete the installation. You have a couple\noptions for how we go about this, they're listed below. I will also need your\nWindows password prior to connecting to your computer, or I can just reset it if\nthat is preferable. If none is received, we'll just reset it for you.\n\n 1. Leave your computer in the office and powered on for the night tonight\n    (11-27-2023) or tomorrow night (11-28-2023) and shoot me an email to let me\n    know.\n    Alternatively, you can use the link below to select the earliest timeslot\n    that will work for you during business hours. \n\n \n\nClick here to pick a time slot.\n[https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com/meetingtype/pHiXmDbtzEKEjyxH61gfPQ2?anonymous&ep=mLinkFromTile]\n\n \n\nThank you!\n\n \n\nJoshua J. Wowk \n\nSYSTEMS ADMINISTRATOR \n\nHIGH PURITY NEW ENGLAND | HP-NE.COM \n\n2 THURBER BLVD. SMITHFIELD, RI 02917 \n\n401-349-5153 | Joshua.Wowk@HP-NE.com"
             },
             {
-              "LinkedResource_Body_HTML": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><meta name=\"Generator\" content=\"Microsoft Word 15 (filtered medium)\"><style>\r\n<!--\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0in;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\nspan.EmailStyle17\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.MsoChpDefault\r\n\t{font-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.WordSection1\r\n\t{}\r\n-->\r\n</style></head><body lang=\"EN-US\" link=\"#0563C1\" vlink=\"#954F72\" style=\"word-wrap:break-word\"><div class=\"WordSection1\"><p class=\"MsoNormal\">Hi Josh,</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">Stephen would like you to provide him with an Excel output for part number and description from QuickBooks. He also wants a list for part number and part description from SolidWorks. Let me know if you need further details.</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">Thanks,</p><p class=\"MsoNormal\">Raud</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\"><b><span style=\"color:black\">Raud Jean-Louis</span></b><span style=\"color:black\"></span></p><p class=\"MsoNormal\"><i><span style=\"color:#ED7D31\">IT Manager</span></i><span style=\"color:#ED7D31\"></span></p><p class=\"MsoNormal\"><b><span style=\"color:#ED7D31\">High Purity New England</span></b><span style=\"color:#ED7D31\"> <b>| HP-NE.com</b></span></p><p class=\"MsoNormal\"><i><span style=\"color:black\">2 Thurber Blvd, Smithfield, RI 02917</span></i><i><span style=\"\"></span></i></p><p class=\"MsoNormal\"><span style=\"color:black\">E:&nbsp;<a href=\"mailto:raud.jeanlouis@hp-ne.com\"><span style=\"color:#0563C1\">raud.jeanlouis@hp-ne.com</span></a> | </span><span style=\"\">O: 401.349.5248 <span style=\"color:black\"></span></span></p><p class=\"MsoNormal\"><b><u><span lang=\"ES\" style=\"color:#ED7D31\">ISO 9001:2015&nbsp;Certification&nbsp;157603-2014-AQ-USA-ANAB</span></u></b><span style=\"\"></span></p><p class=\"MsoNormal\"><b><span lang=\"ES\" style=\"font-size:8.0pt; color:#ED7D31\">&nbsp;</span></b><span style=\"\"></span></p><p class=\"MsoNormal\"><a href=\"https://www.linkedin.com/company/high-purity-new-england\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"27\" height=\"27\" id=\"Picture_x0020_2\" src=\"cid:image001.png@01D9D4DB.A75D82B0\" style=\"width:.2847in; height:.2847in\"></span></a><span lang=\"ES\" style=\"\">&nbsp; </span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\"><b><span lang=\"ES\" style=\"font-size:10.0pt; color:#0563C1; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"Picture_x0020_3\" src=\"cid:image002.png@01D9D4DB.A75D82B0\" style=\"width:.2708in; height:.2708in\"></span></b></a><span lang=\"ES\" style=\"\">&nbsp;&nbsp;</span><a href=\"https://www.facebook.com/HighPurityNE/\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"26\" height=\"26\" id=\"Picture_x0020_4\" src=\"cid:image003.png@01D9D4DB.A75D82B0\" style=\"width:.2708in; height:.2708in\"></span></a><span style=\"\"></span></p><p class=\"MsoNormal\">&nbsp;</p></div></body></html>"
+              "LinkedResource_Sender": "Andrew.Miga@hp-ne.com"
+            },
+            {
+              "LinkedResource_Body_HTML": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><meta name=\"Generator\" content=\"Microsoft Word 15 (filtered medium)\"><style>\r\n<!--\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\n@font-face\r\n\t{font-family:\"Calibri Light\"}\r\n@font-face\r\n\t{font-family:\"Segoe UI Variable Display\"}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0in;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.MsoHyperlink\r\n\t{color:blue;\r\n\ttext-decoration:underline}\r\nspan.EmailStyle20\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.MsoChpDefault\r\n\t{font-size:10.0pt}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.WordSection1\r\n\t{}\r\nol\r\n\t{margin-bottom:0in}\r\nul\r\n\t{margin-bottom:0in}\r\n-->\r\n</style></head><body lang=\"EN-US\" link=\"blue\" vlink=\"purple\" style=\"word-wrap:break-word\"><div class=\"WordSection1\"><p class=\"MsoNormal\">Hey Josh,</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">I was out on vacation during that time. What do I need to do to have this installed?</p><p class=\"MsoNormal\">&nbsp;</p><p class=\"MsoNormal\">Best,</p><p class=\"MsoNormal\">&nbsp;</p><div><p class=\"MsoNormal\"><b><span style=\"color:black\">Andrew Miga</span></b><span style=\"color:black\"></span></p><p class=\"MsoNormal\"><i><span style=\"color:#ED7D31\">Mechanical Design Engineer</span></i><span style=\"color:black\"></span></p><p class=\"MsoNormal\"><b><span style=\"color:#ED7D31\">High Purity New England | HP-NE.com</span></b><span style=\"\"></span></p><p class=\"MsoNormal\"><i><span style=\"color:black\">2 Thurber Blvd, Smithfield, RI 02917</span></i><span style=\"\"></span></p><p class=\"MsoNormal\"><span style=\"color:black\">E:&nbsp;</span><span style=\"\"><a href=\"mailto:mds@hp-ne.com\">Andrew.Migahp-ne.com</a> | <span style=\"color:black\">O: 401.349.4477</span></span></p><p class=\"MsoNormal\"><b><u><span lang=\"ES\" style=\"color:#ED7D31\">ISO 9001:2015&nbsp;Certification&nbsp;157603-2014-AQ-USA-ANAB</span></u></b><span lang=\"ES\" style=\"\"></span></p><p class=\"MsoNormal\"><span lang=\"ES\" style=\"font-size:5.0pt\">&nbsp;</span></p><p class=\"MsoNormal\"><a href=\"https://www.linkedin.com/company/high-purity-new-england\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"27\" height=\"27\" id=\"Picture_x0020_1\" src=\"cid:image001.png@01DA26C5.9C735D70\" alt=\"signature_70785060\" style=\"width:.2777in; height:.2777in\"></span></a><span lang=\"ES\" style=\"\">&nbsp; </span><a href=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\" title=\"https://twitter.com/HighPurityNE?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor\"><b><span lang=\"ES\" style=\"font-size:10.0pt; color:#0563C1; text-decoration:none\"><img border=\"0\" width=\"27\" height=\"27\" id=\"Picture_x0020_5\" src=\"cid:image002.png@01DA26C5.9C735D70\" alt=\"signature_1576473685\" style=\"width:.2777in; height:.2777in\"></span></b></a><span lang=\"ES\" style=\"\">&nbsp;&nbsp;</span><a href=\"https://www.facebook.com/HighPurityNE/\"><span style=\"color:windowtext; text-decoration:none\"><img border=\"0\" width=\"27\" height=\"27\" id=\"Picture_x0020_3\" src=\"cid:image003.png@01DA26C5.9C735D70\" alt=\"signature_3251001740\" style=\"width:.2777in; height:.2777in\"></span></a><span lang=\"ES\" style=\"\"></span></p></div><p class=\"MsoNormal\">&nbsp;</p><div><div style=\"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in\"><p class=\"MsoNormal\"><b>From:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt; <br><b>Sent:</b> Monday, November 27, 2023 4:29 PM<br><b>Cc:</b> IT &lt;IT@hp-ne.com&gt;<br><b>Subject:</b> Epicor Installation: Education environment</p></div></div><p class=\"MsoNormal\">&nbsp;</p><div><p class=\"MsoNormal\" style=\"margin-bottom:12.0pt\"><span style=\"font-size:10.0pt; font-family:&quot;Segoe UI Variable Display&quot;; color:black\">Good afternoon, as you probably know, we're in the process of deploying Epicor clients to all HPNE devices.&nbsp; Your device has been identified as one of a number that require some manual steps to complete the installation. You have a couple options for how we go about this, they're listed below. <span style=\"background:white\">I will also need your Windows password prior to connecting to your computer, or I can just reset it if that is preferable. If none is received, we'll just reset it for you.</span></span></p></div><ol start=\"1\" type=\"1\"><li class=\"MsoNormal\" style=\"color:black\"><span style=\"font-size:10.0pt; font-family:&quot;Segoe UI Variable Display&quot;\">Leave your computer in the office and powered on for the night tonight (11-27-2023) or tomorrow night (11-28-2023) and shoot me an email to let me know.</span></li><div><li class=\"MsoNormal\" style=\"color:black\"><span style=\"font-size:10.0pt; font-family:&quot;Segoe UI Variable Display&quot;\">Alternatively, you can use the link below to select the earliest timeslot that will work for you during business&nbsp;hours.&nbsp;</span></li></div></ol><div><p class=\"MsoNormal\"><span style=\"font-size:10.0pt; font-family:&quot;Segoe UI Variable Display&quot;; color:black\">&nbsp;</span></p></div><div><p class=\"MsoNormal\"><b><span style=\"font-size:12.0pt; font-family:&quot;Segoe UI Variable Display&quot;; color:black\"><a href=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com/meetingtype/pHiXmDbtzEKEjyxH61gfPQ2?anonymous&amp;ep=mLinkFromTile\" title=\"https://outlook.office.com/bookwithme/user/bfd84cd2a9db4f789224347779b1acf8@hp-ne.com/meetingtype/pHiXmDbtzEKEjyxH61gfPQ2?anonymous&amp;ep=mLinkFromTile\">Click here to pick a time slot.</a></span></b><span style=\"font-size:10.0pt; font-family:&quot;Segoe UI Variable Display&quot;; color:black\"></span></p></div><div><p class=\"MsoNormal\"><span style=\"font-size:10.0pt; font-family:&quot;Segoe UI Variable Display&quot;; color:black\">&nbsp;</span></p></div><div><p class=\"MsoNormal\"><span style=\"font-size:10.0pt; font-family:&quot;Segoe UI Variable Display&quot;; color:black; background:white\">Thank you!</span></p></div><div><p class=\"MsoNormal\">&nbsp;</p></div><div id=\"Signature\"><p style=\"background:white\"><b><span style=\"font-size:13.0pt; color:#DE6A19; letter-spacing:.1pt\">Joshua J. Wowk</span></b><span style=\"font-size:13.0pt; color:#DE6A19\">&nbsp;</span></p><p style=\"line-height:11.0pt; background:white\"><span style=\"font-size:10.0pt; font-family:&quot;Calibri Light&quot;,sans-serif; color:black\">SYSTEMS ADMINISTRATOR</span><span style=\"font-family:&quot;Calibri Light&quot;,sans-serif; color:black\">&nbsp;</span></p><p style=\"line-height:11.0pt; background:white\"><b><span style=\"color:#DE6A19; letter-spacing:-.2pt\">HIGH PURITY NEW ENGLAND&nbsp;| HP-NE.COM</span></b><span style=\"font-size:10.0pt; color:#DE6A19; letter-spacing:-.2pt\">&nbsp;</span></p><p style=\"line-height:11.0pt; background:white\"><span style=\"font-size:10.0pt; font-family:&quot;Calibri Light&quot;,sans-serif; color:black\">2 THURBER BLVD. SMITHFIELD, RI 02917&nbsp;</span></p><p style=\"line-height:11.0pt; background:white\"><b><span style=\"color:#DE6A19; letter-spacing:-.2pt\">401-349-5153&nbsp;| </span><span style=\"color:#DE6A19; letter-spacing:.1pt\"><a href=\"mailto:Joshua.Wowk@HP-NE.com\">Joshua.Wowk@HP-NE.com</a></span></b></p></div></div></body></html>"
             }
           ]
         },
@@ -525,6 +528,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-22T21:16:40.000Z",
-  "versionId": "863e7bbf-c63f-478f-bc01-bfe9161fdfb2"
+  "updatedAt": "2023-12-04T23:43:52.000Z",
+  "versionId": "6aca03d7-0f4e-4497-a6ef-f7322ea0dc74"
 }
