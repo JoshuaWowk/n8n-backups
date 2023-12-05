@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "ClickUp Trigger": {
       "main": [
@@ -346,13 +346,10 @@
     "executionOrder": "v1"
   },
   "staticData": {
-    "node:ClickUp Trigger": {
-      "webhookId": "0b3ae0d0-66d9-4e87-9390-45e363206d1e",
-      "secret": "YQ5HAB9BC2OYQP3YT02MX1WW4T966BRZYCR3U2DXC0U2JE0O49Y5618TPUFZB0T2"
-    }
+    "node:ClickUp Trigger": {}
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-11-17T18:47:29.000Z",
+  "updatedAt": "2023-12-04T22:47:01.000Z",
   "versionId": "dd9b33e3-f180-459a-b973-3939439c2d9a"
 }
