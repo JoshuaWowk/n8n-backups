@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Markdown",
+            "node": "LinkedResource",
             "type": "main",
             "index": 0
           }
@@ -78,7 +78,7 @@
       "main": [
         [
           {
-            "node": "IsDueDateSet",
+            "node": "Markdown1",
             "type": "main",
             "index": 0
           }
@@ -110,11 +110,11 @@
         ]
       ]
     },
-    "Markdown": {
+    "Markdown1": {
       "main": [
         [
           {
-            "node": "LinkedResource",
+            "node": "IsDueDateSet",
             "type": "main",
             "index": 0
           }
@@ -140,7 +140,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1380,
+        1580,
         700
       ],
       "webhookId": "b1553754-7754-43ff-b655-ca06ecaffed2"
@@ -164,7 +164,7 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2420,
+        2620,
         440
       ],
       "notesInFlow": true,
@@ -194,7 +194,7 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2420,
+        2620,
         600
       ],
       "notesInFlow": true,
@@ -210,7 +210,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[15].value }}",
+        "taskId": "={{ $('Webhook').item.json.body[0].Task_ID }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -221,7 +221,7 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2660,
+        2860,
         600
       ],
       "credentials": {
@@ -237,7 +237,7 @@
         "space": "56901433",
         "folderless": true,
         "list": "164286867",
-        "name": "={{ $json.title }}",
+        "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
           "content": "=# To-Do: \n{{ $json.body[5].Body }} ",
           "dueDate": "={{ $json.dueDateTime }}"
@@ -248,7 +248,7 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2420,
+        2620,
         780
       ],
       "notesInFlow": true,
@@ -266,7 +266,7 @@
         "space": "56901433",
         "folderless": true,
         "list": "164286867",
-        "name": "={{ $json.title }}",
+        "name": "={{ $json.body[1].Title }}",
         "additionalFields": {
           "content": "=# To-Do: \n{{ $json.body[5].Body }} "
         }
@@ -276,7 +276,7 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        2420,
+        2620,
         940
       ],
       "notesInFlow": true,
@@ -304,7 +304,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2100,
+        2300,
         860
       ]
     },
@@ -345,7 +345,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2100,
+        2300,
         520
       ]
     },
@@ -353,7 +353,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[15].value }}",
+        "taskId": "={{ $('Webhook').item.json.body[0].Task_ID }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -364,7 +364,7 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2660,
+        2860,
         440
       ],
       "credentials": {
@@ -378,7 +378,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[15].value }}",
+        "taskId": "={{ $('Webhook').item.json.body[0].Task_ID }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -389,7 +389,7 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2660,
+        2860,
         780
       ],
       "credentials": {
@@ -403,7 +403,7 @@
       "parameters": {
         "operation": "update",
         "taskListId": "AQMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjIANC0zNDc3ATliMWFjZjgALgAAA4qo9h2K1ApHgMRJyB2ca5UBAAdImxVtwLlHjaP_23l_dPwAAAIBEgAAAA==",
-        "taskId": "={{ $json.custom_fields[15].value }}",
+        "taskId": "={{ $('Webhook').item.json.body[0].Task_ID }}",
         "updateFields": {
           "content": "=ClickUp URL: {{ $json.url }}",
           "status": "completed"
@@ -414,7 +414,7 @@
       "type": "n8n-nodes-base.microsoftToDo",
       "typeVersion": 1,
       "position": [
-        2660,
+        2860,
         940
       ],
       "credentials": {
@@ -433,13 +433,13 @@
           "maxConsecutiveNewlines": 1
         }
       },
-      "id": "4c29fef1-71e7-4ead-8a35-846083a04e0e",
-      "name": "Markdown",
+      "id": "f8fa8684-b7e6-4681-862c-ab99211315b3",
+      "name": "Markdown1",
       "type": "n8n-nodes-base.markdown",
       "typeVersion": 1,
       "position": [
-        1600,
-        700
+        2080,
+        600
       ]
     }
   ],
@@ -528,6 +528,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-12-04T23:43:52.000Z",
-  "versionId": "6aca03d7-0f4e-4497-a6ef-f7322ea0dc74"
+  "updatedAt": "2023-12-06T21:59:23.000Z",
+  "versionId": "e0f7ead0-dfad-47f8-a559-baa5c9c7f471"
 }
