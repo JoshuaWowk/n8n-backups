@@ -1,0 +1,278 @@
+{
+  "active": false,
+  "connections": {
+    "getSubtask": {
+      "main": [
+        [
+          {
+            "node": "hasParent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "subtaskCreated": {
+      "main": [
+        [
+          {
+            "node": "getSubtask",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hasParent": {
+      "main": [
+        [
+          {
+            "node": "getParent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getParent": {
+      "main": [
+        [
+          {
+            "node": "updateSubtaskStatus",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-01-19T15:48:43.216Z",
+  "id": "xOjy8UdattgQAWJD",
+  "meta": null,
+  "name": "ClickUp | Copy parent status to subtask",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.task_id }}"
+      },
+      "id": "8efa16bc-5bfa-48f9-b15f-de455e4555ff",
+      "name": "getSubtask",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        520
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskCreated"
+        ],
+        "filters": {}
+      },
+      "id": "e98ae322-ece0-44b3-a2e7-c5582acb3307",
+      "name": "subtaskCreated",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        900,
+        520
+      ],
+      "webhookId": "4dcafc76-e486-4425-a6eb-4ad6fcd47614",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "5f5aaf30-7429-4e19-96c7-ef554d873c5a",
+              "leftValue": "={{ $json.parent }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "da2c21ec-74c8-43e6-b531-920a99fda833",
+      "name": "hasParent",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.parent }}"
+      },
+      "id": "9e722c48-b159-45f9-bc19-f735472a57fa",
+      "name": "getParent",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        520
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $('getSubtask').item.json.id }}",
+        "updateFields": {
+          "status": "={{ $json.status.status }}"
+        }
+      },
+      "id": "de84245c-eb48-4b27-ad4f-0023b9bc1d94",
+      "name": "updateSubtaskStatus",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        520
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "subtaskCreated": [
+      {
+        "json": {
+          "event": "taskCreated",
+          "history_items": [
+            {
+              "id": "3856801556729557863",
+              "type": 1,
+              "date": "1705679426385",
+              "field": "assignee_add",
+              "parent_id": "164286867",
+              "data": {},
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "after": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              }
+            },
+            {
+              "id": "3856801556595340133",
+              "type": 1,
+              "date": "1705679426384",
+              "field": "task_creation",
+              "parent_id": "164286867",
+              "data": {
+                "via": "user",
+                "trace_id": "6533010847557127601",
+                "subcategory_id": "164286867"
+              },
+              "source": "user",
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "before": null,
+              "after": null
+            },
+            {
+              "id": "3856801556595340134",
+              "type": 1,
+              "date": "1705679426384",
+              "field": "status",
+              "parent_id": "164286867",
+              "data": {
+                "status_type": "open"
+              },
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "before": {
+                "status": null,
+                "color": "#000000",
+                "type": "removed",
+                "orderindex": -1
+              },
+              "after": {
+                "status": "backlog",
+                "color": "#b49581",
+                "orderindex": 0,
+                "type": "open"
+              }
+            }
+          ],
+          "task_id": "868732nke",
+          "webhook_id": "e7d36c20-9cfd-4f36-90d4-7c05e50c56d5"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-19T16:38:09.000Z",
+  "versionId": "0dbe05a7-333d-4153-95da-9aa19dbcc7c1"
+}
