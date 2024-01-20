@@ -1,0 +1,758 @@
+{
+  "active": true,
+  "connections": {
+    "GetParent": {
+      "main": [
+        [
+          {
+            "node": "AreDueDatesSet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "updateSubtaskStatus",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AreDueDatesSet": {
+      "main": [
+        [
+          {
+            "node": "SetDueDate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Filter2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "SetCustomField",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hasParent": {
+      "main": [
+        [
+          {
+            "node": "GetParent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "taskCreated": {
+      "main": [
+        [
+          {
+            "node": "getTask",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getTask": {
+      "main": [
+        [
+          {
+            "node": "hasParent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-12-18T19:25:24.698Z",
+  "id": "4JpNvkj6sv40jnrx",
+  "meta": null,
+  "name": "ClickUp | Copy details & custom fields to subtask",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.parent }}"
+      },
+      "id": "59c893ad-eea0-4d73-8ef3-a6d64e220a57",
+      "name": "GetParent",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        360
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setCustomField",
+        "task": "={{ $('hasParent').item.json.id }}",
+        "field": "={{ $json.id }}",
+        "value": "={{ $json.value }}"
+      },
+      "id": "0d28d1f6-74c7-4d05-852b-d6f608bda000",
+      "name": "SetCustomField",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        880
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "custom_fields",
+        "options": {}
+      },
+      "id": "08d2a8c1-dd17-4f5c-bc42-61babe560b6e",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3.1,
+      "position": [
+        2000,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.value }}",
+              "operation": "isNotEmpty"
+            },
+            {
+              "value1": "={{ $json.type }}",
+              "operation": "notEqual",
+              "value2": "automatic_progress"
+            },
+            {
+              "value1": "={{ $json.type }}",
+              "operation": "notEqual",
+              "value2": "emoji"
+            }
+          ]
+        }
+      },
+      "id": "074024da-7d47-4227-a5dd-61bff08947f1",
+      "name": "Filter1",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Copy due date",
+        "height": 80,
+        "width": 276.9630259777011,
+        "color": 4
+      },
+      "id": "19473600-b0b9-4449-959d-66a26f8f3ff2",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $('hasParent').item.json.id }}",
+        "updateFields": {
+          "dueDate": "={{ $json.due_date }}",
+          "dueDateTime": true
+        }
+      },
+      "id": "d967a678-70e0-447a-9907-1a97a87953bb",
+      "name": "SetDueDate",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        100
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.due_date }}",
+              "operation": "isEmpty"
+            },
+            {
+              "value1": "={{ $('hasParent').item.json.due_date }}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "04845b69-b138-4435-90ce-409fd83784f4",
+      "name": "AreDueDatesSet",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "custom_fields",
+        "options": {}
+      },
+      "id": "b12bcf6a-ed7d-4c27-b6f4-bcf273b93bdf",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3.1,
+      "position": [
+        2000,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.value }}",
+              "operation": "isNotEmpty"
+            },
+            {
+              "value1": "={{ $json.type }}",
+              "operation": "notEqual",
+              "value2": "automatic_progress"
+            },
+            {
+              "value1": "={{ $json.type }}",
+              "operation": "notEqual",
+              "value2": "emoji"
+            }
+          ]
+        }
+      },
+      "id": "2cc0a9d9-bff7-40dd-bff1-b4a5ca504088",
+      "name": "Filter2",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "workflowBranch",
+              "stringValue": "child"
+            }
+          ]
+        },
+        "include": "except",
+        "excludeFields": "type_config, hide_from_guests, date_created, required",
+        "options": {}
+      },
+      "id": "e544f886-4905-49b8-a896-32b877493df8",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        2160,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "workflowBranch",
+              "stringValue": "parent"
+            }
+          ]
+        },
+        "include": "except",
+        "excludeFields": "type_config, hide_from_guests, date_created, required",
+        "options": {}
+      },
+      "id": "5db2564c-535d-491d-aa41-05cd7f7601bd",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        2160,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "id"
+            }
+          ]
+        },
+        "joinMode": "keepEverything",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "preferInput2",
+              "mergeMode": "shallowMerge"
+            }
+          }
+        }
+      },
+      "id": "1a054beb-fe1e-419d-bcb9-789a460fd3e7",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        2560,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Child branch",
+        "height": 80,
+        "width": 150,
+        "color": 6
+      },
+      "id": "79cf093b-0441-4ae3-ab43-151941e88b29",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Parent branch\n",
+        "height": 80,
+        "width": 150,
+        "color": 6
+      },
+      "id": "aba20c94-0c73-4978-8306-a75fe21381b2",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.parent }}",
+              "operation": "isNotEmpty"
+            },
+            {
+              "value1": "={{ $json.custom_fields[24].value }}",
+              "operation": "notContains",
+              "value2": "true"
+            }
+          ]
+        }
+      },
+      "id": "c0fb221f-42e8-4634-96a0-0dea1eb7ae75",
+      "name": "hasParent",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Copy status",
+        "height": 80,
+        "width": 237.83714793380688,
+        "color": 5
+      },
+      "id": "411abacf-d125-4ad9-872c-5e78231a7553",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $('hasParent').item.json.id }}",
+        "updateFields": {
+          "status": "={{ $json.status.status }}"
+        }
+      },
+      "id": "68474f3a-6233-498f-bc36-0ef8ec0b34f5",
+      "name": "updateSubtaskStatus",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        360
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Copy custom fields",
+        "height": 80,
+        "width": 364.7403122863704,
+        "color": 6
+      },
+      "id": "53128684-4059-4355-a99a-43f7a38c1e8f",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "team": "14335650",
+        "events": [
+          "taskCreated"
+        ],
+        "filters": {}
+      },
+      "id": "1a2c3069-7509-4124-bf8b-70b2eb1068f2",
+      "name": "taskCreated",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        620
+      ],
+      "webhookId": "15f86b0b-7294-4338-932a-b39ec70f73dd",
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "id": "={{ $json.task_id }}"
+      },
+      "id": "c5d75b6c-80ee-4057-931d-c816ff8df16b",
+      "name": "getTask",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        620
+      ],
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "taskCreated": [
+      {
+        "json": {
+          "event": "taskCreated",
+          "history_items": [
+            {
+              "id": "3856910682654624413",
+              "type": 1,
+              "date": "1705685930801",
+              "field": "assignee_add",
+              "parent_id": "164286867",
+              "data": {},
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "after": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              }
+            },
+            {
+              "id": "3856910682604292763",
+              "type": 1,
+              "date": "1705685930800",
+              "field": "task_creation",
+              "parent_id": "164286867",
+              "data": {
+                "via": "user",
+                "trace_id": "5944522566246648242",
+                "subcategory_id": "164286867"
+              },
+              "source": "user",
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "before": null,
+              "after": null
+            },
+            {
+              "id": "3856910682604292764",
+              "type": 1,
+              "date": "1705685930800",
+              "field": "status",
+              "parent_id": "164286867",
+              "data": {
+                "status_type": "open"
+              },
+              "source": null,
+              "user": {
+                "id": 32274652,
+                "username": "Joshua Wowk",
+                "email": "joshua.wowk@hp-ne.com",
+                "color": "#7b68ee",
+                "initials": "JW",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
+              },
+              "before": {
+                "status": null,
+                "color": "#000000",
+                "type": "removed",
+                "orderindex": -1
+              },
+              "after": {
+                "status": "backlog",
+                "color": "#b49581",
+                "orderindex": 0,
+                "type": "open"
+              }
+            }
+          ],
+          "task_id": "8687344gc",
+          "webhook_id": "7e593d50-623f-419b-956f-5c865c08f3b6"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Filter1": [
+      {
+        "json": {
+          "id": "91f4293d-d86b-44bb-b84c-ea14cb4939d9",
+          "name": "Attachment Link",
+          "type": "url",
+          "value": "https://outlook.office365.com/owa/?ItemID=AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j%2Ftt5fnT8AAAAAAEMAAAHSJsVbcC5R42j%2Ftt5fnT8AAGkZZrmAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+          "workflowBranch": "parent"
+        },
+        "pairedItem": {
+          "item": 15
+        }
+      },
+      {
+        "json": {
+          "id": "c69df9e5-49e4-485e-9827-026545266843",
+          "name": "Attachment App",
+          "type": "short_text",
+          "value": "Outlook",
+          "workflowBranch": "parent"
+        },
+        "pairedItem": {
+          "item": 16
+        }
+      },
+      {
+        "json": {
+          "id": "fa591d15-5b3e-4803-b49e-4b76f0f32ca2",
+          "name": "Attachment Name",
+          "type": "short_text",
+          "value": "Reports I Need Access To in Epicor",
+          "workflowBranch": "parent"
+        },
+        "pairedItem": {
+          "item": 17
+        }
+      },
+      {
+        "json": {
+          "id": "593f61fb-1a7d-4935-ba13-f3de27bf6b34",
+          "name": "To-Do ID",
+          "type": "short_text",
+          "value": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAg4HEKAAAHSJsVbcC5R42j-tt5fnT8AAGkZ_zxAAA=",
+          "workflowBranch": "parent"
+        },
+        "pairedItem": {
+          "item": 19
+        }
+      },
+      {
+        "json": {
+          "id": "b18d9563-75bf-4daf-a9d5-311a16564d7f",
+          "name": "User's Email",
+          "type": "email",
+          "value": "amy.dupuis@hp-ne.com",
+          "workflowBranch": "parent"
+        },
+        "pairedItem": {
+          "item": 26
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "a455b41f-fc8d-4eed-abe4-5d1e6ad91c16",
+      "secret": "MNZ3PT561M34JAM2AVSZZ4IGZNL162EX2QNK61TR48WKXT93MJE22MIVJ40NX8XQ"
+    },
+    "node:taskCreated": {
+      "webhookId": "145a0314-c9ec-4e42-9727-9d49cd863c36",
+      "secret": "194WYM9EERYFZHAQ9AB7QLBX2R9YPG9QKDRS3O1JJSUDJD2CB3SDQGKNW3AAYUZA"
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-01-19T17:53:42.000Z",
+  "versionId": "40016e81-6e2f-45b6-aba4-fdcad24c9aa4"
+}
