@@ -124,7 +124,9 @@
   },
   "createdAt": "2023-08-02T21:42:02.390Z",
   "id": "X8Ixy9wRrIlGreQP",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "ClickUp | \"Pending\" & \"Done\" tasks",
   "nodes": [
     {
@@ -798,12 +800,19 @@
   },
   "staticData": {
     "node:ClickUp Trigger": {
-      "webhookId": "f980c600-d5f4-432a-8292-d07ea8c8aaf9",
-      "secret": "UM6QYTRR4X0B7NA2O6X99O1TH9NX33B4IU7K91SD4SLQHQQ5YJHKD9DLM6ZFBSVC"
+      "webhookId": "e5269530-0a3a-4999-963b-18598ed8e153",
+      "secret": "ZD6ZB3QHV7I5DJXUZFEUDOM7MNI93EL2E70OSZT0U1HBKS7VIWD48BR0FGQVZ9QN"
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2024-01-26T18:28:43.937Z",
+      "updatedAt": "2024-01-26T18:28:43.937Z",
+      "id": "7IGo6pgSgFWQT7IA",
+      "name": "clickup-trigger-webhooks"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2023-12-18T18:19:48.000Z",
+  "updatedAt": "2024-01-26T18:34:54.000Z",
   "versionId": "d00d296a-9724-4b30-8f06-f5179d022331"
 }
