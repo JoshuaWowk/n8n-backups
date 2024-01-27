@@ -1,0 +1,267 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "List all webhooks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deactivate them": {
+      "main": [
+        [
+          {
+            "node": "activate them again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "endpoint = this n8n instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete webhook": {
+      "main": [
+        [
+          {
+            "node": "get all workflows with clickup-webhooks tag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get all workflows with clickup-webhooks tag": {
+      "main": [
+        [
+          {
+            "node": "deactivate them",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List all webhooks": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "endpoint = this n8n instance": {
+      "main": [
+        [
+          {
+            "node": "delete webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-01-26T18:19:16.001Z",
+  "id": "3yJMsgJvY5bxf90k",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Refresh ClickUp trigger webhooks",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "3ee5fc20-cda2-4e34-af13-9b81db7c4042",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "deactivate",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        }
+      },
+      "id": "79fe8e93-124b-41ff-b1fd-994d5549dba5",
+      "name": "deactivate them",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        460
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "2",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "activate",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        }
+      },
+      "id": "963d7a61-9471-4867-96ff-8fc0761fe0a6",
+      "name": "activate them again",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        460
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "2",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "webhooks",
+        "options": {}
+      },
+      "id": "79e4e91f-8601-4c45-bb51-860c77d5e3cb",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3.1,
+      "position": [
+        900,
+        460
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://api.clickup.com/api/v2/webhook/{{ $json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpApi",
+        "options": {}
+      },
+      "id": "cbc26cf9-1408-4d11-ac0a-65d4ec417993",
+      "name": "delete webhook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1380,
+        460
+      ],
+      "notesInFlow": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Needs to be a HTTP Request Node, because n8n sends it as a number but String is required."
+    },
+    {
+      "parameters": {
+        "filters": {
+          "activeWorkflows": true,
+          "tags": "clickup-trigger-webhooks"
+        }
+      },
+      "id": "05b37361-4232-4d44-b465-9cbc35f0fb92",
+      "name": "get all workflows with clickup-webhooks tag",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        460
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "2",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.clickup.com/api/v2/team/14335650/webhook",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpApi",
+        "options": {}
+      },
+      "id": "951a4e1a-451e-4867-b2cf-a011abe6efba",
+      "name": "List all webhooks",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        460
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "clickUpApi": {
+          "id": "1",
+          "name": "ClickUp account"
+        }
+      },
+      "notes": "Needs to be a HTTP Request Node, because n8n sends it as a number but String is required."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.endpoint }}",
+              "operation": "startsWith",
+              "value2": "=https://n8n.hp-ne.us"
+            }
+          ]
+        }
+      },
+      "id": "a9475238-34e8-43ed-8e5f-38608f0d7db6",
+      "name": "endpoint = this n8n instance",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-26T18:34:32.000Z",
+  "versionId": "139382a0-843e-48f6-b1a9-d0ee954b73eb"
+}
