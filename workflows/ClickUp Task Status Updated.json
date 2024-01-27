@@ -120,7 +120,9 @@
   },
   "createdAt": "2023-05-30T22:08:00.145Z",
   "id": "12",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "ClickUp Task Status Updated",
   "nodes": [
     {
@@ -2193,9 +2195,15 @@
       "updatedAt": "2023-06-09T19:54:36.928Z",
       "id": "7",
       "name": "Trigger:Change/Update"
+    },
+    {
+      "createdAt": "2024-01-26T18:28:43.937Z",
+      "updatedAt": "2024-01-26T18:28:43.937Z",
+      "id": "7IGo6pgSgFWQT7IA",
+      "name": "clickup-trigger-webhooks"
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-31T11:18:36.000Z",
-  "versionId": "f2dac96b-2252-418a-b37f-7f0c0c0131dd"
+  "updatedAt": "2024-01-26T18:31:08.000Z",
+  "versionId": "bc47ef08-a79f-4cbe-a911-ccb27db76d46"
 }
