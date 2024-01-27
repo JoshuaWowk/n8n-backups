@@ -1,0 +1,18 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2024-01-26T18:36:36.391Z",
+  "id": "7LVUOEt10LTkPZwj",
+  "meta": null,
+  "name": "ClickUp: Update child fields",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-26T18:36:36.391Z",
+  "versionId": "23e74fa8-96f5-4a1f-b85c-8fab05857aa3"
+}
