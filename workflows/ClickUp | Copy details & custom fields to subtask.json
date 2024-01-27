@@ -151,7 +151,9 @@
   },
   "createdAt": "2023-12-18T19:25:24.698Z",
   "id": "4JpNvkj6sv40jnrx",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "ClickUp | Copy details & custom fields to subtask",
   "nodes": [
     {
@@ -747,12 +749,19 @@
       "secret": "MNZ3PT561M34JAM2AVSZZ4IGZNL162EX2QNK61TR48WKXT93MJE22MIVJ40NX8XQ"
     },
     "node:taskCreated": {
-      "webhookId": "145a0314-c9ec-4e42-9727-9d49cd863c36",
-      "secret": "194WYM9EERYFZHAQ9AB7QLBX2R9YPG9QKDRS3O1JJSUDJD2CB3SDQGKNW3AAYUZA"
+      "webhookId": "6072b0ce-5358-4e41-85b5-bf40994c182f",
+      "secret": "52FLT9YFAQ0BQRCH9TY0LLTYGH715OCYH22DMFZFGKSFB9RK7CQ7A4U3PS7VUTVD"
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2024-01-26T18:28:43.937Z",
+      "updatedAt": "2024-01-26T18:28:43.937Z",
+      "id": "7IGo6pgSgFWQT7IA",
+      "name": "clickup-trigger-webhooks"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2024-01-19T17:53:42.000Z",
-  "versionId": "40016e81-6e2f-45b6-aba4-fdcad24c9aa4"
+  "updatedAt": "2024-01-26T18:34:27.229Z",
+  "versionId": "a9a42efd-f907-4be2-b736-55e3e991f8a0"
 }
