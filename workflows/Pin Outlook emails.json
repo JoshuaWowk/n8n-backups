@@ -1,0 +1,138 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Microsoft Outlook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-04T14:54:46.933Z",
+  "id": "73A1Zbx4fbm3jLBC",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Pin Outlook emails",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cd59b73a-2ea7-483c-8607-80c9d2fc09f3",
+        "options": {}
+      },
+      "id": "cb036f5e-518c-4811-ac65-c28d480f7ce3",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1020,
+        520
+      ],
+      "webhookId": "cd59b73a-2ea7-483c-8607-80c9d2fc09f3"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "messageId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "updateFields": {}
+      },
+      "id": "57b0b65d-9459-45dc-9791-e2f45e3c276c",
+      "name": "Microsoft Outlook",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        520
+      ],
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "10",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.hp-ne.us",
+            "x-real-ip": "168.62.9.74",
+            "x-forwarded-for": "168.62.9.74",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "connection": "close",
+            "content-length": "7418",
+            "accept-language": "en-US",
+            "user-agent": "azure-logic-apps/1.0 (workflow f0b27d799fbf4115b482965b13e1e649; version 08584920423301491812) microsoft-flow/1.0",
+            "x-ms-workflow-id": "f0b27d799fbf4115b482965b13e1e649",
+            "x-ms-workflow-version": "08584920423301491812",
+            "x-ms-workflow-name": "b504c04c-c4f0-4190-8afc-0c27d54ac27b",
+            "x-ms-workflow-system-id": "/locations/westus/scaleunits/prod-188/workflows/f0b27d799fbf4115b482965b13e1e649",
+            "x-ms-workflow-run-id": "08584920422698741852544813962CU189",
+            "x-ms-workflow-run-tracking-id": "6c5c392c-ceda-4ff1-a6ee-63ed46fb7025",
+            "x-ms-workflow-operation-name": "HTTP",
+            "x-ms-execution-location": "westus",
+            "x-ms-workflow-subscription-id": "c44298d0-c055-4569-9fb2-6ab8693eb98a",
+            "x-ms-workflow-resourcegroup-name": "0A0B09FEF7AD496F931D3A307603E062-DD3E9CBA43CE44DE8421B75EDD52F276",
+            "x-ms-tracking-id": "2495858e-3f58-4622-b698-030713473860",
+            "x-ms-correlation-id": "2495858e-3f58-4622-b698-030713473860",
+            "x-ms-client-request-id": "2495858e-3f58-4622-b698-030713473860",
+            "x-ms-client-tracking-id": "08584920422698741853544813962CU182",
+            "x-ms-action-tracking-id": "16fc8014-6c91-4d95-a272-1eafda500fdf",
+            "x-ms-activity-vector": "00.01.IN.3D.IN.11.IN.1X",
+            "accept-encoding": "gzip, deflate",
+            "content-type": "application/json; charset=utf-8"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAEMAAAHSJsVbcC5R42j-tt5fnT8AAHD46qtAAA=",
+            "receivedDateTime": "2024-03-04T15:03:19+00:00",
+            "hasAttachments": false,
+            "internetMessageId": "<PH7PR22MB3890DC00250D704128993DEEAB232@PH7PR22MB3890.namprd22.prod.outlook.com>",
+            "subject": "Case CS",
+            "bodyPreview": "IT Systems Administrator JD.pdf\r\n\r\n\r\nJoshua Wowk | Sys Admin | HPNE | 401-349-5153\r\n Joshua.Wowk ◀ Click to chat in Teams!\r\n________________________________\r\nFrom: Joshua Wowk <Joshua.Wowk@hp-ne.com>\r\nSent: Monday, March 4, 2024 9:57 AM\r\nTo: Joshua Wowk <",
+            "importance": "normal",
+            "conversationId": "AAQkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOAAQAF_kJtQk0s9OhQ_flMq10NE=",
+            "isRead": false,
+            "isHtml": true,
+            "body": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><span class=\"_Entity _EType_OWALink _EId_OWALink _EReadonly_1\" style=\"display:inline-block\"><span><a href=\"https://highpuritynewengland-my.sharepoint.com/:b:/g/personal/joshua_wowk_hp-ne_com/ERJmxz3iBItDnE-pg9hiuvsBex7ODLipfV3z1Vz4tjrYtw\" rel=\"noopener noreferrer\" id=\"OLK_Beautified_73173fd8-9d10-92f6-eb85-dd9d8a96475e\" class=\"OWAAutoLink eScj0 none\" data-ogsb=\"rgb(244,244,244)\" data-ogsc=\"\" style=\"padding:0px 1px; border-radius:2px; background-color:rgb(244,244,244)\"><img class=\"suRDx\" alt=\"\" role=\"presentation\" src=\"https://res.cdn.office.net/assets/mail/file-icon/png/pdf_16x16.png\" style=\"width:16px; height:16px; vertical-align:middle; padding:1px 2px 2px 0px\">IT Systems Administrator JD.pdf</a></span></span> <div class=\"elementToProof\" style=\"font-family:&quot;Segoe UI Variable Display&quot;; font-size:10pt; color:rgb(0,0,0)\"><br></div><div class=\"elementToProof\"><div style=\"font-family:&quot;Segoe UI Variable Display&quot;; font-size:10pt; color:rgb(0,0,0)\"><br></div><div id=\"Signature\"><div><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(237,125,49); background-color:white\">Joshua Wowk&nbsp;| Sys Admin</span><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(222,106,25); background-color:white\">&nbsp;</span><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(222,106,25); background-color:rgb(255,255,255)\">| </span><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(237,125,49); background-color:white\">HPNE</span><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(222,106,25); background-color:white\">&nbsp;</span><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(222,106,25); background-color:rgb(255,255,255)\">| </span><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(237,125,49); background-color:white\">401-349-5153</span> <div><span style=\"font-family:&quot;Calibri Light&quot;,sans-serif; font-size:10pt; color:rgb(80,90,201); background-color:white\"><img id=\"imageSelected0\" data-outlook-trace=\"F:1|T:1\" src=\"cid:b25b75c1-30f5-44b1-947e-29db224f1349\" style=\"max-width:100%; margin:0px\"></span><span style=\"font-family:&quot;Yu Gothic UI&quot;; font-size:10pt; color:rgb(80,90,201); background-color:white\">&nbsp;</span><span style=\"font-family:&quot;Yu Gothic UI&quot;; font-size:8pt; color:rgb(158,166,255); background-color:white\"><a href=\"https://teams.microsoft.com/l/chat/0/0?users=joshua.wowk@hp-ne.com\" target=\"_blank\" title=\"https://teams.microsoft.com/l/chat/0/0?users=joshua.wowk@hp-ne.com\" style=\"color:rgb(158,166,255); margin:0px\">Joshua.Wowk</a></span><span style=\"font-family:&quot;Yu Gothic UI Semibold&quot;; font-size:9pt; color:rgb(158,166,255); background-color:white\">&nbsp;</span><span style=\"font-family:&quot;Yu Gothic UI&quot;; font-size:8pt; color:rgb(158,166,255); background-color:rgb(255,255,255)\">◀ <a href=\"https://teams.microsoft.com/l/chat/0/0?users=joshua.wowk@hp-ne.com\" title=\"https://teams.microsoft.com/l/chat/0/0?users=joshua.wowk@hp-ne.com\" style=\"color:rgb(158,166,255); margin:0px\">Click to chat in&nbsp;Teams!</a></span></div></div></div></div><div id=\"appendonsend\"></div><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br><b>Sent:</b> Monday, March 4, 2024 9:57 AM<br><b>To:</b> Joshua Wowk &lt;Joshua.Wowk@hp-ne.com&gt;<br><b>Subject:</b> Case CS</font> <div>&nbsp;</div></div><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style><div dir=\"ltr\"><div class=\"x_elementToProof\" style=\"font-family:&quot;Segoe UI Variable Display&quot;; font-size:10pt; color:rgb(0,0,0)\"></div><div class=\"x_elementToProof\" style=\"font-family:&quot;Segoe UI Variable Display&quot;; font-size:10pt; color:rgb(0,0,0)\"><br></div><div class=\"x_elementToProof\"><div style=\"font-family:&quot;Segoe UI Variable Display&quot;; font-size:10pt; color:rgb(0,0,0)\"><br></div><div id=\"x_Signature\"><div><p style=\"line-height:11pt; background-color:white; margin:0in; font-family:Calibri,sans-serif; font-size:11pt\"><span style=\"letter-spacing:0.1pt; font-size:13pt; color:rgb(222,106,25)\"><b>Joshua J. Wowk</b></span><span style=\"font-size:13pt; color:rgb(222,106,25)\">&nbsp;</span></p><p style=\"line-height:11pt; background-color:white; margin:0in; font-family:Calibri,sans-serif; font-size:11pt\"><span style=\"font-family:&quot;Calibri Light&quot;,sans-serif; font-size:10pt; color:black\">SYSTEMS ADMINISTRATOR</span><span style=\"font-family:&quot;Calibri Light&quot;,sans-serif; color:black\">&nbsp;</span></p><p style=\"line-height:11pt; background-color:white; margin:0in; font-family:Calibri,sans-serif; font-size:11pt\"><span style=\"letter-spacing:-0.2pt; color:rgb(222,106,25)\"><b>HIGH PURITY NEW ENGLAND&nbsp;| HP-NE.COM</b></span><span style=\"letter-spacing:-0.2pt; font-size:10pt; color:rgb(222,106,25)\">&nbsp;</span></p><p style=\"line-height:11pt; background-color:white; margin:0in; font-family:Calibri,sans-serif; font-size:11pt\"><span style=\"font-family:&quot;Calibri Light&quot;,sans-serif; font-size:10pt; color:black\">2 THURBER BLVD. SMITHFIELD, RI 02917&nbsp;</span></p><p style=\"line-height:11pt; background-color:white; margin:0in; font-family:Calibri,sans-serif; font-size:11pt\"><span style=\"letter-spacing:-0.2pt; color:rgb(222,106,25)\"><b>401-349-5153&nbsp;| </b></span><span style=\"letter-spacing:0.1pt; color:rgb(222,106,25); line-height:normal\"><b>Joshua.Wowk@HP-NE.com</b></span></p></div></div></div></div></body></html>",
+            "from": "Joshua.Wowk@hp-ne.com",
+            "toRecipients": "Joshua.Wowk@hp-ne.com",
+            "attachments": [
+              {
+                "@odata.type": "#microsoft.graph.fileAttachment",
+                "id": "AAMkAGJmZDg0Y2QyLWE5ZGItNGY3OC05MjI0LTM0Nzc3OWIxYWNmOABGAAAAAACKqPYditQKR4DEScgdnGuVBwAHSJsVbcC5R42j-tt5fnT8AAAAAAEMAAAHSJsVbcC5R42j-tt5fnT8AAHD46qtAAABEgAQAMNEXXwBN1REl-sKemnrZZg=",
+                "lastModifiedDateTime": "2024-03-04T15:03:19+00:00",
+                "name": "Outlook-bdf2d5ku.png",
+                "contentType": "image/png",
+                "size": 986,
+                "isInline": true
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-03-04T15:09:14.000Z",
+  "versionId": "b69517af-0f19-46f6-bc30-252753156cf1"
+}
