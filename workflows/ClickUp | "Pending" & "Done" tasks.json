@@ -183,7 +183,7 @@
     {
       "parameters": {
         "amount": 3,
-        "unit": "days"
+        "unit": "seconds"
       },
       "id": "96de28f7-375a-44ca-989c-975a26d4d092",
       "name": "Wait",
@@ -219,7 +219,7 @@
     {
       "parameters": {
         "amount": 5,
-        "unit": "days"
+        "unit": "seconds"
       },
       "id": "764d24dd-047e-4956-89ae-a288268a39d5",
       "name": "Wait1",
@@ -352,7 +352,7 @@
     {
       "parameters": {
         "amount": 3,
-        "unit": "days"
+        "unit": "seconds"
       },
       "id": "67d06ae0-dc03-48eb-86df-9369ef84baf8",
       "name": "Wait2",
@@ -388,7 +388,7 @@
     {
       "parameters": {
         "amount": 5,
-        "unit": "days"
+        "unit": "seconds"
       },
       "id": "f2e2dfbf-9940-4737-b148-1eac5ff82c42",
       "name": "Wait3",
@@ -529,279 +529,14 @@
       ]
     }
   ],
-  "pinData": {
-    "ClickUp Trigger": [
-      {
-        "json": {
-          "event": "taskStatusUpdated",
-          "history_items": [
-            {
-              "id": "3610732372335125384",
-              "type": 1,
-              "date": "1691012560044",
-              "field": "status",
-              "parent_id": "164286867",
-              "data": {
-                "status_type": "done"
-              },
-              "source": null,
-              "user": {
-                "id": 32274652,
-                "username": "Joshua Wowk",
-                "email": "joshua.wowk@hp-ne.com",
-                "color": "#7b68ee",
-                "initials": "JW",
-                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
-              },
-              "before": {
-                "status": "pending",
-                "color": "#b5bcc2",
-                "orderindex": 5,
-                "type": "done"
-              },
-              "after": {
-                "status": "done",
-                "color": "#2ecd6f",
-                "orderindex": 6,
-                "type": "done"
-              }
-            }
-          ],
-          "task_id": "86854661v",
-          "webhook_id": "cb0c3c38-811d-4261-901d-363403b6993b"
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ],
-    "Filter": [
-      {
-        "json": {
-          "event": "taskStatusUpdated",
-          "history_items": [
-            {
-              "id": "3610732372335125384",
-              "type": 1,
-              "date": "1691012560044",
-              "field": "status",
-              "parent_id": "164286867",
-              "data": {
-                "status_type": "done"
-              },
-              "source": null,
-              "user": {
-                "id": 32274652,
-                "username": "Joshua Wowk",
-                "email": "joshua.wowk@hp-ne.com",
-                "color": "#7b68ee",
-                "initials": "JW",
-                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
-              },
-              "before": {
-                "status": "pending",
-                "color": "#b5bcc2",
-                "orderindex": 5,
-                "type": "done"
-              },
-              "after": {
-                "status": "done",
-                "color": "#2ecd6f",
-                "orderindex": 6,
-                "type": "done"
-              }
-            }
-          ],
-          "task_id": "86854661v",
-          "webhook_id": "cb0c3c38-811d-4261-901d-363403b6993b"
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ],
-    "Wait1": [
-      {
-        "json": {
-          "event": "taskStatusUpdated",
-          "history_items": [
-            {
-              "id": "3610732372335125384",
-              "type": 1,
-              "date": "1691012560044",
-              "field": "status",
-              "parent_id": "164286867",
-              "data": {
-                "status_type": "done"
-              },
-              "source": null,
-              "user": {
-                "id": 32274652,
-                "username": "Joshua Wowk",
-                "email": "joshua.wowk@hp-ne.com",
-                "color": "#7b68ee",
-                "initials": "JW",
-                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
-              },
-              "before": {
-                "status": "pending",
-                "color": "#b5bcc2",
-                "orderindex": 5,
-                "type": "done"
-              },
-              "after": {
-                "status": "done",
-                "color": "#2ecd6f",
-                "orderindex": 6,
-                "type": "done"
-              }
-            }
-          ],
-          "task_id": "86854661v",
-          "webhook_id": "cb0c3c38-811d-4261-901d-363403b6993b"
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ],
-    "Wait": [
-      {
-        "json": {
-          "event": "taskStatusUpdated",
-          "history_items": [
-            {
-              "id": "3610732372335125384",
-              "type": 1,
-              "date": "1691012560044",
-              "field": "status",
-              "parent_id": "164286867",
-              "data": {
-                "status_type": "done"
-              },
-              "source": null,
-              "user": {
-                "id": 32274652,
-                "username": "Joshua Wowk",
-                "email": "joshua.wowk@hp-ne.com",
-                "color": "#7b68ee",
-                "initials": "JW",
-                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
-              },
-              "before": {
-                "status": "pending",
-                "color": "#b5bcc2",
-                "orderindex": 5,
-                "type": "done"
-              },
-              "after": {
-                "status": "done",
-                "color": "#2ecd6f",
-                "orderindex": 6,
-                "type": "done"
-              }
-            }
-          ],
-          "task_id": "86854661v",
-          "webhook_id": "cb0c3c38-811d-4261-901d-363403b6993b"
-        }
-      }
-    ],
-    "Wait3": [
-      {
-        "json": {
-          "event": "taskStatusUpdated",
-          "history_items": [
-            {
-              "id": "3610732372335125384",
-              "type": 1,
-              "date": "1691012560044",
-              "field": "status",
-              "parent_id": "164286867",
-              "data": {
-                "status_type": "done"
-              },
-              "source": null,
-              "user": {
-                "id": 32274652,
-                "username": "Joshua Wowk",
-                "email": "joshua.wowk@hp-ne.com",
-                "color": "#7b68ee",
-                "initials": "JW",
-                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
-              },
-              "before": {
-                "status": "pending",
-                "color": "#b5bcc2",
-                "orderindex": 5,
-                "type": "done"
-              },
-              "after": {
-                "status": "done",
-                "color": "#2ecd6f",
-                "orderindex": 6,
-                "type": "done"
-              }
-            }
-          ],
-          "task_id": "86854661v",
-          "webhook_id": "cb0c3c38-811d-4261-901d-363403b6993b"
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ],
-    "Wait2": [
-      {
-        "json": {
-          "event": "taskStatusUpdated",
-          "history_items": [
-            {
-              "id": "3610732372335125384",
-              "type": 1,
-              "date": "1691012560044",
-              "field": "status",
-              "parent_id": "164286867",
-              "data": {
-                "status_type": "done"
-              },
-              "source": null,
-              "user": {
-                "id": 32274652,
-                "username": "Joshua Wowk",
-                "email": "joshua.wowk@hp-ne.com",
-                "color": "#7b68ee",
-                "initials": "JW",
-                "profilePicture": "https://attachments.clickup.com/profilePictures/32274652_hWJ.jpg"
-              },
-              "before": {
-                "status": "pending",
-                "color": "#b5bcc2",
-                "orderindex": 5,
-                "type": "done"
-              },
-              "after": {
-                "status": "done",
-                "color": "#2ecd6f",
-                "orderindex": 6,
-                "type": "done"
-              }
-            }
-          ],
-          "task_id": "86854661v",
-          "webhook_id": "cb0c3c38-811d-4261-901d-363403b6993b"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
   "staticData": {
     "node:ClickUp Trigger": {
-      "webhookId": "e5269530-0a3a-4999-963b-18598ed8e153",
-      "secret": "ZD6ZB3QHV7I5DJXUZFEUDOM7MNI93EL2E70OSZT0U1HBKS7VIWD48BR0FGQVZ9QN"
+      "webhookId": "2962a793-e3a8-49a1-b391-0e5af5b7b34d",
+      "secret": "AQV5WUOWFAN5Q0V9NVJVV2BHRAFCZENFF8ML14YDS7PLX70EHPISEO2YPCIBO9NT"
     }
   },
   "tags": [
@@ -813,6 +548,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-01-26T18:34:54.000Z",
-  "versionId": "d00d296a-9724-4b30-8f06-f5179d022331"
+  "updatedAt": "2024-03-06T12:59:37.000Z",
+  "versionId": "0a9a9308-63ba-4139-8904-027820e32943"
 }
