@@ -183,7 +183,7 @@
     {
       "parameters": {
         "amount": 3,
-        "unit": "seconds"
+        "unit": "days"
       },
       "id": "96de28f7-375a-44ca-989c-975a26d4d092",
       "name": "Wait",
@@ -219,7 +219,7 @@
     {
       "parameters": {
         "amount": 5,
-        "unit": "seconds"
+        "unit": "days"
       },
       "id": "764d24dd-047e-4956-89ae-a288268a39d5",
       "name": "Wait1",
@@ -352,7 +352,7 @@
     {
       "parameters": {
         "amount": 3,
-        "unit": "seconds"
+        "unit": "days"
       },
       "id": "67d06ae0-dc03-48eb-86df-9369ef84baf8",
       "name": "Wait2",
@@ -388,7 +388,7 @@
     {
       "parameters": {
         "amount": 5,
-        "unit": "seconds"
+        "unit": "days"
       },
       "id": "f2e2dfbf-9940-4737-b148-1eac5ff82c42",
       "name": "Wait3",
@@ -535,8 +535,8 @@
   },
   "staticData": {
     "node:ClickUp Trigger": {
-      "webhookId": "2962a793-e3a8-49a1-b391-0e5af5b7b34d",
-      "secret": "AQV5WUOWFAN5Q0V9NVJVV2BHRAFCZENFF8ML14YDS7PLX70EHPISEO2YPCIBO9NT"
+      "webhookId": "089ade72-c48e-42db-bc72-7dbf1ce7694c",
+      "secret": "1AJS8YASBQ7W9L6XUDA631TACINRHCPLOMTVYWJQ6NJNEUROTIBKMIU8W9UHADSM"
     }
   },
   "tags": [
@@ -548,6 +548,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-03-06T12:59:37.000Z",
-  "versionId": "0a9a9308-63ba-4139-8904-027820e32943"
+  "updatedAt": "2024-03-06T18:34:14.000Z",
+  "versionId": "665f9336-90e5-4a66-8f1e-ccd09f4e1e3c"
 }
